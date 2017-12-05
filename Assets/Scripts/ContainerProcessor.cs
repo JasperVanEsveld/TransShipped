@@ -18,7 +18,7 @@ public abstract class ContainerProcessor : Area
 
     void MoveAfterTime(object source, ElapsedEventArgs e)
     {
-        if(source.GetType().Equals(this.GetType())){
+        if(source is ContainerProcessor){
             ContainerProcessor cp = (ContainerProcessor)source;
             targetArea.AddContainer(container);
             container = null;
