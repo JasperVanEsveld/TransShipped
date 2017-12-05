@@ -23,7 +23,6 @@ public class DeliveryArea<DeliveryVehicle> : Area
     /// </summary>
     void OnVehicleEmpty()
     {
-        p
     }
 
     /// <summary>
@@ -38,9 +37,12 @@ public class DeliveryArea<DeliveryVehicle> : Area
         }
     }
 
-    protected override bool AddContainer(MonoContainer monoContainer)
+    public override bool AddContainer(MonoContainer monoContainer)
     {
-        throw new NotImplementedException();
+        return false;
+    }
+    protected override void RemoveContainer(MonoContainer monoContainer){
+
     }
 }
 

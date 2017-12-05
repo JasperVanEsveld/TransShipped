@@ -3,7 +3,29 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    private ContainerManager manager;
-    private List<ContainerProcessor> connected;
-    protected abstract bool AddContainer(MonoContainer monoContainer);
+    public float time = 0f;
+    public Game game;
+    public ContainerManager manager;
+    public List<Area> connected;
+
+    public void Start(){
+        manager = game.manager;
+        print(manager);
+    }
+
+    public abstract bool AddContainer(MonoContainer monoContainer);
+    protected abstract void RemoveContainer(MonoContainer monoCont);
+
+    protected bool MoveToNext(MonoContainer monoCont){
+        if (monoCont.movement != null) {
+            Area nextArea = manager.GetNextArea(this, monoCont.movement);
+            if(nextArea.AddContainer(monoCont)){
+                RemoveContainer(monoCont);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
 }

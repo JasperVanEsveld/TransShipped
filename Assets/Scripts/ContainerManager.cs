@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ContainerManager
 {
-    List<DeliveryArea<DeliveryVehicle>> deliver;
-    List<Stack> stacks;
+    public List<DeliveryArea<DeliveryVehicle>> deliver;
+    public List<Stack> stacks;
 
     void OnMovementComplete(Movement movement) {
     }
@@ -13,15 +14,50 @@ public class ContainerManager
         container.movement = new Movement(container,start,target);
     }
 
-    void Request(Container container, Area target) {
+    bool Request(Container container, Area target) {
         Stack stackContaining = FindStackContaining(container);
-
-        //container._movement = new Movement(container,start,target);
+        if(stackContaining == null){
+            return false;
+        }
+        int i = stackContaining.Contains(container);
+        MonoContainer monoCont = stackContaining.containers[i];
+        monoCont.movement = new Movement(monoCont,stackContaining,target);
+        return true;
     }
 
-    Area GetNextArea(Area area, Movement movement) {
-        return null;
+    public Area GetNextArea(Area area, Movement movement) {
+        Dictionary<Area,Area> nextArea = new Dictionary<Area,Area>();
+        Dictionary<Area,int> hops = new Dictionary<Area,int>();
+        if ( movement.TargetArea == area){
+            MonoBehaviour.print("HEllo");
+            return null;
+        }
+        List<Area> areas = new List<Area>();
+        areas.Add(area);
+        Pair<Area,int> next = FirstArea(movement.TargetArea, area, areas);
+        MonoBehaviour.print("Next object: " + next.First + "Distance: " + next.Second );
+        return next.First;
     }
+
+    private Pair<Area,int> FirstArea(Area current, Area target, List<Area> visited) {
+        Pair<Area,int> result = null;
+        int closest = int.MaxValue;
+        foreach(Area area in current.connected) {
+            if(area == target){
+                return new Pair<Area,int>(current,1);
+            }
+            if (!visited.Contains(area) ) {
+                visited.Add(area);
+                Pair<Area,int> areaDistance = FirstArea(area, target, visited);
+                if(areaDistance != null && areaDistance.Second < closest){
+                    areaDistance.Second += 1;
+                    result = areaDistance;
+                }
+            }
+        }
+        return result;
+    }
+
     private Stack FindStackContaining(Container container){
         Stack result = null;
         foreach(Stack stack in stacks){

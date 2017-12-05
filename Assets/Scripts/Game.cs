@@ -3,7 +3,7 @@
 public class Game : MonoBehaviour
 {
     GameState currentState;
-    ContainerManager manager;
+    public ContainerManager manager = new ContainerManager();
 
     void OnContainerProcessed(Container container)
     {
