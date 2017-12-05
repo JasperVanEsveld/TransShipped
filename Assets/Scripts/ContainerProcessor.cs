@@ -5,7 +5,7 @@ public abstract class ContainerProcessor : Area
 {
     ProcessorState currentState;
     float baseTime;
-    MonoContainer container;
+    protected MonoContainer container;
     Area targetArea;
     System.Timers.Timer baseTimer;
 
@@ -46,10 +46,16 @@ public abstract class ContainerProcessor : Area
 
 public class Crane : ContainerProcessor
 {
-    // do stuff
+    protected override void RemoveContainer(MonoContainer monoContainer)
+    {
+        container =  null;
+    }
 }
 
 public class Vehicle : ContainerProcessor
 {
-    // do stuff
+    protected override void RemoveContainer(MonoContainer monoContainer)
+    {
+        container = null;
+    }
 }
