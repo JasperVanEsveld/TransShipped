@@ -5,12 +5,12 @@ public class Stack : Area
     /// <summary>
     /// The list of containers stacked in this stack
     /// </summary>
-    private readonly List<MonoContainer> containers;
+    public List<MonoContainer> containers;
 
     /// <summary>
     /// The max volume of containers this stack could stack
     /// </summary>
-    private readonly int max;
+    public int max = 10;
 
     /// <summary>
     /// When instantiating a stack, its max volume should be decided
@@ -20,6 +20,26 @@ public class Stack : Area
     {
         this.max = max;
         containers = new List<MonoContainer>();
+    }
+    public void Start(){
+        game.manager.stacks.Add(this);
+    }
+
+    public int Contains(Container container){
+        for(int i = 0; i < containers.Count; i++){
+            if(containers[i].container.Equals(container)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void Update(){
+        foreach(MonoContainer cont in containers){
+            if(MoveToNext(cont)){
+                break;
+            }
+        }
     }
 
     /// <summary>
@@ -33,6 +53,14 @@ public class Stack : Area
     {
         if (containers.Count >= max) return false;
         containers.Add(monoContainer);
+        if(monoContainer.movement.TargetArea == this){
+            monoContainer.movement = null;
+        }
         return true;
+    }
+    
+    protected override void RemoveContainer(MonoContainer monoContainer)
+    {
+        containers.Remove(monoContainer);
     }
 }

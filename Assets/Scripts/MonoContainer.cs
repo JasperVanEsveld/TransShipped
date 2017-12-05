@@ -2,8 +2,10 @@
 
 public class MonoContainer : MonoBehaviour
 {
-    Container container;
-    Movement movement;
+    public Area first;
+    public Area target;
+    public Container container;
+    public Movement movement;
 
     public MonoContainer(Container container, Movement movement)
     {
@@ -13,6 +15,7 @@ public class MonoContainer : MonoBehaviour
 
     private void Start()
     {
+        //movement = new Movement(this,first,target);
         //todo This function initialize the MonoContainer with different colours according to their transType
     }
 }
