@@ -3,7 +3,7 @@
     /// <summary>
     /// This boolean value indicates whether a container needs to be plugged in
     /// </summary>
-    private readonly bool _isFridge;
+    private readonly bool isFridge;
 
     /// <summary>
     /// This int value indicates the transportation type of the container:<br/>
@@ -12,21 +12,21 @@
     /// 3. one needs to be dispatched by a truck<br/>
     /// Different types of containers will be colored differently later<br/>
     /// </summary>
-    private readonly int _transTyep;
+    private readonly int transTyep;
 
     public Container(bool isFridge, int transTyep)
     {
-        _isFridge = isFridge;
-        _transTyep = transTyep;
+        this.isFridge = isFridge;
+        this.transTyep = transTyep;
     }
 
     public bool IsFridge
     {
-        get { return _isFridge; }
+        get { return isFridge; }
     }
 
     public int TransTyep
     {
-        get { return _transTyep; }
+        get { return transTyep; }
     }
 }

@@ -2,8 +2,8 @@
 
 public class Game : MonoBehaviour
 {
-    GameState _currentState;
-    ContainerManager _manager;
+    GameState currentState;
+    ContainerManager manager;
 
     void OnContainerProcessed(Container container)
     {

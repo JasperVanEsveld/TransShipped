@@ -2,15 +2,15 @@
 
 public class ContainerManager
 {
-    List<DeliveryArea<DeliveryVehicle>> _deliver;
-    List<Stack> _stacks;
+    List<DeliveryArea<DeliveryVehicle>> deliver;
+    List<Stack> stacks;
 
     void OnMovementComplete(Movement movement) {
     }
 
     void Store(MonoContainer container, Area start) {
         Stack target = LeastFilledStack();
-        container._movement = new Movement(container,start,target);
+        container.movement = new Movement(container,start,target);
     }
 
     void Request(Container container, Area target) {
@@ -24,7 +24,7 @@ public class ContainerManager
     }
     private Stack FindStackContaining(Container container){
         Stack result = null;
-        foreach(Stack stack in _stacks){
+        foreach(Stack stack in stacks){
             if(stack.Contains(container) >= 0){
                 result = stack;
             }
@@ -35,10 +35,10 @@ public class ContainerManager
     private Stack LeastFilledStack(){
         Stack result = null;
         int leastAmount = int.MaxValue;
-        foreach(Stack stack in _stacks){
-            if(leastAmount > stack._containers.Count){
+        foreach(Stack stack in stacks){
+            if(leastAmount > stack.containers.Count){
                 result = stack;
-                leastAmount = stack._containers.Count;
+                leastAmount = stack.containers.Count;
             }
         }
         return result;

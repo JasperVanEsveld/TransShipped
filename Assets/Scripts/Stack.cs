@@ -5,12 +5,12 @@ public class Stack : Area
     /// <summary>
     /// The list of containers stacked in this stack
     /// </summary>
-    public List<MonoContainer> _containers;
+    public List<MonoContainer> containers;
 
     /// <summary>
     /// The max volume of containers this stack could stack
     /// </summary>
-    private readonly int _max;
+    private readonly int max;
 
     /// <summary>
     /// When instantiating a stack, its max volume should be decided
@@ -18,13 +18,13 @@ public class Stack : Area
     /// <param name="max">The max number of containers this stack could stack</param>
     public Stack(int max)
     {
-        _max = max;
-        _containers = new List<MonoContainer>();
+        this.max = max;
+        containers = new List<MonoContainer>();
     }
 
     public int Contains(Container container){
-        for(int i = 0; i < _containers.Count; i++){
-            if(_containers[i]._container.Equals(container)){
+        for(int i = 0; i < containers.Count; i++){
+            if(containers[i].container.Equals(container)){
                 return i;
             }
         }
@@ -40,8 +40,8 @@ public class Stack : Area
     /// <returns>Whether the operation is successful</returns>
     protected override bool AddContainer(MonoContainer monoContainer)
     {
-        if (_containers.Count >= _max) return false;
-        _containers.Add(monoContainer);
+        if (containers.Count >= max) return false;
+        containers.Add(monoContainer);
         return true;
     }
 }

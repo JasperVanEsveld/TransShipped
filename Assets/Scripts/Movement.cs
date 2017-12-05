@@ -3,17 +3,17 @@
     /// <summary>
     /// The container described in this movement
     /// </summary>
-    private readonly MonoContainer _container;
+    private readonly MonoContainer container;
 
     /// <summary>
     /// Starting point of this movement
     /// </summary>
-    private readonly Area _originArea;
+    private readonly Area originArea;
 
     /// <summary>
     /// Desitnation of this movement
     /// </summary>
-    private readonly Area _targetArea;
+    private readonly Area targetArea;
 
     /// <summary>
     /// Constructor of a movement with 3 parameters
@@ -23,23 +23,23 @@
     /// <param name="targetArea">Destination of this movement</param>
     public Movement(MonoContainer container, Area originArea, Area targetArea)
     {
-        _container = container;
-        _originArea = originArea;
-        _targetArea = targetArea;
+        this.container = container;
+        this.originArea = originArea;
+        this.targetArea = targetArea;
     }
 
     public MonoContainer Container
     {
-        get { return _container; }
+        get { return container; }
     }
 
     public Area OriginArea
     {
-        get { return _originArea; }
+        get { return originArea; }
     }
 
     public Area TargetArea
     {
-        get { return _targetArea; }
+        get { return targetArea; }
     }
 }
