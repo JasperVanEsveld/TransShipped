@@ -1,14 +1,17 @@
-﻿public abstract class ContainerProcessor : Area
+﻿using System;
+using System.Timers;
+
+public abstract class ContainerProcessor : Area
 {
-    import System.Timers.Timer;
     ProcessorState currentState;
     float baseTime;
     MonoContainer container;
-    public System.Timers.Timer baseTimer;
+    Area targetArea;
+    System.Timers.Timer baseTimer;
 
     void Process(MonoContainer container, Area target) {
         baseTimer = new System.Timers.Timer();
-        baseTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        baseTimer.Elapsed += new ElapsedEventHandler(MoveAfterTime);
         baseTimer.Interval = baseTime;
         baseTimer.Enabled = true;
     }
@@ -17,13 +20,14 @@
     {
         if(source.GetType().Equals(this.GetType())){
             ContainerProcessor cp = (ContainerProcessor)source;
-            target.AddContainer(container);
+            targetArea.AddContainer(container);
             container = null;
-            source.baseTimer.Dispose();
+            targetArea = null;
+            if(cp.baseTimer != null) cp.baseTimer.Dispose();
         }
     }
 
-    protected override bool AddContainer(MonoContainer toAddContainer)
+    public override bool AddContainer(MonoContainer toAddContainer)
     {
         if(container == null)
         {
