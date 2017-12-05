@@ -34,7 +34,9 @@ public class Stack : Area
 
     public void Update(){
         foreach(MonoContainer cont in containers){
-            MoveToNext(cont);
+            if(MoveToNext(cont)){
+                break;
+            }
         }
     }
 
@@ -48,9 +50,10 @@ public class Stack : Area
     public override bool AddContainer(MonoContainer monoContainer)
     {
         if (containers.Count >= max) return false;
-        print("ADdded");
         containers.Add(monoContainer);
-        monoContainer.movement = null;
+        if(monoContainer.movement.TargetArea == this){
+            monoContainer.movement = null;
+        }
         return true;
     }
     

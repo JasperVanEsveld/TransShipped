@@ -544,11 +544,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   game: {fileID: 870149824}
   connected:
   - {fileID: 1814944690}
+  - {fileID: 0}
   containers: []
+  max: 20
 --- !u!4 &1140309458
 Transform:
   m_ObjectHideFlags: 0
@@ -673,11 +674,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   game: {fileID: 870149824}
   connected:
-  - {fileID: 2011426664}
+  - {fileID: 0}
+  - {fileID: 1659523378}
   containers: []
+  max: 20
 --- !u!4 &1460521536
 Transform:
   m_ObjectHideFlags: 0
@@ -802,12 +804,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   game: {fileID: 870149824}
   connected:
   - {fileID: 1460521535}
+  - {fileID: 2011426664}
   containers:
   - {fileID: 752706534}
+  max: 20
 --- !u!4 &1659523379
 Transform:
   m_ObjectHideFlags: 0
@@ -848,11 +851,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   game: {fileID: 870149824}
   connected:
-  - {fileID: 0}
+  - {fileID: 1140309457}
   containers: []
+  max: 20
 --- !u!4 &1814944691
 Transform:
   m_ObjectHideFlags: 0
@@ -876,7 +879,7 @@ GameObject:
   - component: {fileID: 2011426665}
   - component: {fileID: 2011426664}
   m_Layer: 0
-  m_Name: Stack (2)
+  m_Name: Crane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,14 +893,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2011426663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
+  m_Script: {fileID: 11500000, guid: cc95da63d4d92c640aca957c67a87917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   game: {fileID: 870149824}
-  connected:
-  - {fileID: 1140309457}
-  containers: []
+  connected: []
+  baseTime: 10
 --- !u!4 &2011426665
 Transform:
   m_ObjectHideFlags: 0

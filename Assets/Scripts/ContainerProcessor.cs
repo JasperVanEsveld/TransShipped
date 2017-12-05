@@ -4,34 +4,17 @@ using System.Timers;
 public abstract class ContainerProcessor : Area 
 {
     ProcessorState currentState;
-    float baseTime;
+    public float baseTime;
+    private DateTime startTime;
     protected MonoContainer container;
-    Area targetArea;
     System.Timers.Timer baseTimer;
-
-    void Process(MonoContainer container, Area target) {
-        baseTimer = new System.Timers.Timer();
-        baseTimer.Elapsed += new ElapsedEventHandler(MoveAfterTime);
-        baseTimer.Interval = baseTime;
-        baseTimer.Enabled = true;
-    }
-
-    void MoveAfterTime(object source, ElapsedEventArgs e)
-    {
-        if(source is ContainerProcessor){
-            ContainerProcessor cp = (ContainerProcessor)source;
-            targetArea.AddContainer(container);
-            container = null;
-            targetArea = null;
-            if(cp.baseTimer != null) cp.baseTimer.Dispose();
-        }
-    }
 
     public override bool AddContainer(MonoContainer toAddContainer)
     {
         if(container == null)
         {
             container = toAddContainer;
+            startTime = DateTime.Now;
             return true;
         }
         return false;
@@ -39,23 +22,10 @@ public abstract class ContainerProcessor : Area
 
     private void Update()
     {
+        if(container != null && DateTime.Now.Subtract(startTime).Seconds >= baseTime){
+            this.MoveToNext(container);
+        }
     }
 
 
-}
-
-public class Crane : ContainerProcessor
-{
-    protected override void RemoveContainer(MonoContainer monoContainer)
-    {
-        container =  null;
-    }
-}
-
-public class Vehicle : ContainerProcessor
-{
-    protected override void RemoveContainer(MonoContainer monoContainer)
-    {
-        container = null;
-    }
 }

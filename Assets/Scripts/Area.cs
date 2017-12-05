@@ -3,7 +3,6 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    public float time = 0f;
     public Game game;
     public ContainerManager manager;
     public List<Area> connected;
