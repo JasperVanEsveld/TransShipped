@@ -2,13 +2,13 @@
 
 public class MonoContainer : MonoBehaviour
 {
-    Container _container;
-    Movement _movement;
+    Container container;
+    Movement movement;
 
     public MonoContainer(Container container, Movement movement)
     {
-        _container = container;
-        _movement = movement;
+        this.container = container;
+        this.movement = movement;
     }
 
     private void Start()

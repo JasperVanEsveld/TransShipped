@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    ContainerManager _manager;
-    List<ContainerProcessor> _connected;
+    private ContainerManager manager;
+    private List<ContainerProcessor> connected;
     protected abstract bool AddContainer(MonoContainer monoContainer);
 }
