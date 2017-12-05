@@ -2,8 +2,8 @@
 
 public class MonoContainer : MonoBehaviour
 {
-    Container _container;
-    Movement _movement;
+    public Container _container;
+    public Movement _movement;
 
     public MonoContainer(Container container, Movement movement)
     {

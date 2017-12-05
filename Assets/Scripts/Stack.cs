@@ -5,7 +5,7 @@ public class Stack : Area
     /// <summary>
     /// The list of containers stacked in this stack
     /// </summary>
-    private readonly List<MonoContainer> _containers;
+    public List<MonoContainer> _containers;
 
     /// <summary>
     /// The max volume of containers this stack could stack
@@ -20,6 +20,15 @@ public class Stack : Area
     {
         _max = max;
         _containers = new List<MonoContainer>();
+    }
+
+    public int Contains(Container container){
+        for(int i = 0; i < _containers.Count; i++){
+            if(_containers[i]._container.Equals(container)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     /// <summary>
