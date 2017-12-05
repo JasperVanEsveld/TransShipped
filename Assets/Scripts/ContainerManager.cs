@@ -2,8 +2,8 @@
 
 public class ContainerManager
 {
-    List<DeliveryArea<DeliveryVehicle>> _deliver;
-    List<Stack> _stacks;
+    List<DeliveryArea<DeliveryVehicle>> deliver;
+    List<Stack> stacks;
 
     void OnMovementComplete(Movement movement)
     {

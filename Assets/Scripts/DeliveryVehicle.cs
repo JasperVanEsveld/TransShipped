@@ -4,14 +4,25 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MonoBehaviour
 {
-    List<MonoContainer> _carrying;
-    List<Container> _incoming;
-    List<Container> _outgoing;
+    List<MonoContainer> carrying;
+    List<Container> incoming;
+    List<Container> outgoing;
 
     private void Start()
     {
     }
 
+    public List<Container> Incoming
+    {
+        get { return incoming; }
+        set { incoming = value; }
+    }
+
+    public List<Container> Outgoing
+    {
+        get { return outgoing; }
+        set { outgoing = value; }
+    }
 
     protected abstract void EnterTerminal();
     protected abstract void LeaveTerminal();
