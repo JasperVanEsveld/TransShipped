@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-public abstract class ContainerProcessor : Area
+public abstract class ContainerProcessor : Area 
 {
     ProcessorState currentState;
     float baseTime;
