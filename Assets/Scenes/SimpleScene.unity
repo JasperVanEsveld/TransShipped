@@ -547,7 +547,7 @@ MonoBehaviour:
   game: {fileID: 870149824}
   connected:
   - {fileID: 1814944690}
-  - {fileID: 0}
+  - {fileID: 2011426664}
   containers: []
   max: 20
 --- !u!4 &1140309458
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 870149824}
   connected:
-  - {fileID: 0}
+  - {fileID: 2011426664}
   - {fileID: 1659523378}
   containers: []
   max: 20
@@ -897,7 +897,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 870149824}
-  connected: []
+  connected:
+  - {fileID: 1659523378}
+  - {fileID: 1140309457}
+  - {fileID: 1460521535}
   baseTime: 10
 --- !u!4 &2011426665
 Transform:
