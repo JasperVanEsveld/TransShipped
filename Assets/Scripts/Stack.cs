@@ -29,7 +29,7 @@ public class Stack : Area
     /// </summary>
     /// <param name="monoContainer">The container to be stacked</param>
     /// <returns>Whether the operation is successful</returns>
-    protected override bool AddContainer(MonoContainer monoContainer)
+    public override bool AddContainer(MonoContainer monoContainer)
     {
         if (containers.Count >= max) return false;
         containers.Add(monoContainer);

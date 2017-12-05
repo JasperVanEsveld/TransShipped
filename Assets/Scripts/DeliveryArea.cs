@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class DeliveryArea<DeliveryVehicle> : Area
+public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
     /// <summary>
-    /// Vehicles currently waiting to fetch or deliver containers
+    /// Vehicles waiting outside this area
     /// </summary>
     private Queue<DeliveryVehicle> waiting;
-    private DeliveryVehicle processing;
 
     /// <summary>
     /// A new vehicle just entered this area, put it in the queue
@@ -19,26 +18,35 @@ public class DeliveryArea<DeliveryVehicle> : Area
     }
 
     /// <summary>
-    /// If a vehicle is coming in empty, then give it containers.
+    /// Serving a vehicle, 
     /// </summary>
-    void OnVehicleEmpty()
+    void OnServingVehicles()
     {
-        p
-    }
-
-    /// <summary>
-    /// When a vehicle left a delivery area, the first one at<br/>
-    /// the beginning of the queue is going to be processed next
-    /// </summary>
-    void OnVehicleLeft()
-    {
-        if (waiting.Count > 0)
+        while (waiting.Count > 0)
         {
-            processing = waiting.Dequeue();
+            var current = waiting.Dequeue();
+            var fetch = current.Outgoing;
+            var deliver = current.Incoming;
+            
+            while (deliver.Count > 0)
+            {
+                if (!AddContainer(deliver[0]))
+                    break;
+                deliver.RemoveAt(0);
+            }
+            current.Incoming = deliver;
+            while (fetch.Count > 0)
+            {
+                if (!manager.Request(this, fetch[0]))
+                    break;
+                fetch.RemoveAt(0);
+            }
+            current.Outgoing = fetch;
         }
     }
 
-    protected override bool AddContainer(MonoContainer monoContainer)
+
+    public override bool AddContainer(Container container)
     {
         throw new NotImplementedException();
     }

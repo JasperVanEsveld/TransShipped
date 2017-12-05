@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DeliveryVehicle : MonoBehaviour
+public class DeliveryVehicle : MonoBehaviour
 {
     List<MonoContainer> carrying;
     List<Container> incoming;

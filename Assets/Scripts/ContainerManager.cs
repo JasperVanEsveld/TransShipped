@@ -13,7 +13,7 @@ public class ContainerManager
     {
     }
 
-    void Request(Area area, Container container)
+    public bool Request(Area area, Container container)
     {
     }
 
