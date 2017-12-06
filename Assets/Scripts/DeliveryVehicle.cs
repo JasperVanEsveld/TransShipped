@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MonoBehaviour
 {
-    List<MonoContainer> carrying;
-    List<Container> incoming;
-    List<Container> outgoing;
+    private List<MonoContainer> carrying;
+    private List<Container> incoming;
+    private List<Container> outgoing;
+
 
     private void Start()
     {
@@ -26,8 +27,17 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected abstract void EnterTerminal();
     protected abstract void LeaveTerminal();
+
+    public void setScale(Vector3 in_scale)
+    {
+        transform.localScale = in_scale;
+    }
+
+
 }
 
+
+//Legacy
 public class Train : DeliveryVehicle
 {
     protected override void EnterTerminal()
