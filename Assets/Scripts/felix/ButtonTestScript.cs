@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class ButtonTestScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Vector3 scale_ = new Vector3(1.0f, 1.0f, 1.0f);
+    private Vector3 targetPos_ = new Vector3(12.0f, -21.0f, 12.0f);
+    private float speed_ = 1.0f;
 
-    public void testFun0(float x)
-    {
-        GameObject obj = GameObject.Find("Cube");
-        Debug.Log(obj);
-        VehicleShip test = obj.GetComponent<VehicleShip>();
-        Debug.Log(test);
-        test.setScale(new Vector3(x,0,0));
-    }
+    public void setScaleX(float i) { scale_.x = i; }
+    public void setScaleY(float i) { scale_.y = i; }
+    public void setScaleZ(float i) { scale_.z = i; }
+    public void setTargetPosX(float i) { targetPos_.x = i; }
+    public void setTargetPosY(float i) { targetPos_.y = i; }
+    public void setTargetPosZ(float i) { targetPos_.z = i; }
 
     public void testFun1()
     {
@@ -30,8 +22,18 @@ public class ButtonTestScript : MonoBehaviour {
         cube.transform.position = new Vector3(0, 0, 0);
     }
 
-    public void testFun2(float x)
+    public void testFun2()
     {
-        
+        GameObject.Find("Cube").GetComponent<VehicleShip>().setScale(scale_);
+    }
+
+    public void testFun3(float i_dis)
+    {
+        GameObject.Find("Cube").GetComponent<VehicleShip>().MoveForward(i_dis);
+    }
+
+    public void testFun4(float i_angle)
+    {
+        GameObject.Find("Cube").GetComponent<VehicleShip>().Rotate(i_angle);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VehicleShip : DeliveryVehicle
 {
+    //private Vector3 scale_ = new Vector3(1.0f, 1.0f, 1.0f);
+
     protected override void EnterTerminal()
     {
         throw new System.NotImplementedException();
@@ -20,8 +22,6 @@ public class VehicleShip : DeliveryVehicle
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
 }

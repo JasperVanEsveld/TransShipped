@@ -8,6 +8,28 @@ public abstract class DeliveryVehicle : MonoBehaviour
     private List<Container> incoming;
     private List<Container> outgoing;
 
+    protected Vector3 targetPos_ = new Vector3(0.0f, 0.0f, 0.0f);
+    protected float speed_ = 1.0f;
+
+    protected Vector3 direction_ = new Vector3(1.0f, 0.0f, 0.0f);
+    protected float forwardSpeed_ = 0.5f;
+    protected float sidewaySpeed_ = 0.2f;
+
+    public void Rotate(float i_angle)
+    {
+        transform.Rotate(new Vector3(0.0f, i_angle, 0.0f), Space.World);
+    }
+
+    public void MoveForward(float i_dis)
+    {
+        targetPos_ += i_dis * direction_;
+    }
+
+    void Update()
+    {
+        float step = speed_ * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPos_, step);
+    }
 
     private void Start()
     {
@@ -33,7 +55,15 @@ public abstract class DeliveryVehicle : MonoBehaviour
         transform.localScale = in_scale;
     }
 
+    public void modifyPos(Vector3 in_pos)
+    {
+        transform.position += in_pos;
+    }
 
+    public void moveToPos(Vector3 in_pos)
+    {
+        targetPos_ = in_pos;
+    }
 }
 
 
