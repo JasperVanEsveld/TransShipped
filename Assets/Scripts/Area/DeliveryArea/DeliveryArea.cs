@@ -16,16 +16,18 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     /// <param name="vehicle"></param>
     public void OnVehicleEnter(T vehicle)
     {
-        foreach(MonoContainer container in vehicle.Carrying){
-            game.manager.Store(this, container);
-        }
-        foreach(Container container in vehicle.Outgoing){
-            game.manager.Request(this, container);
-        }
-        if(waiting.Count == 0){
-            current = vehicle;
-        } else{
-            waiting.Enqueue(vehicle);
+        if(game.currentState is OperationState){
+            foreach(MonoContainer container in vehicle.Carrying){
+                (game.currentState as OperationState).manager.Store(this, container);
+            }
+            foreach(Container container in vehicle.Outgoing){
+                (game.currentState as OperationState).manager.Request(this, container);
+            }
+            if(waiting.Count == 0){
+                current = vehicle;
+            } else{
+                waiting.Enqueue(vehicle);
+            }
         }
     }
 
@@ -41,10 +43,9 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     void Update()
     {
         if(current != null){
-            var deliver = current.Carrying;
-            while (deliver.Count > 0)
+            foreach (MonoContainer container in current.Carrying)
             {
-                if(this.MoveToNext(deliver[0])){
+                if(this.MoveToNext(container)){
                     break;
                 }
             }

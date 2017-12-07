@@ -3,13 +3,21 @@ using UnityEngine;
 
 public class ContainerManager
 {
+    private OperationState origin;
     public List<Stack> stacks = new List<Stack>();
 
-    void OnMovementComplete(Movement movement) {
+    public ContainerManager(List<Stack> stacks, OperationState origin){
+        this.stacks = stacks;
+        this.origin = origin;
     }
 
-    public bool Store( Area start, MonoContainer container) {
+    void OnMovementComplete(Movement movement) {
+        origin.OnMovementComplete(movement);
+    }
+
+    public bool Store(Area start, MonoContainer container) {
         Stack target = LeastFilledStack();
+        if(target == null) return false;
         container.movement = new Movement(container,start,target);
         return true;
     }
@@ -26,16 +34,13 @@ public class ContainerManager
     }
 
     public Area GetNextArea(Area area, Movement movement) {
-        Dictionary<Area,Area> nextArea = new Dictionary<Area,Area>();
-        Dictionary<Area,int> hops = new Dictionary<Area,int>();
         if ( movement.TargetArea == area){
-            MonoBehaviour.print("HEllo");
             return null;
         }
-        List<Area> areas = new List<Area>();
-        areas.Add(area);
-        Pair<Area,int> next = FirstArea(movement.TargetArea, area, areas);
-        MonoBehaviour.print("Next object: " + next.First + "Distance: " + next.Second );
+        List<Area> visited = new List<Area>();
+        visited.Add(area);
+        Pair<Area,int> next = FirstArea(movement.TargetArea, area, visited);
+        MonoBehaviour.print("Next area is: " + next.First + "Distance to target is: " + next.Second );
         return next.First;
     }
 
@@ -69,7 +74,6 @@ public class ContainerManager
     }
 
     private Stack LeastFilledStack(){
-        Game.print("Known stacks: " + stacks.Count);
         Stack result = null;
         int leastAmount = int.MaxValue;
         foreach(Stack stack in stacks){

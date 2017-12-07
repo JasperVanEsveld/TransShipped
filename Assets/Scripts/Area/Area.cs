@@ -4,19 +4,18 @@ using UnityEngine;
 public abstract class Area : MonoBehaviour
 {
     public Game game;
-    public ContainerManager manager;
     public List<Area> connected;
 
     public void Start(){
-        manager = game.manager;
+        game.RegisterArea(this);
     }
 
     public abstract bool AddContainer(MonoContainer monoContainer);
     protected abstract void RemoveContainer(MonoContainer monoCont);
 
     protected bool MoveToNext(MonoContainer monoCont){
-        if (monoCont.movement != null) {
-            Area nextArea = manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement != null && game.currentState is OperationState) {
+            Area nextArea = (game.currentState as OperationState).manager.GetNextArea(this, monoCont.movement);
             if(nextArea.AddContainer(monoCont)){
                 RemoveContainer(monoCont);
                 return true;

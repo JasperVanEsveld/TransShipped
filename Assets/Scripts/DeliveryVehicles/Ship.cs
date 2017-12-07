@@ -4,7 +4,7 @@ public class Ship : DeliveryVehicle
     int i = 0;
 
     public void Update(){
-        if(i ==0){
+        if(i ==0 && this.area.game.currentState is OperationState){
             EnterTerminal();
             i++;
         }

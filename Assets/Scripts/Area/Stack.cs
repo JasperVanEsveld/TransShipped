@@ -21,9 +21,6 @@ public class Stack : Area
         this.max = max;
         containers = new List<MonoContainer>();
     }
-    public void Start(){
-        game.manager.stacks.Add(this);
-    }
 
     public int Contains(Container container){
         for(int i = 0; i < containers.Count; i++){
