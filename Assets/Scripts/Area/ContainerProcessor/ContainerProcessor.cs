@@ -6,7 +6,7 @@ public abstract class ContainerProcessor : Area
     private DateTime startTime;
     public MonoContainer container;
 
-    public override bool AddContainer(MonoContainer toAddContainer)
+    protected override bool AddContainer(MonoContainer toAddContainer)
     {
         if (container != null) return false;
         container = toAddContainer;

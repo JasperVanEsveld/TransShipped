@@ -2,8 +2,6 @@
 
 public class MonoContainer : MonoBehaviour
 {
-    public Area first;
-    public Area target;
     public Container container;
     public Movement movement;
 

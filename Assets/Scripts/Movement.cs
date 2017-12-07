@@ -28,16 +28,6 @@
         this.targetArea = targetArea;
     }
 
-    public MonoContainer Container
-    {
-        get { return container; }
-    }
-
-    public Area OriginArea
-    {
-        get { return originArea; }
-    }
-
     public Area TargetArea
     {
         get { return targetArea; }

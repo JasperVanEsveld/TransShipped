@@ -1,20 +1,22 @@
 public class Ship : DeliveryVehicle
 {
     public ShipArea area;
-    int i = 0;
+    private int i;
 
-    public void Update(){
-        if(i ==0 && this.area.game.currentState is OperationState){
-            EnterTerminal();
-            i++;
-        }
+    private void Start()
+    {
+        i = 0;
     }
-    protected override void EnterTerminal()
+
+    public void Update()
+    {
+        if (i != 0 || !(area.game.currentState is OperationState)) return;
+        EnterTerminal();
+        i++;
+    }
+
+    private void EnterTerminal()
     {
         area.OnVehicleEnter(this);
-    }
-
-    protected override void LeaveTerminal()
-    {
     }
 }

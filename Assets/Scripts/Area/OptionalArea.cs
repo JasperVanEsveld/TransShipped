@@ -13,8 +13,6 @@ public class OptionalArea : MonoBehaviour
 
     private bool locked;
 
-
-
     private void Update()
     {
         BuyArea();
@@ -25,8 +23,9 @@ public class OptionalArea : MonoBehaviour
         if (!(game.currentState is UpgradeState)) return;
         if (((UpgradeState) game.currentState).Buy(price))
         {
-            Area newArea = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Area>();
-            foreach(Area connectArea in connected){
+            var newArea = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Area>();
+            foreach (var connectArea in connected)
+            {
                 newArea.Connect(connectArea);
             }
             Destroy(gameObject);

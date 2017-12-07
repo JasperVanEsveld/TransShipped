@@ -1,4 +1,5 @@
-public class OperationState : GameState {
+public class OperationState : GameState
+{
     public ContainerManager manager;
 
     public OperationState(Game game) : base(game)
@@ -6,7 +7,8 @@ public class OperationState : GameState {
         manager = new ContainerManager(game.GetAreasOfType<Stack>(), this);
     }
 
-    public void OnMovementComplete(Movement movement){
-        this.game.movements += 1;
+    public void OnMovementComplete()
+    {
+        game.movements += 1;
     }
 }

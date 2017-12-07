@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
@@ -16,23 +15,29 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     /// <param name="vehicle"></param>
     public void OnVehicleEnter(T vehicle)
     {
-        if(game.currentState is OperationState){
-            foreach(MonoContainer container in vehicle.Carrying){
-                (game.currentState as OperationState).manager.Store(this, container);
-            }
-            foreach(Container container in vehicle.Outgoing){
-                (game.currentState as OperationState).manager.Request(this, container);
-            }
-            if(waiting.Count == 0){
-                current = vehicle;
-            } else{
-                waiting.Enqueue(vehicle);
-            }
+        if (!(game.currentState is OperationState)) return;
+        foreach (var container in vehicle.Carrying)
+        {
+            ((OperationState) game.currentState).manager.Store(this, container);
+        }
+        foreach (var container in vehicle.Outgoing)
+        {
+            ((OperationState) game.currentState).manager.Request(this, container);
+        }
+        if (waiting.Count == 0)
+        {
+            current = vehicle;
+        }
+        else
+        {
+            waiting.Enqueue(vehicle);
         }
     }
 
-    void OnVehicleLeaves(T vehicle){
-        if(waiting.Count != 0){
+    void OnVehicleLeaves()
+    {
+        if (waiting.Count != 0)
+        {
             current = waiting.Dequeue();
         }
     }
@@ -42,23 +47,25 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     /// </summary>
     void Update()
     {
-        if(current != null){
-            foreach (MonoContainer container in current.Carrying)
+        if (current == null) return;
+        foreach (var container in current.Carrying)
+        {
+            if (MoveToNext(container))
             {
-                if(this.MoveToNext(container)){
-                    break;
-                }
+                break;
             }
         }
     }
 
-    public override bool AddContainer(MonoContainer monoContainer)
+    protected override bool AddContainer(MonoContainer monoContainer)
     {
         current.Carrying.Add(monoContainer);
         monoContainer.movement = null;
         return true;
     }
-    protected override void RemoveContainer(MonoContainer monoContainer){
+
+    protected override void RemoveContainer(MonoContainer monoContainer)
+    {
         current.Carrying.Remove(monoContainer);
     }
 }

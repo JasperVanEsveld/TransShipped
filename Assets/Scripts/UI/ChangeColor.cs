@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class ChangeColor : MonoBehaviour, IPointerClickHandler
 {
-    void OnEnable ()
+    void OnEnable()
     {
     }
 
@@ -11,18 +11,18 @@ public class ChangeColor : MonoBehaviour, IPointerClickHandler
     {
         OnValueChanged(value, 0);
     }
-	
+
     public void SetGreen(float value)
     {
         OnValueChanged(value, 1);
     }
-	
+
     public void SetBlue(float value)
     {
         OnValueChanged(value, 2);
     }
-	
-    public void OnValueChanged(float value, int channel)
+
+    private void OnValueChanged(float value, int channel)
     {
         var c = Color.white;
 
@@ -30,7 +30,7 @@ public class ChangeColor : MonoBehaviour, IPointerClickHandler
             c = GetComponent<Renderer>().material.color;
         else if (GetComponent<Light>() != null)
             c = GetComponent<Light>().color;
-		
+
         c[channel] = value;
 
         if (GetComponent<Renderer>() != null)

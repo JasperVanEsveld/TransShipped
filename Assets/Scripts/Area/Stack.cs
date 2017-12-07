@@ -10,7 +10,7 @@ public class Stack : Area
     /// <summary>
     /// The max volume of containers this stack could stack
     /// </summary>
-    public int max = 10;
+    public int max;
 
     /// <summary>
     /// When instantiating a stack, its max volume should be decided
@@ -22,18 +22,24 @@ public class Stack : Area
         containers = new List<MonoContainer>();
     }
 
-    public int Contains(Container container){
-        for(int i = 0; i < containers.Count; i++){
-            if(containers[i].container.Equals(container)){
+    public int Contains(Container container)
+    {
+        for (var i = 0; i < containers.Count; i++)
+        {
+            if (containers[i].container.Equals(container))
+            {
                 return i;
             }
         }
         return -1;
     }
 
-    public void Update(){
-        foreach(MonoContainer cont in containers){
-            if(MoveToNext(cont)){
+    public void Update()
+    {
+        foreach (var cont in containers)
+        {
+            if (MoveToNext(cont))
+            {
                 break;
             }
         }
@@ -46,16 +52,17 @@ public class Stack : Area
     /// </summary>
     /// <param name="monoContainer">The container to be stacked</param>
     /// <returns>Whether the operation is successful</returns>
-    public override bool AddContainer(MonoContainer monoContainer)
+    protected override bool AddContainer(MonoContainer monoContainer)
     {
         if (containers.Count >= max) return false;
         containers.Add(monoContainer);
-        if(monoContainer.movement.TargetArea == this){
+        if (monoContainer.movement.TargetArea == this)
+        {
             monoContainer.movement = null;
         }
         return true;
     }
-    
+
     protected override void RemoveContainer(MonoContainer monoContainer)
     {
         containers.Remove(monoContainer);

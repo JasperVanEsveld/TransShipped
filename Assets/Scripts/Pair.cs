@@ -1,12 +1,11 @@
-public class Pair<T, U> {
-    public Pair() {
+public class Pair<T, U>
+{
+    public Pair(T first, U second)
+    {
+        First = first;
+        Second = second;
     }
 
-    public Pair(T first, U second) {
-        this.First = first;
-        this.Second = second;
-    }
-
-    public T First { get; set; }
+    public T First { get; private set; }
     public U Second { get; set; }
-};
+}
