@@ -4,28 +4,30 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ScrollDetailTexture : MonoBehaviour
 {
-    public bool uniqueMaterial = false;
+    public bool uniqueMaterial;
     public Vector2 scrollPerSecond = Vector2.zero;
 
-    Matrix4x4 m_Matrix;
-    Material mCopy;
-    Material mOriginal;
-    Image mSprite;
-    Material m_Mat;
+    private Matrix4x4 m_Matrix;
+    private Material mCopy;
+    private Material mOriginal;
+    private Image mSprite;
+    private Material m_Mat;
 
-    private void OnEnable ()
+    private void OnEnable()
     {
         mSprite = GetComponent<Image>();
         mOriginal = mSprite.material;
 
         if (!uniqueMaterial || mSprite.material == null) return;
-        mCopy = new Material(mOriginal);
-        mCopy.name = "Copy of " + mOriginal.name;
-        mCopy.hideFlags = HideFlags.DontSave;
+        mCopy = new Material(mOriginal)
+        {
+            name = "Copy of " + mOriginal.name,
+            hideFlags = HideFlags.DontSave
+        };
         mSprite.material = mCopy;
     }
 
-    private void OnDisable ()
+    private void OnDisable()
     {
         if (mCopy != null)
         {
@@ -39,7 +41,7 @@ public class ScrollDetailTexture : MonoBehaviour
         mOriginal = null;
     }
 
-    private void Update ()
+    private void Update()
     {
         Material mat = (mCopy != null) ? mCopy : mOriginal;
 
