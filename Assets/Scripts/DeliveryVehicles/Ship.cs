@@ -1,9 +1,7 @@
 using UnityEngine;
-using Random = System.Random;
 
 public class Ship : DeliveryVehicle
 {
-    public Transform monoContainerPrefab;
     public ShipArea area;
     private int j, k;
     private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
@@ -32,16 +30,9 @@ public class Ship : DeliveryVehicle
     {
         j = 0;
         k = 0;
-        var rnd = new Random();
+        
         // TODO: This probably will relate to size
-        var conCount = rnd.Next(10, 30);
-
-        for (var i = 0; i < conCount; ++i)
-        {
-            var temp = Instantiate(monoContainerPrefab, transform.position, transform.rotation)
-                .GetComponent<MonoContainer>();
-            carrying.Add(temp);
-        }
+        GenerateContainers(10, 30);
 
         transform.position = spawnPos;
         transform.localScale = spawnScale;

@@ -54,4 +54,17 @@ public abstract class DeliveryVehicle : MonoBehaviour
         movementQueue.Enqueue(interPos);
         movementQueue.Enqueue(spawnPos);
     }
+
+    protected void GenerateContainers(int from, int to)
+    {
+        var rnd = new System.Random();
+        var conCount = rnd.Next(10, 30);
+
+        for (var i = 0; i < conCount; ++i)
+        {
+            var temp = Instantiate(Resources.Load("Container") as GameObject, transform.position, transform.rotation)
+                .GetComponent<MonoContainer>();
+            carrying.Add(temp);
+        }
+    }
 }

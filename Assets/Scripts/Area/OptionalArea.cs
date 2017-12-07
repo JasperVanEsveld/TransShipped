@@ -3,15 +3,21 @@ using UnityEngine;
 
 public class OptionalArea : MonoBehaviour
 {
-    public Transform stackPrefab;
-
-    public Game game;
+    private Game game { get; set; }
 
     public List<Area> connected;
+
+    private GameObject stackPrefab;
 
     public double price = 10;
 
     private bool locked;
+
+    private void Start()
+    {
+        game = (Game) FindObjectOfType(typeof(Game));
+        stackPrefab = Resources.Load("Areas/Stack") as GameObject;
+    }
 
     private void Update()
     {
