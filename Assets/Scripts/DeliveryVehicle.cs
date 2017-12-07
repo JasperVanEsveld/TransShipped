@@ -8,31 +8,52 @@ public abstract class DeliveryVehicle : MonoBehaviour
     private List<Container> incoming;
     private List<Container> outgoing;
 
-    protected Vector3 targetPos_ = new Vector3(0.0f, 0.0f, 0.0f);
-    protected float speed_ = 1.0f;
+    protected Queue<Vector3> movementQueue_ = new Queue<Vector3>();
+
+    protected Vector3 destPos_ = new Vector3(17.0f, -1.0f, 17.0f);
+    protected Vector3 targetPos_;
+    protected Vector3 spawnPos_ = new Vector3(100.0f, -1.0f, 40.0f);
+    protected Vector3 spawnScale_ = new Vector3(20, 4, 2);
+    protected bool moveAxisOrder = false;
+
 
     protected Vector3 direction_ = new Vector3(1.0f, 0.0f, 0.0f);
-    protected float forwardSpeed_ = 0.5f;
-    protected float sidewaySpeed_ = 0.2f;
+    protected float speed_ = 10.0f;
+    protected float forwardSpeed_ = 1.5f;
+    protected float sidewaySpeed_ = 1.2f;
 
+
+    public void EnterParkingSpot()
+    {
+
+    }
+
+    public void LeaveParkingSpot()
+    {
+
+    }
+
+    /*
     public void Rotate(float i_angle)
     {
         transform.Rotate(new Vector3(0.0f, i_angle, 0.0f), Space.World);
+        direction_ = Quaternion.AngleAxis(i_angle, Vector3.up) * direction_;
     }
+    */
 
-    public void MoveForward(float i_dis)
-    {
-        targetPos_ += i_dis * direction_;
-    }
+
 
     void Update()
     {
+        /*
         float step = speed_ * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPos_, step);
+        */
     }
 
     private void Start()
     {
+
     }
 
     public List<Container> Incoming
@@ -47,35 +68,36 @@ public abstract class DeliveryVehicle : MonoBehaviour
         set { outgoing = value; }
     }
 
-    protected abstract void EnterTerminal();
-    protected abstract void LeaveTerminal();
-
+    public abstract void EnterTerminal();
+    public abstract void LeaveTerminal();
+    /*
     public void setScale(Vector3 in_scale)
     {
         transform.localScale = in_scale;
     }
 
-    public void modifyPos(Vector3 in_pos)
+    public void MoveForward(float i_dis)
     {
-        transform.position += in_pos;
+        targetPos_ += i_dis * direction_;
     }
 
-    public void moveToPos(Vector3 in_pos)
+    public void MoveSideway(float i_dis)
     {
-        targetPos_ = in_pos;
+        targetPos_ += i_dis * (Quaternion.AngleAxis(90, Vector3.up) * direction_);
     }
+    */
 }
 
 
 //Legacy
 public class Train : DeliveryVehicle
 {
-    protected override void EnterTerminal()
+    public override void EnterTerminal()
     {
         throw new NotImplementedException();
     }
 
-    protected override void LeaveTerminal()
+    public override void LeaveTerminal()
     {
         throw new NotImplementedException();
     }
@@ -83,12 +105,12 @@ public class Train : DeliveryVehicle
 
 public class Ship : DeliveryVehicle
 {
-    protected override void EnterTerminal()
+    public override void EnterTerminal()
     {
         throw new NotImplementedException();
     }
 
-    protected override void LeaveTerminal()
+    public override void LeaveTerminal()
     {
         throw new NotImplementedException();
     }
@@ -96,12 +118,12 @@ public class Ship : DeliveryVehicle
 
 public class Truck : DeliveryVehicle
 {
-    protected override void EnterTerminal()
+    public override void EnterTerminal()
     {
         throw new NotImplementedException();
     }
 
-    protected override void LeaveTerminal()
+    public override void LeaveTerminal()
     {
         throw new NotImplementedException();
     }
