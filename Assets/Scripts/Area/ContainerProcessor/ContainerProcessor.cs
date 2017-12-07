@@ -1,30 +1,24 @@
 ﻿using System;
-using System.Timers;
 
-public abstract class ContainerProcessor : Area 
+public abstract class ContainerProcessor : Area
 {
     public float baseTime;
     private DateTime startTime;
     protected MonoContainer container;
-    System.Timers.Timer baseTimer;
 
     public override bool AddContainer(MonoContainer toAddContainer)
     {
-        if(container == null)
-        {
-            container = toAddContainer;
-            startTime = DateTime.Now;
-            return true;
-        }
-        return false;
+        if (container != null) return false;
+        container = toAddContainer;
+        startTime = DateTime.Now;
+        return true;
     }
 
     private void Update()
     {
-        if(container != null && DateTime.Now.Subtract(startTime).Seconds >= baseTime){
-            this.MoveToNext(container);
+        if (container != null && DateTime.Now.Subtract(startTime).Seconds >= baseTime)
+        {
+            MoveToNext(container);
         }
     }
-
-
 }

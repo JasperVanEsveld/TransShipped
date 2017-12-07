@@ -1,4 +1,4 @@
-public class Crane : ContainerProcessor
+public class CraneArea : ContainerProcessor
 {
     protected override void RemoveContainer(MonoContainer monoContainer)
     {

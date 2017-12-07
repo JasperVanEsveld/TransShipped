@@ -41,7 +41,6 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     void Update()
     {
         if(current != null){
-            print("Servicing vehicle: " + current);
             var deliver = current.Carrying;
             while (deliver.Count > 0)
             {

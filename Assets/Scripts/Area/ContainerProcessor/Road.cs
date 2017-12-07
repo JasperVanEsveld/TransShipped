@@ -1,4 +1,4 @@
-public class Vehicle : ContainerProcessor
+public class Road : ContainerProcessor
 {
     protected override void RemoveContainer(MonoContainer monoContainer)
     {
