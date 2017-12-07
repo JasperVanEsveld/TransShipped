@@ -11,11 +11,13 @@ public abstract class DeliveryVehicle : MonoBehaviour
     protected Queue<Vector3> movementQueue_ = new Queue<Vector3>();
 
     protected Vector3 destPos_ = new Vector3(17.0f, -1.0f, 17.0f);
-    protected Vector3 targetPos_;
+    protected Vector3 targetPos_ = new Vector3();
     protected Vector3 spawnPos_ = new Vector3(100.0f, -1.0f, 40.0f);
     protected Vector3 spawnScale_ = new Vector3(20, 4, 2);
+    protected Vector3 interPos_ = new Vector3();
     protected bool moveAxisOrder = false;
 
+    protected float height_ = 0.0f;
 
     protected Vector3 direction_ = new Vector3(1.0f, 0.0f, 0.0f);
     protected float speed_ = 20.0f;
@@ -32,7 +34,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
     {
 
     }
-
+    //comment
     /*
     public void Rotate(float i_angle)
     {
@@ -62,8 +64,42 @@ public abstract class DeliveryVehicle : MonoBehaviour
         set { outgoing = value; }
     }
 
-    public abstract void EnterTerminal();
-    public abstract void LeaveTerminal();
+    protected Vector3 getNextPos()
+    {
+
+        float step = speed_ * Time.deltaTime;
+        Vector3 tempTarget = movementQueue_.Peek();
+        return Vector3.MoveTowards(transform.position, tempTarget, step);
+    }
+
+    public void EnterTerminal()
+    {
+        interPos_.x = destPos_.x;
+        interPos_.y = height_;
+        interPos_.z = spawnPos_.z;
+
+        movementQueue_.Enqueue(interPos_);
+        movementQueue_.Enqueue(destPos_);
+
+    }
+
+    protected bool isAtDest()
+    {
+        if (Vector3.Distance(destPos_, transform.position) < speed_ * Time.deltaTime)
+            return true;
+        else
+            return false;
+    }
+
+    public void LeaveTerminal()
+    {
+        interPos_.x = destPos_.x;
+        interPos_.y = height_;
+        interPos_.z = spawnPos_.z;
+
+        movementQueue_.Enqueue(interPos_);
+        movementQueue_.Enqueue(spawnPos_);
+    }
     /*
     public void setScale(Vector3 in_scale)
     {
@@ -86,39 +122,15 @@ public abstract class DeliveryVehicle : MonoBehaviour
 //Legacy
 public class Train : DeliveryVehicle
 {
-    public override void EnterTerminal()
-    {
-        throw new NotImplementedException();
-    }
 
-    public override void LeaveTerminal()
-    {
-        throw new NotImplementedException();
-    }
 }
 
 public class Ship : DeliveryVehicle
 {
-    public override void EnterTerminal()
-    {
-        throw new NotImplementedException();
-    }
 
-    public override void LeaveTerminal()
-    {
-        throw new NotImplementedException();
-    }
 }
 
 public class Truck : DeliveryVehicle
 {
-    public override void EnterTerminal()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void LeaveTerminal()
-    {
-        throw new NotImplementedException();
-    }
+ 
 }

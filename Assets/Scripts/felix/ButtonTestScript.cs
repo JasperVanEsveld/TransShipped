@@ -35,6 +35,11 @@ public class ButtonTestScript : MonoBehaviour {
     {
         GameObject.Find("ShipPrototype").GetComponent<VehicleShip>().LeaveTerminal();
     }
+
+    public void ShipSize(float in_f)
+    {
+        GameObject.Find("ShipPrototype").GetComponent<VehicleShip>().SetSize(in_f);
+    }
     /*
     public void testFun2()
     {

@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class VehicleShip : DeliveryVehicle
 {
+    
 
-
-    public override void EnterTerminal()
+    // I can't figure out why cant I pass a Vector3 into this function
+    public void SetSize(float i_size)
     {
-        moveAxisOrder = true;
-        targetPos_ = destPos_;
+        Vector3 temp = transform.localScale;
+        temp.x = i_size;
+        // So that the height does not change that much
+        temp.y = i_size / 5.0f;
+        temp.z = i_size / 10.0f;
+        transform.localScale = temp;
     }
 
-    public override void LeaveTerminal()
+    // I can't figure out why cant I pass a Vector3 into this function
+    // so this is a bit tricky to do....
+    public void SetTargetPos()
     {
-        moveAxisOrder = false;
-        targetPos_ = spawnPos_;
+
     }
 
     // Use this for initialization
     void Start ()
     {
+        height_ = -1.0f;
+        destPos_ = new Vector3(17.0f, height_, 17.0f);
+        spawnPos_ = new Vector3(100.0f, height_, 40.0f);
+        spawnScale_ = new Vector3(20, 4, 2);
         carrying = new List<MonoContainer>();
         System.Random rnd = new System.Random();
         // TODO: This probably will relate to size
@@ -36,44 +46,22 @@ public class VehicleShip : DeliveryVehicle
 
     private void Update()
     {
-        if (moveAxisOrder)
+        if (movementQueue_.Count != 0)
         {
-            if (transform.position.x - targetPos_.x > 0.1f)
+            if (Vector3.Distance(movementQueue_.Peek(), transform.position) < speed_ * Time.deltaTime)
             {
-                float step = forwardSpeed_ * Time.deltaTime;
-                transform.position += new Vector3(-step, 0.0f, 0.0f);
+                movementQueue_.Dequeue();
             }
-            else if (transform.position.z - targetPos_.z > 0.1f)
-            {
-                float step = sidewaySpeed_ * Time.deltaTime;
-                transform.position += new Vector3(0.0f, 0.0f, -step);
-            }
-        }
-        else
-        {
-            if (transform.position.z - targetPos_.z < -0.1f)
-            {
-                float step = sidewaySpeed_ * Time.deltaTime;
-                transform.position += new Vector3(0.0f, 0.0f, step);
-            }
-            else if (transform.position.x - targetPos_.x < -0.1f)
-            {
-                float step = forwardSpeed_ * Time.deltaTime;
-                transform.position += new Vector3(step, 0.0f, 0.0f);
-            }
+            if (movementQueue_.Count != 0)
+                transform.position = getNextPos();
         }
 
         // If at port
-        if (isAtPort())
+        
+        if (isAtDest())
         {
-            // TODO exchange cargo with terminal
+            Debug.Log("At Port");
         }
     }
-    private bool isAtPort()
-    {
-        if (Vector3.Distance(destPos_, transform.position) < 0.1f)
-            return true;
-        else
-            return false;
-    }
+
 }
