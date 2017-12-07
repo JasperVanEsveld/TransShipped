@@ -2,21 +2,14 @@
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
-    /// <summary>
-    /// Vehicles waiting outside this area
-    /// </summary>
     private Queue<T> waiting = new Queue<T>();
 
     private T current;
 
-    /// <summary>
-    /// A new vehicle just entered this area, put it in the queue
-    /// </summary>
-    /// <param name="vehicle"></param>
     public void OnVehicleEnter(T vehicle)
     {
         if (!(game.currentState is OperationState)) return;
-        foreach (var container in vehicle.Carrying)
+        foreach (var container in vehicle.carrying)
         {
             ((OperationState) game.currentState).manager.Store(this, container);
         }
@@ -24,6 +17,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         {
             ((OperationState) game.currentState).manager.Request(this, container);
         }
+
         if (waiting.Count == 0)
         {
             current = vehicle;
@@ -36,19 +30,17 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
 
     void OnVehicleLeaves()
     {
+        current.LeaveTerminal();
         if (waiting.Count != 0)
         {
             current = waiting.Dequeue();
         }
     }
 
-    /// <summary>
-    /// Serving a vehicle, 
-    /// </summary>
-    void Update()
+    private void Update()
     {
         if (current == null) return;
-        foreach (var container in current.Carrying)
+        foreach (var container in current.carrying)
         {
             if (MoveToNext(container))
             {
@@ -59,13 +51,13 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
 
     protected override bool AddContainer(MonoContainer monoContainer)
     {
-        current.Carrying.Add(monoContainer);
+        current.carrying.Add(monoContainer);
         monoContainer.movement = null;
         return true;
     }
 
     protected override void RemoveContainer(MonoContainer monoContainer)
     {
-        current.Carrying.Remove(monoContainer);
+        current.carrying.Remove(monoContainer);
     }
 }
