@@ -4,7 +4,7 @@ public abstract class ContainerProcessor : Area
 {
     public float baseTime;
     private DateTime startTime;
-    protected MonoContainer container;
+    public MonoContainer container;
 
     public override bool AddContainer(MonoContainer toAddContainer)
     {

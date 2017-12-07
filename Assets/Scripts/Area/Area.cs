@@ -7,7 +7,13 @@ public abstract class Area : MonoBehaviour
     public List<Area> connected;
 
     public void Start(){
+        game = (Game) FindObjectOfType(typeof(Game));
         game.RegisterArea(this);
+    }
+
+    public void Connect(Area connectArea){
+        this.connected.Add(connectArea);
+        connectArea.connected.Add(this);
     }
 
     public abstract bool AddContainer(MonoContainer monoContainer);

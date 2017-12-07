@@ -40,7 +40,6 @@ public class ContainerManager
         List<Area> visited = new List<Area>();
         visited.Add(area);
         Pair<Area,int> next = FirstArea(movement.TargetArea, area, visited);
-        MonoBehaviour.print("Next area is: " + next.First + "Distance to target is: " + next.Second );
         return next.First;
     }
 

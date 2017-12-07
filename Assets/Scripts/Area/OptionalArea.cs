@@ -9,10 +9,10 @@ public class OptionalArea : MonoBehaviour
 
     public List<Area> connected;
 
+    public double price = 10;
 
     private bool locked;
 
-    private double price { get; set; }
 
 
     private void Update()
@@ -25,9 +25,10 @@ public class OptionalArea : MonoBehaviour
         if (!(game.currentState is UpgradeState)) return;
         if (((UpgradeState) game.currentState).Buy(price))
         {
-            Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Area>().connected =
-                connected;
-
+            Area newArea = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Area>();
+            foreach(Area connectArea in connected){
+                newArea.Connect(connectArea);
+            }
             Destroy(gameObject);
         }
         else
