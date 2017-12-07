@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MonoBehaviour
 {
-    private List<MonoContainer> carrying;
-    private List<Container> incoming;
-    private List<Container> outgoing;
+    public List<MonoContainer> carrying;
+    //public List<Container> incoming;
+    public List<Container> outgoing;
 
     protected Queue<Vector3> movementQueue_ = new Queue<Vector3>();
 
@@ -54,12 +54,6 @@ public abstract class DeliveryVehicle : MonoBehaviour
     private void Start()
     {
 
-    }
-
-    public List<Container> Incoming
-    {
-        get { return incoming; }
-        set { incoming = value; }
     }
 
     public List<Container> Outgoing

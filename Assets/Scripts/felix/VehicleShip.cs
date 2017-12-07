@@ -21,6 +21,14 @@ public class VehicleShip : DeliveryVehicle
     // Use this for initialization
     void Start ()
     {
+        carrying = new List<MonoContainer>();
+        System.Random rnd = new System.Random();
+        // TODO: This probably will relate to size
+        int conCount = rnd.Next(10, 30);
+
+        for (int i = 0; i < conCount; ++i)
+            carrying.Add(new MonoContainer(new Container(true, 1), null));
+
         transform.position = spawnPos_;
         transform.localScale = spawnScale_;
         targetPos_ = transform.position;
@@ -55,6 +63,17 @@ public class VehicleShip : DeliveryVehicle
             }
         }
 
+        // If at port
+        if (isAtPort())
+        {
+            // TODO exchange cargo with terminal
+        }
     }
-
+    private bool isAtPort()
+    {
+        if (Vector3.Distance(destPos_, transform.position) < 0.1f)
+            return true;
+        else
+            return false;
+    }
 }
