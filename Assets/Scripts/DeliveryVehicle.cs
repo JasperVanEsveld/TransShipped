@@ -18,9 +18,9 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
 
     protected Vector3 direction_ = new Vector3(1.0f, 0.0f, 0.0f);
-    protected float speed_ = 10.0f;
-    protected float forwardSpeed_ = 1.5f;
-    protected float sidewaySpeed_ = 1.2f;
+    protected float speed_ = 20.0f;
+    protected float forwardSpeed_ = 20.0f;
+    protected float sidewaySpeed_ = 10.0f;
 
 
     public void EnterParkingSpot()
