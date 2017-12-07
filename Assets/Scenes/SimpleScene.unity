@@ -297,7 +297,7 @@ MonoBehaviour:
     type: 2}
   game: {fileID: 870149824}
   connected:
-  - {fileID: 2011426664}
+  - {fileID: 453950884}
   price: 10
 --- !u!23 &360886524
 MeshRenderer:
@@ -427,6 +427,51 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 621e5152d1fd7e54d879b34b30713fb7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &453950883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 453950885}
+  - component: {fileID: 453950884}
+  m_Layer: 0
+  m_Name: Road
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &453950884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453950883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d18010edc95a0418d08324a1ba4889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 0}
+  connected:
+  - {fileID: 2011426664}
+  baseTime: 1
+  container: {fileID: 0}
+--- !u!4 &453950885
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453950883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8938866, y: -15.203625, z: 1.0087738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &561191591
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,9 +744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd9b0b5dc64946958787157853ce9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 11400000, guid: 2c5ab9725ca80334cb9a2cddb4c53eba, type: 2}
+  stage: {fileID: 0}
   movements: 0
-  money: 1000
+  money: 0
   operating: 0
 --- !u!4 &870149825
 Transform:
@@ -1159,6 +1204,7 @@ MonoBehaviour:
   connected:
   - {fileID: 1814944690}
   baseTime: 5
+  container: {fileID: 0}
 --- !u!1 &2084394449
 GameObject:
   m_ObjectHideFlags: 0
