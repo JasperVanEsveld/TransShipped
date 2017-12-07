@@ -31,4 +31,6 @@ sysinfo.txt
 
 # Builds
 *.apk
-*.unitypackage
+*.unitypackage*.unitypackage*.unitypackage
+.vscode/launch.json
+UpgradeLog.htm
