@@ -25,32 +25,9 @@ public abstract class DeliveryVehicle : MonoBehaviour
     protected float sidewaySpeed_ = 10.0f;
 
 
-    public void EnterParkingSpot()
-    {
-
-    }
-
-    public void LeaveParkingSpot()
-    {
-
-    }
-    //comment
-    /*
-    public void Rotate(float i_angle)
-    {
-        transform.Rotate(new Vector3(0.0f, i_angle, 0.0f), Space.World);
-        direction_ = Quaternion.AngleAxis(i_angle, Vector3.up) * direction_;
-    }
-    */
-
-
-
     void Update()
     {
-        /*
-        float step = speed_ * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPos_, step);
-        */
+
     }
 
     private void Start()
@@ -100,22 +77,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
         movementQueue_.Enqueue(interPos_);
         movementQueue_.Enqueue(spawnPos_);
     }
-    /*
-    public void setScale(Vector3 in_scale)
-    {
-        transform.localScale = in_scale;
-    }
 
-    public void MoveForward(float i_dis)
-    {
-        targetPos_ += i_dis * direction_;
-    }
-
-    public void MoveSideway(float i_dis)
-    {
-        targetPos_ += i_dis * (Quaternion.AngleAxis(90, Vector3.up) * direction_);
-    }
-    */
 }
 
 
