@@ -7,11 +7,7 @@ public class Vehicle : MonoBehaviour
     public int capacity;
     public List<MonoContainer> containers = new List<MonoContainer>();
     public readonly Queue<Area> request = new Queue<Area>();
-
-    public Vehicle()
-    {
-        isOccupied = false;
-    }
+    public bool isOccupied;
 
     public bool AddContainer(MonoContainer monoContainer)
     {
@@ -23,11 +19,9 @@ public class Vehicle : MonoBehaviour
 
     public void GoTo(Area targetArea)
     {
-        isOccupied = true;
+        //isOccupied = true;
         //todo Animation for going to targetArea
     }
-
-    public bool isOccupied { get; private set; }
 
     public bool IsFull()
     {
@@ -48,7 +42,7 @@ public class Vehicle : MonoBehaviour
             if (nextStop.AddContainer(containers[0]))
                 containers.Remove(containers[0]);
         }
-        else if (request.Count == 0) isOccupied = true;
+        else if (request.Count == 0) isOccupied = false;
         else
         {
             nextStop = request.Dequeue();

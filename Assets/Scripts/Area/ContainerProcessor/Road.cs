@@ -3,8 +3,8 @@ using System.Linq;
 
 public class Road : ContainerProcessor
 {
-    Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
-    private readonly List<Vehicle> vehicles = new List<Vehicle>();
+    private readonly Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
+    public List<Vehicle> vehicles = new List<Vehicle>();
 
     private Vehicle FindAvailableVehicle()
     {
@@ -14,6 +14,7 @@ public class Road : ContainerProcessor
     private Vehicle FindShortedQueueVehicle()
     {
         int min = int.MaxValue, minIndex;
+        minIndex = 0;
         for (var i = 0; i < vehicles.Count; i++)
         {
             if (vehicles[i].request.Count <= min)
