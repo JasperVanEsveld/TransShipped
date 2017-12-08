@@ -296,7 +296,8 @@ MonoBehaviour:
   road: {fileID: 453950884}
   capacity: 1
   containers: []
-  isOccupied: 0
+  isMoving: 0
+  speed: 0
 --- !u!23 &330043552
 MeshRenderer:
   m_ObjectHideFlags: 0
