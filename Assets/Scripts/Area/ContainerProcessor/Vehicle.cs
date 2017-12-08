@@ -55,18 +55,14 @@ public class Vehicle : MonoBehaviour
             if (containers.Count != 0)
             {
                 GoTo(containers[0].movement.TargetArea);
-                if (nextStop.AddContainer(containers[0]))
-                {
-                    containers.Remove(containers[0]);
-                }
+                if (!nextStop.AddContainer(containers[0])) return;
+                containers.Remove(containers[0]);
             }
             else
             {
-                if (request.Count != 0)
-                {
-                    GoTo(request.Dequeue());
-                    nextStop.AreaAvailable(road);
-                }
+                if (request.Count == 0) return;
+                GoTo(request.Dequeue());
+                nextStop.AreaAvailable(road);
             }
         }
     }
