@@ -1,11 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : DeliveryVehicle
 {
     public ShipArea area;
     private int j, k;
-    private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
-    private Vector3 spawnScale = new Vector3(20, 4, 2);
     private bool moveAxisOrder;
 
 
@@ -32,23 +31,36 @@ public class Ship : DeliveryVehicle
         k = 0;
         
         // TODO: This probably will relate to size
-        GenerateContainers(10, 30);
+        //GenerateContainers(10, 30);
 
-        transform.position = spawnPos;
-        transform.localScale = spawnScale;
+        
 
         height = -1.0f;
         spawnPos = new Vector3(100.0f, height, 40.0f);
         spawnScale = new Vector3(20, 4, 2);
+
+        Debug.Log(spawnPos);
+        Debug.Log(transform.position);
         transform.position = spawnPos;
+        Debug.Log(spawnPos);
+        Debug.Log(transform.position);
         transform.localScale = spawnScale;
+
+
+        List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
+
+        //TODO:get the first free area
+        area = areaList[0];
+
+        destPos = area.transform.position;
+        destPos.y = height;
     }
 
     private void Update()
     {
-        if (!(area.game.currentState is OperationState)) return;
-        if (j == 0) EnterTerminal();
-        j++;
+        //if (!(area.game.currentState is OperationState)) return;
+        //if (j == 0) EnterTerminal();
+        //j++;
         if (movementQueue.Count != 0)
         {
             if (Vector3.Distance(movementQueue.Peek(), transform.position) < speed * Time.deltaTime)
@@ -56,8 +68,8 @@ public class Ship : DeliveryVehicle
             if (movementQueue.Count != 0)
                 transform.position = getNextPos();
         }
-        if (!isAtDest()) return;
-        if (k == 0) area.OnVehicleEnter(this);
-        k++;
+       // if (!isAtDest()) return;
+       // if (k == 0) area.OnVehicleEnter(this);
+       // k++;
     }
 }

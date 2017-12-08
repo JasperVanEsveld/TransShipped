@@ -9,9 +9,10 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected readonly Queue<Vector3> movementQueue = new Queue<Vector3>();
 
-    private Vector3 destPos = new Vector3(17.0f, -1.0f, 17.0f);
-    private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
-    private Vector3 interPos;
+    protected Vector3 destPos;
+    protected Vector3 spawnPos;
+    protected Vector3 spawnScale;
+    protected Vector3 interPos;
 
     protected float height = 0.0f;
 
@@ -30,7 +31,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
         return Vector3.MoveTowards(transform.position, tempTarget, step);
     }
 
-    protected void EnterTerminal()
+    public void EnterTerminal()
     {
         interPos.x = destPos.x;
         interPos.y = height;
