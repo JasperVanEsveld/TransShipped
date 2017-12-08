@@ -32,7 +32,7 @@ public class BuildingPanel : MonoBehaviour {
         buttonCount = game.optionalAreas.Count;
         foreach(OptionalArea area in game.optionalAreas){
             Transform obj = Instantiate(prefab);
-            obj.SetParent(this.transform.parent);
+            obj.SetParent(this.transform.parent, false);
             buttons.Add(obj);
             obj.GetComponent<RectTransform>().anchorMin = new Vector2(min,0.05f);
             obj.GetComponent<RectTransform>().anchorMax = new Vector2(max,0.95f);

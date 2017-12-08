@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222863420686345848}
   - component: {fileID: 114129601030264482}
   - component: {fileID: 114137423209054520}
+  - component: {fileID: 114776070416657464}
   m_Layer: 5
   m_Name: Ship_button
   m_TagString: Untagged
@@ -113,7 +114,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: toggleStack
+        m_MethodName: 
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -158,6 +159,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Buy Stack
+--- !u!114 &114776070416657464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511380983383198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80facc2ac0b8ed4db8dff89772a9702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222795161946970198
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -195,7 +207,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1511380983383198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.53998, y: 91.04001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224220942203935896}
@@ -204,6 +216,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.02, y: 0.05}
   m_AnchorMax: {x: 0.18, y: 0.95}
-  m_AnchoredPosition: {x: 155.53998, y: 91.04001}
-  m_SizeDelta: {x: 159.98401, y: 163.87201}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
