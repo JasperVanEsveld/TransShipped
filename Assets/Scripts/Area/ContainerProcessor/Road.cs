@@ -8,7 +8,7 @@ public class Road : ContainerProcessor
 
     private Vehicle FindAvailableVehicle()
     {
-        return vehicles.FirstOrDefault(vehicle => !vehicle.isOccupied && !vehicle.IsFull());
+        return vehicles.FirstOrDefault(vehicle => !vehicle.isMoving && !vehicle.IsFull());
     }
 
     private Vehicle FindShortedQueueVehicle()

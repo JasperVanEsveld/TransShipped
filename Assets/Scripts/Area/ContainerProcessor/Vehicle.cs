@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class Vehicle : MonoBehaviour
 {
+    private Game game;
     public Road road;
     public int capacity;
     public List<MonoContainer> containers = new List<MonoContainer>();
-    public bool isOccupied;
-
-    public Vehicle()
-    {
-        request = new Queue<Area>();
-    }
+    public bool isMoving;
+    public int speed;
+    private Area nextStop;
 
     public Queue<Area> request { get; private set; }
+
+    private void Awake()
+    {
+        request = new Queue<Area>();
+        game = (Game) FindObjectOfType(typeof(Game));
+    }
 
     public bool AddContainer(MonoContainer monoContainer)
     {
@@ -23,38 +27,47 @@ public class Vehicle : MonoBehaviour
         return true;
     }
 
-    public void GoTo(Area targetArea)
-    {
-        print("Now going to " + targetArea);
-
-        //todo Animation for going to targetArea
-    }
-
     public bool IsFull()
     {
         return containers.Count >= capacity;
     }
 
+    public void GoTo(Area targetArea)
+    {
+        isMoving = true;
+        nextStop = targetArea;
+    }
+
     private void Update()
     {
+        if (!(game.currentState is OperationState)) return;
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
                 transform.position.y + transform.lossyScale.y / 2 + i, transform.position.z);
-        if (isOccupied) return;
-        Area nextStop;
-        if (containers.Count != 0)
+        if (isMoving)
         {
-            nextStop = containers[0].movement.TargetArea;
-            GoTo(nextStop);
-            if (nextStop.AddContainer(containers[0]))
-                containers.Remove(containers[0]);
+            //todo Moving
+
+            isMoving = false;
         }
-        else if (request.Count == 0) isOccupied = false;
         else
         {
-            nextStop = request.Dequeue();
-            GoTo(nextStop);
-            nextStop.AreaAvailable(road);
+            if (containers.Count != 0)
+            {
+                GoTo(containers[0].movement.TargetArea);
+                if (nextStop.AddContainer(containers[0]))
+                {
+                    containers.Remove(containers[0]);
+                }
+            }
+            else
+            {
+                if (request.Count != 0)
+                {
+                    GoTo(request.Dequeue());
+                    nextStop.AreaAvailable(road);
+                }
+            }
         }
     }
 }
