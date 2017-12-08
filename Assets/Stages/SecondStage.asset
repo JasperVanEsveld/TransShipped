@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f7f9494dde9542800b0e3e45f581b, type: 3}
   m_Name: SecondStage
   m_EditorClassIdentifier: 
+  duration: 40
   moneyRequired: 250
   movementsRequired: 2
   reward: 50

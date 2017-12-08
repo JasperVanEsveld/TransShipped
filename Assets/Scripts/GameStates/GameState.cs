@@ -6,4 +6,8 @@
     {
         this.game = game;
     }
+
+    public virtual void Update() {
+
+    }
 }

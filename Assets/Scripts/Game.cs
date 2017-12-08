@@ -5,7 +5,9 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public GameState currentState;
-    public Stage stage;
+    public Stage currentStage;
+    public List<Stage> stagesList;
+    public Queue<Stage> stages;
     public int movements;
     public double money;
     private readonly List<Area> areas = new List<Area>();
@@ -13,11 +15,18 @@ public class Game : MonoBehaviour
 
     public void Start()
     {
+        stages = new Queue<Stage>(stagesList);
+        if(stages.Count > 0){
+            currentStage = stages.Dequeue();
+        } else {
+            currentState = new LevelEndState(this);
+        }
         currentState = new UpgradeState(this);
     }
 
     public void Update()
     {
+        currentState.Update();
         if (operating && !(currentState is OperationState))
         {
             currentState = new OperationState(this);

@@ -41,9 +41,9 @@ public abstract class Area : MonoBehaviour {
     public void OnAreaAvailable(Area area){
         Queue<MonoContainer> queue = containerQueue[area];
         MonoContainer container;
-        if(queue.Count > 0){
+        if(queue.Count > 0) {
             container = queue.Dequeue();
-        } else{
+        } else {
             area.listening.Remove(this);
             return;
         }

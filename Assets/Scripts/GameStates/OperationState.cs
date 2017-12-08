@@ -1,6 +1,9 @@
+using System;
+
 public class OperationState : GameState
 {
     public ContainerManager manager;
+    private DateTime startTime = DateTime.Now;
 
     public OperationState(Game game) : base(game)
     {
@@ -10,5 +13,11 @@ public class OperationState : GameState
     public void OnMovementComplete()
     {
         game.movements += 1;
+    }
+
+    public override void Update() {
+        if(this.game.currentStage.duration < DateTime.Now.Subtract(startTime).Seconds){
+            game.currentState = new StageEndState(game);
+        }
     }
 }

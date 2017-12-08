@@ -10,4 +10,8 @@ public class UpgradeState : GameState
         game.money -= price;
         return true;
     }
+
+    public override void Update(){
+
+    }
 }

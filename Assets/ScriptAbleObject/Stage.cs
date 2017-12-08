@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Stage")]
 public class Stage : ScriptableObject
 {
+    public double duration;
     public double moneyRequired;
     public int movementsRequired;
     public double reward;
