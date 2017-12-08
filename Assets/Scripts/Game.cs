@@ -2,15 +2,18 @@
 using System.Linq;
 using UnityEngine;
 
+public delegate void OnStateChanged(GameState newState);
+
 public class Game : MonoBehaviour
 {
-    public GameState currentState;
+    public GameState currentState {get;private set;}
     public Stage currentStage;
     public List<Stage> stagesList;
     public Queue<Stage> stages;
     public int movements;
     public double money;
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
+    public event OnStateChanged stateChangeEvent;
     private readonly List<Area> areas = new List<Area>();
 
     public void Start()
@@ -48,5 +51,13 @@ public class Game : MonoBehaviour
     public List<T> GetAreasOfType<T>() where T : Area
     {
         return areas.OfType<T>().Select(a => a).ToList();
+    }
+
+    public void ChangeState(GameState newState){
+        if(stateChangeEvent != null){
+            stateChangeEvent.Invoke(newState);
+        }
+        currentState = newState;
+        
     }
 }

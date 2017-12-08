@@ -9,13 +9,14 @@ public class StageEndState : GameState
             game.money += game.currentStage.reward;
             if(game.stages.Peek() != null){
                 game.currentStage = game.stages.Dequeue();
+                game.ChangeState(new UpgradeState(game));
             }
             else{
-                game.currentState = new LevelEndState(game);
+                game.ChangeState(new LevelEndState(game));
             }
         } else{
             game.money += game.currentStage.penalty;
-
+            game.ChangeState(new UpgradeState(game));
         }
     }
 }

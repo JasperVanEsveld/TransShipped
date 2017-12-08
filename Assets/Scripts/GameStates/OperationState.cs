@@ -17,7 +17,7 @@ public class OperationState : GameState
 
     public override void Update() {
         if(this.game.currentStage.duration < DateTime.Now.Subtract(startTime).Seconds){
-            game.currentState = new StageEndState(game);
+            game.ChangeState(new StageEndState(game));
         }
     }
 }
