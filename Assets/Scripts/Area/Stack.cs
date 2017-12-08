@@ -2,10 +2,7 @@
 
 public class Stack : Area
 {
-    /// <summary>
-    /// The list of containers stacked in this stack
-    /// </summary>
-    public List<MonoContainer> containers;
+    public List<MonoContainer> containers { private set; get; }
 
     /// <summary>
     /// The max volume of containers this stack could stack

@@ -30,9 +30,8 @@ public class Ship : DeliveryVehicle
     {
         j = 0;
         k = 0;
-        
         // TODO: This probably will relate to size
-        GenerateContainers(10, 30);
+        GenerateRandomContainers(10, 30);
 
         transform.position = spawnPos;
         transform.localScale = spawnScale;

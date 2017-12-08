@@ -9,7 +9,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected readonly Queue<Vector3> movementQueue = new Queue<Vector3>();
 
-    private Vector3 destPos = new Vector3(17.0f, -1.0f, 17.0f);
+    protected Vector3 destPos = new Vector3(17.0f, -1.0f, 17.0f);
     private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
     private Vector3 interPos;
 
@@ -55,15 +55,36 @@ public abstract class DeliveryVehicle : MonoBehaviour
         movementQueue.Enqueue(spawnPos);
     }
 
-    protected void GenerateContainers(int from, int to)
+    protected void GenerateRandomContainers(int from, int to)
     {
         var rnd = new System.Random();
-        var conCount = rnd.Next(10, 30);
+        var conCount = rnd.Next(from, to);
 
         for (var i = 0; i < conCount; ++i)
         {
-            var temp = Instantiate(Resources.Load("Container") as GameObject, transform.position, transform.rotation)
-                .GetComponent<MonoContainer>();
+            MonoContainer temp;
+            switch (rnd.Next(0, 3))
+            {
+                case 0:
+                    temp = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, 0);
+                    break;
+                case 1:
+                    temp = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, 1);
+                    break;
+                default:
+                    temp = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, 2);
+                    break;
+            }
+            temp.movement = null;
             carrying.Add(temp);
         }
     }

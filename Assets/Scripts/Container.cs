@@ -6,7 +6,7 @@
         this.transTyep = transTyep;
     }
 
-    private bool isFridge { get; set; }
+    public bool isFridge { get; set; }
 
-    private int transTyep { get; set; }
+    public int transTyep { get; set; }
 }
