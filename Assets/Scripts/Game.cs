@@ -22,9 +22,9 @@ public class Game : MonoBehaviour
         if(stages.Count > 0){
             currentStage = stages.Dequeue();
         } else {
-            currentState = new LevelEndState(this);
+            ChangeState(new LevelEndState(this));
         }
-        currentState = new UpgradeState(this);
+        ChangeState(new UpgradeState(this));
     }
 
     public void Update()

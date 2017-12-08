@@ -11,6 +11,6 @@ public class Stage : ScriptableObject
 
     public bool IsSuccess(GameState state)
     {
-        return state.game.money > moneyRequired && state.game.movements > movementsRequired;
+        return state.game.money >= moneyRequired && state.game.movements >= movementsRequired;
     }
 }
