@@ -52,11 +52,9 @@ public class Vehicle : MonoBehaviour
         }
         else
         {
-            if (containers.Count != 0)
+            if (containers.Count != 0 && game.currentState is OperationState)
             {
-                GoTo(containers[0].movement.TargetArea);
-                if (!nextStop.AddContainer(containers[0])) return;
-                containers.Remove(containers[0]);
+                road.MoveToNext(containers[0]);
             }
             else
             {

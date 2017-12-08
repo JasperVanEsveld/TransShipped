@@ -7,16 +7,11 @@ public class StageEndState : GameState
         MonoBehaviour.print(game.currentStage.IsSuccess(this) ? "Stage passed" : "Stage failed");
         if(game.currentStage.IsSuccess(this)){
             game.money += game.currentStage.reward;
-            if(game.stages.Peek() != null){
+            if(game.stages.Count > 0){
                 game.currentStage = game.stages.Dequeue();
-                game.ChangeState(new UpgradeState(game));
-            }
-            else{
-                game.ChangeState(new LevelEndState(game));
             }
         } else{
             game.money += game.currentStage.penalty;
-            game.ChangeState(new UpgradeState(game));
         }
     }
 }

@@ -8,6 +8,9 @@ public class StatePanelManager : MonoBehaviour {
 
 	public GameObject commandPanel;
 	public GameObject buildingPanel;
+	public GameObject StagePassedPanel;
+	public GameObject StageFailedPanel;
+	public GameObject LevelCompletedPanel;
 
 	private delegate void StateChangeAction();
 	private Game game;
@@ -28,16 +31,25 @@ public class StatePanelManager : MonoBehaviour {
 	}
 
 	public void OnUpgradeStart(){
+		StagePassedPanel.SetActive(false);
+		StageFailedPanel.SetActive(false);
 		commandPanel.SetActive(false);
         buildingPanel.SetActive(true);
 	}
 
 	public void OnStageEnd(){
-		
+		if(game.currentStage.IsSuccess(game.currentState)){
+			StagePassedPanel.SetActive(true);
+			commandPanel.SetActive(false);
+		} else{
+			StageFailedPanel.SetActive(true);
+			commandPanel.SetActive(false);
+		}
 	}
 
 	public void OnLevelEnd(){
-		
+		LevelCompletedPanel.SetActive(true);
+		StagePassedPanel.SetActive(false);
 	}
 
 	public void stateChanged(GameState newState) {

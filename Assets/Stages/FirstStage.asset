@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f7f9494dde9542800b0e3e45f581b, type: 3}
   m_Name: FirstStage
   m_EditorClassIdentifier: 
-  duration: 5
-  moneyRequired: 70
+  duration: 20
+  moneyRequired: 81
   movementsRequired: 0
   reward: 200
   penalty: -50

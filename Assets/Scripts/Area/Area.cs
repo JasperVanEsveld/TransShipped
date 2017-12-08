@@ -68,7 +68,7 @@ public abstract class Area : MonoBehaviour
 
     protected abstract void RemoveContainer(MonoContainer monoCont);
 
-    protected bool MoveToNext(MonoContainer monoCont)
+    public bool MoveToNext(MonoContainer monoCont)
     {
         if (monoCont.movement == null || !(game.currentState is OperationState)) return false;
         var nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
