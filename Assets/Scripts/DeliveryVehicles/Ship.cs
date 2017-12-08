@@ -5,8 +5,8 @@ public class Ship : DeliveryVehicle
 {
     public ShipArea area;
     private int j, k;
-    private bool moveAxisOrder;
 
+    private bool moveAxisOrder;
 
     public void SetSize(float i_size)
     {
@@ -29,11 +29,8 @@ public class Ship : DeliveryVehicle
     {
         j = 0;
         k = 0;
-        
         // TODO: This probably will relate to size
-        //GenerateContainers(10, 30);
-
-        
+        GenerateRandomContainers(10, 30);
 
         height = -1.0f;
         spawnPos = new Vector3(100.0f, height, 40.0f);
@@ -58,9 +55,8 @@ public class Ship : DeliveryVehicle
 
     private void Update()
     {
-        //if (!(area.game.currentState is OperationState)) return;
-        //if (j == 0) EnterTerminal();
-        //j++;
+        if (!(this.game.currentState is OperationState)) return;
+        j++;
         if (movementQueue.Count != 0)
         {
             if (Vector3.Distance(movementQueue.Peek(), transform.position) < speed * Time.deltaTime)

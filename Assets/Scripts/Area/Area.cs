@@ -3,10 +3,10 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    public Game game;
+    protected Game game { get; private set; }
     public List<Area> connected;
 
-    public void Start()
+    public void Awake()
     {
         game = (Game) FindObjectOfType(typeof(Game));
         game.RegisterArea(this);
@@ -19,6 +19,7 @@ public abstract class Area : MonoBehaviour
     }
 
     protected abstract bool AddContainer(MonoContainer monoContainer);
+
     protected abstract void RemoveContainer(MonoContainer monoCont);
 
     protected bool MoveToNext(MonoContainer monoCont)

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MonoBehaviour
 {
-    public List<MonoContainer> carrying;
+    public List<MonoContainer> carrying = new List<MonoContainer>();
+    protected Game game { get; private set; }
     private List<Container> outgoing = new List<Container>();
 
 
@@ -22,6 +23,10 @@ public abstract class DeliveryVehicle : MonoBehaviour
     {
         get { return outgoing; }
         set { outgoing = value; }
+    }
+
+    public void Awake(){
+        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     protected Vector3 getNextPos()
@@ -56,15 +61,36 @@ public abstract class DeliveryVehicle : MonoBehaviour
         movementQueue.Enqueue(spawnPos);
     }
 
-    protected void GenerateContainers(int from, int to)
+    protected void GenerateRandomContainers(int from, int to)
     {
         var rnd = new System.Random();
-        var conCount = rnd.Next(10, 30);
+        var conCount = rnd.Next(from, to);
 
         for (var i = 0; i < conCount; ++i)
         {
-            var temp = Instantiate(Resources.Load("Container") as GameObject, transform.position, transform.rotation)
-                .GetComponent<MonoContainer>();
+            MonoContainer temp;
+            switch (rnd.Next(0, 3))
+            {
+                case 0:
+                    temp = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Blue);
+                    break;
+                case 1:
+                    temp = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Red);
+                    break;
+                default:
+                    temp = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
+                            transform.rotation)
+                        .GetComponent<MonoContainer>();
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Green);
+                    break;
+            }
+            temp.movement = null;
             carrying.Add(temp);
         }
     }

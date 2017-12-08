@@ -2,25 +2,12 @@
 
 public class Stack : Area
 {
-    /// <summary>
-    /// The list of containers stacked in this stack
-    /// </summary>
-    public List<MonoContainer> containers;
+    public List<MonoContainer>  containers = new List<MonoContainer>();
 
     /// <summary>
     /// The max volume of containers this stack could stack
     /// </summary>
     public int max;
-
-    /// <summary>
-    /// When instantiating a stack, its max volume should be decided
-    /// </summary>
-    /// <param name="max">The max number of containers this stack could stack</param>
-    public Stack(int max)
-    {
-        this.max = max;
-        containers = new List<MonoContainer>();
-    }
 
     public int Contains(Container container)
     {
