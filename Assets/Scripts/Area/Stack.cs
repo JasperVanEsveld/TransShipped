@@ -9,13 +9,8 @@ public class Stack : Area
     /// </summary>
     public int max;
 
-    /// <summary>
-    /// When instantiating a stack, its max volume should be decided
-    /// </summary>
-    /// <param name="max">The max number of containers this stack could stack</param>
-    public Stack(int max)
+    public new void Start()
     {
-        this.max = max;
         containers = new List<MonoContainer>();
     }
 

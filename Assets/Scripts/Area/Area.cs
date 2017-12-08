@@ -19,6 +19,7 @@ public abstract class Area : MonoBehaviour
     }
 
     protected abstract bool AddContainer(MonoContainer monoContainer);
+
     protected abstract void RemoveContainer(MonoContainer monoCont);
 
     protected bool MoveToNext(MonoContainer monoCont)

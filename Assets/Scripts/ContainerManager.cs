@@ -20,7 +20,7 @@ public class ContainerManager
     {
         var target = LeastFilledStack();
         if (target == null) return false;
-        container.movement = new Movement(container, start, target);
+        container.movement = new Movement(target);
         return true;
     }
 
@@ -33,7 +33,7 @@ public class ContainerManager
         }
         var i = stackContaining.Contains(container);
         var monoCont = stackContaining.containers[i];
-        monoCont.movement = new Movement(monoCont, stackContaining, target);
+        monoCont.movement = new Movement(target);
         return true;
     }
 
