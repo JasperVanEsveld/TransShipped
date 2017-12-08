@@ -74,19 +74,19 @@ public abstract class DeliveryVehicle : MonoBehaviour
             switch (rnd.Next(0, 3))
             {
                 case 0:
-                    tempGO = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
+                    tempGO = Instantiate(Resources.Load("Container_Blue") as GameObject, transform.position,
                         transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Blue);
                     break;
                 case 1:
-                    tempGO = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
+                    tempGO = Instantiate(Resources.Load("Container_Red") as GameObject, transform.position,
                         transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Red);
                     break;
                 default:
-                    tempGO = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
+                    tempGO = Instantiate(Resources.Load("Container_Green") as GameObject, transform.position,
                         transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Green);
