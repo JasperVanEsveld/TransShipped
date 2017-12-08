@@ -22,4 +22,9 @@ public class BuildingPanel : MonoBehaviour {
 
         GameObject.Find("Canvas/BuildingPanel").SetActive(false);
     }
+
+    public void toggleStack(int i)
+    {
+        GameObject.Find("OptStack_" + i).GetComponent<OptionalArea>().BuyArea();
+    }
 }

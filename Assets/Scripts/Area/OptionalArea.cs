@@ -25,10 +25,10 @@ public class OptionalArea : MonoBehaviour
 
     private void Update()
     {
-        BuyArea();
+        //BuyArea();
     }
 
-    private void BuyArea()
+    public void BuyArea()
     {
         if (!(game.currentState is UpgradeState)) return;
         if (((UpgradeState) game.currentState).Buy(price))
