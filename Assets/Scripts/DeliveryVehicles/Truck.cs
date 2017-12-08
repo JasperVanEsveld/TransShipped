@@ -4,7 +4,6 @@ public class Truck : DeliveryVehicle
 {
     public TruckArea area;
     private int j, k;
-    private Vector3 spawnPos = new Vector3(20.0f, 0.0f, 50.0f);
     private Vector3 spawnScale = new Vector3(20, 4, 2);
     private bool moveAxisOrder;
 
