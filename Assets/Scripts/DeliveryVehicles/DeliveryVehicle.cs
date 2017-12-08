@@ -74,19 +74,19 @@ public abstract class DeliveryVehicle : MonoBehaviour
                     temp = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
                             transform.rotation)
                         .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 0);
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Blue);
                     break;
                 case 1:
                     temp = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
                             transform.rotation)
                         .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 1);
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Red);
                     break;
                 default:
                     temp = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
                             transform.rotation)
                         .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 2);
+                    temp.container = new Container(rnd.Next(0, 2) != 0, containerType.Green);
                     break;
             }
             temp.movement = null;
