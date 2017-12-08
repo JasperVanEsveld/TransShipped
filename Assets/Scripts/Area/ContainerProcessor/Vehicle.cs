@@ -6,8 +6,14 @@ public class Vehicle : MonoBehaviour
     public Road road;
     public int capacity;
     public List<MonoContainer> containers = new List<MonoContainer>();
-    public readonly Queue<Area> request = new Queue<Area>();
     public bool isOccupied;
+
+    public Vehicle()
+    {
+        request = new Queue<Area>();
+    }
+
+    public Queue<Area> request { get; private set; }
 
     public bool AddContainer(MonoContainer monoContainer)
     {
