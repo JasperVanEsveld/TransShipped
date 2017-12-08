@@ -5,7 +5,7 @@
     /// </summary>
     private readonly Area targetArea;
 
-    public Area originArea { get; set; }
+    public Area originArea;
     /// <summary>
     /// Constructor of a movement with 3 parameters
     /// </summary>
