@@ -31,6 +31,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected Vector3 getNextPos()
     {
+        //Debug.Log(movementQueue);
         float step = speed * Time.deltaTime;
         Vector3 tempTarget = movementQueue.Peek();
         return Vector3.MoveTowards(transform.position, tempTarget, step);

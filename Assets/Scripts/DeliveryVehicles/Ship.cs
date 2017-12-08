@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ship : DeliveryVehicle
 {
@@ -36,11 +37,11 @@ public class Ship : DeliveryVehicle
         spawnPos = new Vector3(100.0f, height, 40.0f);
         spawnScale = new Vector3(20, 4, 2);
 
-        Debug.Log(spawnPos);
-        Debug.Log(transform.position);
+        //Debug.Log(spawnPos);
+        //Debug.Log(transform.position);
         transform.position = spawnPos;
-        Debug.Log(spawnPos);
-        Debug.Log(transform.position);
+        //Debug.Log(spawnPos);
+        //Debug.Log(transform.position);
         transform.localScale = spawnScale;
 
 
@@ -51,6 +52,11 @@ public class Ship : DeliveryVehicle
 
         destPos = area.transform.position;
         destPos.y = height;
+
+        string info = name + "\nSize: " + transform.localScale.ToString() + "\nContainer: " + carrying.Count;
+
+        GameObject.Find("Canvas/CommandPanel/" + name + "_button").GetComponentInChildren<Text>().text = info;
+        
     }
 
     private void Update()
@@ -64,7 +70,10 @@ public class Ship : DeliveryVehicle
             if (movementQueue.Count != 0)
                 transform.position = getNextPos();
         }
-       // if (!isAtDest()) return;
+        if (isAtDest())
+        {
+            Debug.Log("in port");
+        }
        // if (k == 0) area.OnVehicleEnter(this);
        // k++;
     }
