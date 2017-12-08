@@ -11,6 +11,8 @@ public class Vehicle : MonoBehaviour
     public int speed;
     private Area nextStop;
 
+    
+
     public Queue<Area> request { get; private set; }
 
     private void Awake()
@@ -27,15 +29,59 @@ public class Vehicle : MonoBehaviour
         return true;
     }
 
+    private bool isAtDestination(Area targetArea)
+    {
+        if (Vector3.Distance(targetArea.transform.position, transform.position) < speed * Time.deltaTime)
+            return true;
+        else
+            return false;
+    }
+
     public bool IsFull()
     {
         return containers.Count >= capacity;
     }
 
+    private Vector3 movementStartPos;
+    private Vector3 movementEndPos;
+    private readonly static Vector3 cranePos = new Vector3(15.28f, 0.0f, 10.9f);
+
     public void GoTo(Area targetArea)
     {
-        isMoving = true;
+        if(!isAtDestination(targetArea))
+            isMoving = true;
+
+        movementStartPos = cranePos;
+        movementEndPos = targetArea.transform.position;
+
+        Vector3 interPos = new Vector3();
+        interPos.x = movementEndPos.x;
+        interPos.y = 0.0f;
+        interPos.z = movementStartPos.z;
+
+        movementQueue.Enqueue(interPos);
+        movementQueue.Enqueue(movementEndPos);
+
+
         nextStop = targetArea;
+    }
+
+    private Queue<Vector3> movementQueue;
+
+    private void Start()
+    {
+        movementQueue = new Queue<Vector3>();
+
+        // Spawn pos
+        transform.position = cranePos;
+
+    }
+
+    private Vector3 getNextPos()
+    {
+        float step = speed * Time.deltaTime;
+        Vector3 tempTarget = movementQueue.Peek();
+        return Vector3.MoveTowards(transform.position, tempTarget, step);
     }
 
     private void Update()
@@ -47,7 +93,7 @@ public class Vehicle : MonoBehaviour
         if (isMoving)
         {
             //todo Moving
-
+            transform.position = getNextPos();
             isMoving = false;
         }
         else
