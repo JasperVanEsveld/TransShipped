@@ -34,3 +34,6 @@ sysinfo.txt
 *.unitypackage*.unitypackage*.unitypackage
 .vscode/launch.json
 UpgradeLog.htm
+Assets/Scripts/DeliveryVehicles/Ship.cs
+Assets/Scripts/Game.cs
+Assets/Scripts/Area/OptionalArea.cs

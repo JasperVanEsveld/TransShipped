@@ -10,8 +10,8 @@ public class Game : MonoBehaviour
     public Queue<Stage> stages;
     public int movements;
     public double money;
+    public List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
-    public bool operating;
 
     public void Start()
     {
@@ -27,14 +27,6 @@ public class Game : MonoBehaviour
     public void Update()
     {
         currentState.Update();
-        if (operating && !(currentState is OperationState))
-        {
-            currentState = new OperationState(this);
-        }
-        else if (!operating && !(currentState is UpgradeState))
-        {
-            currentState = new UpgradeState(this);
-        }
     }
 
     public void RegisterArea(Area area)
@@ -42,6 +34,14 @@ public class Game : MonoBehaviour
         if (!areas.Contains(area))
         {
             areas.Add(area);
+        }
+    }
+
+    public void RegisterArea(OptionalArea area)
+    {
+        if (!optionalAreas.Contains(area))
+        {
+            optionalAreas.Add(area);
         }
     }
 

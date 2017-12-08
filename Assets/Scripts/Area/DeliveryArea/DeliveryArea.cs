@@ -6,6 +6,8 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     private T current = null;
 
     public void OnVehicleEnter(T vehicle) {
+        
+        if(vehicle == current || waiting.Contains(vehicle)) return;
         if (!(game.currentState is OperationState)) return;
         if (current == null)
         {
@@ -19,7 +21,6 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     }
 
     public void Service(T vehicle){
-        print("Vehicle serviced:" + vehicle);
         foreach (var container in vehicle.carrying)
         {
             ((OperationState) game.currentState).manager.Store(this, container);

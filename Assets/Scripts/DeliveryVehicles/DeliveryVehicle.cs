@@ -3,16 +3,17 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MonoBehaviour
 {
-    public List<MonoContainer> carrying;
+    public List<MonoContainer> carrying = new List<MonoContainer>();
     protected Game game { get; private set; }
     private List<Container> outgoing = new List<Container>();
 
 
     protected readonly Queue<Vector3> movementQueue = new Queue<Vector3>();
 
-    protected Vector3 destPos = new Vector3(17.0f, -1.0f, 17.0f);
-    protected Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
-    private Vector3 interPos;
+    protected Vector3 destPos;
+    protected Vector3 spawnPos;
+    protected Vector3 spawnScale;
+    protected Vector3 interPos;
 
     protected float height = 0.0f;
 
@@ -30,13 +31,14 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected Vector3 getNextPos()
     {
+        //Debug.Log(movementQueue);
         float step = speed * Time.deltaTime;
         Vector3 tempTarget = movementQueue.Peek();
         return Vector3.MoveTowards(transform.position, tempTarget, step);
     }
 
-    protected void EnterTerminal()
-    {
+    public void EnterTerminal() {
+        print("Entering");
         interPos.x = destPos.x;
         interPos.y = height;
         interPos.z = spawnPos.z;

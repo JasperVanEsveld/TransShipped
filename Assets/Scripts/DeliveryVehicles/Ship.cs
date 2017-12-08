@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ship : DeliveryVehicle
 {
     public ShipArea area;
     private int j, k;
-    private Vector3 spawnScale = new Vector3(20, 4, 2);
+
     private bool moveAxisOrder;
 
     public void SetSize(float i_size)
@@ -30,22 +32,34 @@ public class Ship : DeliveryVehicle
         k = 0;
         // TODO: This probably will relate to size
 
-        transform.position = spawnPos;
-        transform.localScale = spawnScale;
-
         height = -1.0f;
         spawnPos = new Vector3(100.0f, height, 40.0f);
         spawnScale = new Vector3(20, 4, 2);
+
+        //Debug.Log(spawnPos);
+        //Debug.Log(transform.position);
         transform.position = spawnPos;
+        //Debug.Log(spawnPos);
+        //Debug.Log(transform.position);
         transform.localScale = spawnScale;
         
         GenerateRandomContainers(32, 50);
+        List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
+
+        //TODO:get the first free area
+        area = areaList[0];
+
+        destPos = area.transform.position;
+        destPos.y = height;
+
+        string info = name + "\nSize: " + transform.localScale.ToString() + "\nContainer: " + carrying.Count;
+
+        GameObject.Find("Canvas/CommandPanel/" + name + "_button").GetComponentInChildren<Text>().text = info;
     }
 
     private void Update()
     {
         if (!(this.game.currentState is OperationState)) return;
-        if (j == 0) EnterTerminal();
         j++;
         if (movementQueue.Count != 0)
         {
@@ -55,7 +69,6 @@ public class Ship : DeliveryVehicle
                 transform.position = getNextPos();
         }
         if (!isAtDest()) return;
-        if (k == 0) area.OnVehicleEnter(this);
-        k++;
+        area.OnVehicleEnter(this);
     }
 }

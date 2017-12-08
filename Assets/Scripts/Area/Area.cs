@@ -28,7 +28,6 @@ public abstract class Area : MonoBehaviour {
     protected void AreaAvailable(Area availableTo){
         if(listening.Contains(availableTo)){
             availableTo.OnAreaAvailable(this);
-            listening.Remove(availableTo);
         }
     }
 
