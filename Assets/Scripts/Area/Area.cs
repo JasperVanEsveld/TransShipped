@@ -33,10 +33,9 @@ public abstract class Area : MonoBehaviour {
     }
 
     protected void AreaAvailable(){
-        foreach(Area a in listening){
-            a.OnAreaAvailable(this);
+        for (var i = listening.Count - 1; i >= 0; i--) {
+            listening[i].OnAreaAvailable(this);
         }
-        listening.Clear();
     }
 
     public void OnAreaAvailable(Area area){
@@ -45,10 +44,13 @@ public abstract class Area : MonoBehaviour {
         if(queue.Count > 0){
             container = queue.Dequeue();
         } else{
+            area.listening.Remove(this);
             return;
         }
         MoveToNext(container);
-        print("Ready!");
+        if(queue.Count == 0){
+            area.listening.Remove(this);
+        }
     }
 
     protected abstract bool AddContainer(MonoContainer monoContainer);
@@ -62,7 +64,6 @@ public abstract class Area : MonoBehaviour {
         monoCont.transform.SetParent(nextArea.transform);
         monoCont.transform.position = nextArea.transform.position;
         RemoveContainer(monoCont);
-
         return true;
     }
 
@@ -74,8 +75,6 @@ public abstract class Area : MonoBehaviour {
         }
         if(!containerQueue[nextArea].Contains(monoCont)){
             containerQueue[nextArea].Enqueue(monoCont);
-            print("NotAvailable added to queue, queue count: " + containerQueue[nextArea].Count);
-            
         }
         nextArea.AddListener(this);
     }

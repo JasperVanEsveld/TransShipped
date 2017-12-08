@@ -3,12 +3,23 @@
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
     private Queue<T> waiting = new Queue<T>();
+    private T current = null;
 
-    private T current;
-
-    public void OnVehicleEnter(T vehicle)
-    {
+    public void OnVehicleEnter(T vehicle) {
         if (!(game.currentState is OperationState)) return;
+        if (current == null)
+        {
+            current = vehicle;
+            Service(current);
+        }
+        else
+        {
+            waiting.Enqueue(vehicle);
+        }
+    }
+
+    public void Service(T vehicle){
+        print("Vehicle serviced:" + vehicle);
         foreach (var container in vehicle.carrying)
         {
             ((OperationState) game.currentState).manager.Store(this, container);
@@ -17,35 +28,27 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         {
             ((OperationState) game.currentState).manager.Request(this, container);
         }
-
-        if (waiting.Count == 0)
-        {
-            current = vehicle;
-        }
-        else
-        {
-            waiting.Enqueue(vehicle);
+        for (var i = vehicle.carrying.Count - 1; i >= 0; i--) {
+            if (!MoveToNext(vehicle.carrying[i])) {
+                AddToQueue(vehicle.carrying[i]);
+            }
         }
     }
 
     void OnVehicleLeaves()
     {
         current.LeaveTerminal();
-        if (waiting.Count != 0)
-        {
+        current = null;
+        if (waiting.Count != 0) {
+            print("Unload next ship");
             current = waiting.Dequeue();
+            Service(current);
         }
     }
 
-    private void Update()
-    {
-        if (current == null) return;
-        foreach (var container in current.carrying)
-        {
-            if (MoveToNext(container))
-            {
-                break;
-            }
+    private void Update() {
+        if(current != null && current.carrying.Count == 0){
+            OnVehicleLeaves();
         }
     }
 

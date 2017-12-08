@@ -19,6 +19,8 @@ public abstract class ContainerProcessor : Area
         if (container != null && DateTime.Now.Subtract(startTime).Seconds >= baseTime)
         {
             MoveToNext(container);
+        } else if(container == null){
+            AreaAvailable();
         }
     }
 }
