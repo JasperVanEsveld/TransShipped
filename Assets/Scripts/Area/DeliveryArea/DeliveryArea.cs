@@ -3,7 +3,7 @@
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
     private Queue<T> waiting = new Queue<T>();
-    private T current = null;
+    private T current;
 
     public void OnVehicleEnter(T vehicle) {
         if (!(game.currentState is OperationState)) return;
@@ -18,8 +18,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         }
     }
 
-    public void Service(T vehicle){
-        print("Vehicle serviced:" + vehicle);
+    private void Service(T vehicle){
         foreach (var container in vehicle.carrying)
         {
             ((OperationState) game.currentState).manager.Store(this, container);
@@ -35,12 +34,11 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         }
     }
 
-    void OnVehicleLeaves()
+    private void OnVehicleLeaves()
     {
         current.LeaveTerminal();
         current = null;
         if (waiting.Count != 0) {
-            print("Unload next ship");
             current = waiting.Dequeue();
             Service(current);
         }

@@ -25,7 +25,8 @@ public class Vehicle : MonoBehaviour
 
     public void GoTo(Area targetArea)
     {
-        //isOccupied = true;
+        print("Now going to " + targetArea);
+
         //todo Animation for going to targetArea
     }
 
