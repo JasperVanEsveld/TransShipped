@@ -64,8 +64,7 @@ public class Ship : DeliveryVehicle
             if (movementQueue.Count != 0)
                 transform.position = getNextPos();
         }
-       // if (!isAtDest()) return;
-       // if (k == 0) area.OnVehicleEnter(this);
-       // k++;
+        if (!isAtDest()) return;
+        area.OnVehicleEnter(this);
     }
 }
