@@ -10,7 +10,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
     protected readonly Queue<Vector3> movementQueue = new Queue<Vector3>();
 
     protected Vector3 destPos = new Vector3(17.0f, -1.0f, 17.0f);
-    private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
+    protected Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
     private Vector3 interPos;
 
     protected float height = 0.0f;

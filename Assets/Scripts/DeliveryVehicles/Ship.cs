@@ -4,10 +4,8 @@ public class Ship : DeliveryVehicle
 {
     public ShipArea area;
     private int j, k;
-    private Vector3 spawnPos = new Vector3(100.0f, -1.0f, 40.0f);
     private Vector3 spawnScale = new Vector3(20, 4, 2);
     private bool moveAxisOrder;
-
 
     public void SetSize(float i_size)
     {

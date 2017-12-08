@@ -2,17 +2,12 @@
 
 public class Stack : Area
 {
-    public List<MonoContainer> containers { private set; get; }
+    public List<MonoContainer>  containers = new List<MonoContainer>();
 
     /// <summary>
     /// The max volume of containers this stack could stack
     /// </summary>
     public int max;
-
-    public new void Start()
-    {
-        containers = new List<MonoContainer>();
-    }
 
     public int Contains(Container container)
     {
