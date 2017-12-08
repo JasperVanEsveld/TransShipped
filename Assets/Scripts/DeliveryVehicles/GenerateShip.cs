@@ -7,7 +7,7 @@ public class GenerateShip : MonoBehaviour
 {
     public void generateShip(int i)
     {
-        Debug.Log("generateShip(" + i + ")");
+       // Debug.Log("generateShip(" + i + ")");
         GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
         obj.name = "Ship_" + i;
         obj.AddComponent<Ship>();

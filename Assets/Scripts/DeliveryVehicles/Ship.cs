@@ -70,16 +70,7 @@ public class Ship : DeliveryVehicle
             if (movementQueue.Count != 0)
                 transform.position = getNextPos();
         }
-<<<<<<< HEAD
-        if (isAtDest())
-        {
-            Debug.Log("in port");
-        }
-       // if (k == 0) area.OnVehicleEnter(this);
-       // k++;
-=======
         if (!isAtDest()) return;
         area.OnVehicleEnter(this);
->>>>>>> 17ed32a951b5dda4e44ef8a55cefb63e18ad0421
     }
 }
