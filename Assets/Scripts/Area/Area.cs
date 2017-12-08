@@ -57,11 +57,12 @@ public abstract class Area : MonoBehaviour {
 
     protected bool MoveToNext(MonoContainer monoCont) {
         if (monoCont.movement == null || !(game.currentState is OperationState)) return false;
-        Area nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
-        if (!nextArea.AddContainer(monoCont)){
-            return false;
-        }
+        var nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (!nextArea.AddContainer(monoCont)) return false;
+        monoCont.transform.SetParent(nextArea.transform);
+        monoCont.transform.position = nextArea.transform.position;
         RemoveContainer(monoCont);
+
         return true;
     }
 
