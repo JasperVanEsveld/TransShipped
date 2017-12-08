@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    public Game game { get; private set; }
+    protected Game game { get; private set; }
     public List<Area> connected;
 
     public void Awake()

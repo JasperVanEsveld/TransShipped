@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class DeliveryVehicle : MonoBehaviour
 {
     public List<MonoContainer> carrying;
+    protected Game game { get; private set; }
     private List<Container> outgoing = new List<Container>();
 
 
@@ -21,6 +22,10 @@ public abstract class DeliveryVehicle : MonoBehaviour
     {
         get { return outgoing; }
         set { outgoing = value; }
+    }
+
+    public void Awake(){
+        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     protected Vector3 getNextPos()

@@ -45,7 +45,7 @@ public class Truck : DeliveryVehicle
 
     private void Update()
     {
-        if (!(area.game.currentState is OperationState)) return;
+        if (!(this.game.currentState is OperationState)) return;
         if (j == 0) EnterTerminal();
         j++;
         if (movementQueue.Count != 0)
