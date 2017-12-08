@@ -107,7 +107,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 0}
   connected: []
-  containers: []
-  max: 5
+  max: 0
