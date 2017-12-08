@@ -31,7 +31,6 @@ public class Truck : DeliveryVehicle
         j = 0;
         k = 0;
         // TODO: This probably will relate to size
-        GenerateRandomContainers(10, 30);
 
         transform.position = spawnPos;
         transform.localScale = spawnScale;
@@ -42,6 +41,8 @@ public class Truck : DeliveryVehicle
         destPos = new Vector3(-13, 0, -37);
         transform.position = spawnPos;
         transform.localScale = spawnScale;
+        
+        GenerateRandomContainers(10, 30);
     }
 
     private void Update()

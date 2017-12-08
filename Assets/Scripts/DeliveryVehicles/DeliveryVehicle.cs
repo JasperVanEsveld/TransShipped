@@ -62,30 +62,33 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
         for (var i = 0; i < conCount; ++i)
         {
-            MonoContainer temp;
+            GameObject tempGO;
+            MonoContainer tempMC;
             switch (rnd.Next(0, 3))
             {
                 case 0:
-                    temp = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
-                            transform.rotation)
-                        .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 0);
+                    tempGO = Instantiate(Resources.Load("BlueContainer") as GameObject, transform.position,
+                        transform.rotation);
+                    tempMC = tempGO.GetComponent<MonoContainer>();
+                    tempMC.container = new Container(rnd.Next(0, 2) != 0, 0);
                     break;
                 case 1:
-                    temp = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
-                            transform.rotation)
-                        .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 1);
+                    tempGO = Instantiate(Resources.Load("RedContainer") as GameObject, transform.position,
+                        transform.rotation);
+                    tempMC = tempGO.GetComponent<MonoContainer>();
+                    tempMC.container = new Container(rnd.Next(0, 2) != 0, 1);
                     break;
                 default:
-                    temp = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
-                            transform.rotation)
-                        .GetComponent<MonoContainer>();
-                    temp.container = new Container(rnd.Next(0, 2) != 0, 2);
+                    tempGO = Instantiate(Resources.Load("GreenContainer") as GameObject, transform.position,
+                        transform.rotation);
+                    tempMC = tempGO.GetComponent<MonoContainer>();
+                    tempMC.container = new Container(rnd.Next(0, 2) != 0, 2);
                     break;
             }
-            temp.movement = null;
-            carrying.Add(temp);
+            tempGO.transform.SetParent(transform);
+            tempMC.movement = null;
+            tempMC.gameObject.transform.SetParent(transform);
+            carrying.Add(tempMC);
         }
     }
 }

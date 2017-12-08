@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Stack : Area
 {
-    public List<MonoContainer>  containers = new List<MonoContainer>();
+    public List<MonoContainer> containers = new List<MonoContainer>();
 
-    /// <summary>
-    /// The max volume of containers this stack could stack
-    /// </summary>
     public int max;
 
     public int Contains(Container container)
@@ -23,22 +21,20 @@ public class Stack : Area
 
     public void Update()
     {
-        foreach (var cont in containers)
+        for (var i = containers.Count - 1; i >= 0; i--)
         {
-            if (MoveToNext(cont))
+            if (MoveToNext(containers[i]))
             {
                 break;
             }
+            var n = i % (max / 5);
+            containers[i].transform.position = new Vector3(
+                transform.position.x - transform.lossyScale.x / 2 + 2 + 2 * (int) (n / (transform.lossyScale.z - 2)),
+                i * 5 / max,
+                transform.position.z - transform.lossyScale.z / 2 + 1.5f + n % (transform.lossyScale.z - 2));
         }
     }
 
-    /// <summary>
-    /// Stack a container to the stack<br/>
-    /// If max volume has been reached, return false and abort the operation<br/>
-    /// Otherwise, add the container to the list and return true
-    /// </summary>
-    /// <param name="monoContainer">The container to be stacked</param>
-    /// <returns>Whether the operation is successful</returns>
     protected override bool AddContainer(MonoContainer monoContainer)
     {
         if (containers.Count >= max) return false;
