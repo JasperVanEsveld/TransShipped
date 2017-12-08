@@ -35,7 +35,7 @@ public class Stack : Area
         }
     }
 
-    protected override bool AddContainer(MonoContainer monoContainer)
+    public override bool AddContainer(MonoContainer monoContainer)
     {
         if (containers.Count >= max) return false;
         containers.Add(monoContainer);

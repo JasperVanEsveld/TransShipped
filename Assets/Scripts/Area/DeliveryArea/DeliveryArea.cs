@@ -52,7 +52,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         }
     }
 
-    protected override bool AddContainer(MonoContainer monoContainer)
+    public override bool AddContainer(MonoContainer monoContainer)
     {
         current.carrying.Add(monoContainer);
         monoContainer.movement = null;
