@@ -59,7 +59,7 @@ public class Ship : DeliveryVehicle
 
     private void Update()
     {
-        if (!(this.game.currentState is OperationState)) return;
+        if (!(game.currentState is OperationState)) return;
         j++;
         if (movementQueue.Count != 0)
         {
