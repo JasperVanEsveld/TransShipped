@@ -51,9 +51,13 @@ public class Vehicle : MonoBehaviour
         }
         else
         {
-            Vector3 temp = targetArea.transform.position;
-            temp.y = 0.0f;
-            movementQueue.Enqueue(temp);
+            Vector3 temp1 = new Vector3(0.0f, 0.0f, 0.0f);
+            temp1.x = targetArea.transform.position.x;
+            temp1.z = transform.position.z;
+            Vector3 temp2 = targetArea.transform.position;
+            temp2.y = 0.0f;
+            movementQueue.Enqueue(temp1);
+            movementQueue.Enqueue(temp2);
         }
     }
 
@@ -109,13 +113,13 @@ public class Vehicle : MonoBehaviour
         // If located east of center zone
         if (temp.z >= 11.0f)
         {
-            temp.z = 11.0f;
+            temp.z = targetArea.transform.position.z;
             return temp;
         }
         // If located west of center zone
         else if (temp.z <= -11.0f)
         {
-            temp.z = -11.0f;
+            temp.z = targetArea.transform.position.z;
             return temp;
         }
         // If located south of center zone, aka near the crane
