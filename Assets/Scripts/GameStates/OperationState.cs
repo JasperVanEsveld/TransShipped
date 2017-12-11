@@ -3,11 +3,13 @@ using System;
 public class OperationState : GameState
 {
     public ContainerManager manager;
+    public VehicleGenerator generator;
     private DateTime startTime = DateTime.Now;
 
     public OperationState(Game game) : base(game)
     {
         manager = new ContainerManager(game.GetAreasOfType<Stack>(), this);
+        generator = new VehicleGenerator(game);
     }
 
     public void OnMovementComplete()

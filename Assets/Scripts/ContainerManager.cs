@@ -28,8 +28,8 @@ public class ContainerManager
     public bool Request(Area target, Container container)
     {
         var stackContaining = FindStackContaining(container);
-        if (stackContaining == null)
-        {
+        Game.print("Requesting: " + container);
+        if (stackContaining == null) {
             return false;
         }
         var i = stackContaining.Contains(container);

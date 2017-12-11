@@ -25,7 +25,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         {
             ((OperationState) game.currentState).manager.Store(this, container);
         }
-        foreach (var container in vehicle.Outgoing)
+        foreach (var container in vehicle.outgoing)
         {
             ((OperationState) game.currentState).manager.Request(this, container);
         }
