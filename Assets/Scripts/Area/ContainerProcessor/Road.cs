@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Road : ContainerProcessor
 {
@@ -32,6 +33,7 @@ public class Road : ContainerProcessor
         {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
+            Debug.Log("adding containers");
             return vehicle.AddContainer(monoContainer);
         }
         FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
