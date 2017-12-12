@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 
 public delegate void OnStateChanged(GameState newState);
+public delegate void OnStageChanged(Stage newStage);
+public delegate void OnMoneyChanged(double newValue);
 
 public class Game : MonoBehaviour
 {
@@ -13,17 +15,15 @@ public class Game : MonoBehaviour
     public int movements;
     public double money;
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
-    public event OnStateChanged stateChangeEvent;
     private readonly List<Area> areas = new List<Area>();
-    private InfoPanel infoPanelHandle_ = null;
+    public event OnStateChanged stateChangeEvent;
+    public event OnStageChanged stageChangeEvent;
+    public event OnMoneyChanged moneyChangeEvent;
 
-    public void Start()
-    {
-        infoPanelHandle_ = GameObject.Find("Canvas/InfoPanel").GetComponent<InfoPanel>();
-        //Debug.Log(GameObject.Find("Canvas/InfoPanel"));
+    public void Start() {
         stages = new Queue<Stage>(stagesList);
         if(stages.Count > 0){
-            currentStage = stages.Dequeue();
+            this.SetStage(stages.Dequeue());
         } else {
             ChangeState(new LevelEndState(this));
         }
@@ -32,9 +32,6 @@ public class Game : MonoBehaviour
 
     public void Update()
     {
-        infoPanelHandle_.SetMoney(money);
-        // What is the var for score?
-        infoPanelHandle_.SetScore(money);
         currentState.Update();
     }
 
@@ -64,6 +61,19 @@ public class Game : MonoBehaviour
             stateChangeEvent.Invoke(newState);
         }
         currentState = newState;
-        
+    }
+
+    public void SetMoney(double money) {
+        this.money = money;
+        if(moneyChangeEvent != null){
+            moneyChangeEvent(money);
+        }
+    }
+
+    public void SetStage(Stage newStage) {
+        this.currentStage = newStage;
+        if(stageChangeEvent != null){
+            stageChangeEvent(newStage);
+        }
     }
 }
