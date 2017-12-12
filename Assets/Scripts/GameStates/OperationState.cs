@@ -3,7 +3,7 @@ using System;
 public class OperationState : GameState
 {
     public ContainerManager manager;
-    private DateTime startTime = DateTime.Now;
+    public DateTime startTime = DateTime.Now;
 
     public OperationState(Game game) : base(game)
     {
