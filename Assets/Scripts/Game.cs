@@ -15,9 +15,12 @@ public class Game : MonoBehaviour
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
     public event OnStateChanged stateChangeEvent;
     private readonly List<Area> areas = new List<Area>();
+    private InfoPanel infoPanelHandle_ = null;
 
     public void Start()
     {
+        infoPanelHandle_ = GameObject.Find("Canvas/InfoPanel").GetComponent<InfoPanel>();
+        //Debug.Log(GameObject.Find("Canvas/InfoPanel"));
         stages = new Queue<Stage>(stagesList);
         if(stages.Count > 0){
             currentStage = stages.Dequeue();
@@ -29,6 +32,9 @@ public class Game : MonoBehaviour
 
     public void Update()
     {
+        infoPanelHandle_.SetMoney(money);
+        // What is the var for score?
+        infoPanelHandle_.SetScore(money);
         currentState.Update();
     }
 
