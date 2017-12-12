@@ -1009,7 +1009,8 @@ MonoBehaviour:
   capacity: 1
   containers: []
   isMoving: 0
-  speed: 0
+  speed: 20
+  currentArea: {fileID: 0}
 --- !u!1 &373939735
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,9 @@ public class Road : ContainerProcessor
     private readonly Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
     public List<Vehicle> vehicles = new List<Vehicle>();
 
-    private Vehicle FindAvailableVehicle()
+    private Vehicle FindAvailableVehicle(Area required)
     {
-        return vehicles.FirstOrDefault(vehicle => !vehicle.isMoving && !vehicle.IsFull());
+        return vehicles.FirstOrDefault(vehicle => !vehicle.isMoving && !vehicle.IsFull() && vehicle.currentArea == required);
     }
 
     private Vehicle FindShortedQueueVehicle()
@@ -28,9 +28,8 @@ public class Road : ContainerProcessor
 
     public override bool AddContainer(MonoContainer monoContainer)
     {
-        Vehicle vehicle = FindAvailableVehicle();
-        if (vehicle != null)
-        {
+        Vehicle vehicle = FindAvailableVehicle(monoContainer.movement.originArea);
+        if (vehicle != null) {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
             Debug.Log("adding containers");

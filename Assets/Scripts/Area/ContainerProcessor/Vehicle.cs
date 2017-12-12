@@ -9,6 +9,7 @@ public class Vehicle : MonoBehaviour
     public List<MonoContainer> containers = new List<MonoContainer>();
     public bool isMoving;
     public float speed;
+    public Area currentArea;
     private Area nextStop;
 
     public Queue<Area> request { get; private set; }
@@ -72,10 +73,14 @@ public class Vehicle : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, tempTarget, step);
         }
 
-        if (Vector3.Distance(movementQueue.Peek(), transform.position) < speed * Time.deltaTime)
+        if (Vector3.Distance(movementQueue.Peek(), transform.position) < speed * Time.deltaTime){
             movementQueue.Dequeue();
+        }
 
-        if (movementQueue.Count == 0) isMoving = false;
+        if (movementQueue.Count == 0) {
+            currentArea = nextStop;
+            isMoving = false;
+        } 
     }
 
     //Horrible Hack
@@ -137,25 +142,23 @@ public class Vehicle : MonoBehaviour
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
                 transform.position.y + transform.lossyScale.y / 2 + i, transform.position.z);
-        if (isMoving)
-        {
+        if (isMoving) {
             Debug.Log("Update: Branch 1");
             //todo Moving
             MoveForThisFrame_();
 
             
         }
-        else
-        {
-
-            if (containers.Count != 0)
-            {
-                Debug.Log("Update: Branch 2");
-                GoTo(((OperationState)game.currentState).manager.GetNextArea(road, containers[0].movement));
-                road.MoveToNext(containers[0]);
+        else {
+            if (containers.Count != 0) {
+                nextStop = ((OperationState)game.currentState).manager.GetNextArea(road, containers[0].movement);
+                GoTo(nextStop);
+                Debug.Log(currentArea);
+                if(currentArea == nextStop) {
+                    road.MoveToNext(containers[0]);
+                }
             }
-            else
-            {
+            else {
                 //Debug.Log("Update: Branch 3");
                 if (request.Count == 0) return;
                 Debug.Log("Update: Branch 3.1");
@@ -167,10 +170,7 @@ public class Vehicle : MonoBehaviour
 
     private Vector3 cranePos_ = new Vector3(15.28f, 0.0f, 10.9f);
 
-    private void Start()
-    {
-        //transform.position = cranePos_;
-        speed = 5.0f;
+    private void Start() {
         movementQueue = new Queue<Vector3>();
         isMoving = false;
     }
