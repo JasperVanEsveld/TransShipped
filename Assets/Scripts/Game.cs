@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
     public Queue<Stage> stages;
     public int movements;
     public double money;
+    public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
@@ -48,6 +49,14 @@ public class Game : MonoBehaviour
         if (!optionalAreas.Contains(area))
         {
             optionalAreas.Add(area);
+        }
+    }
+
+    public void RegisterDeliveryVehicle(DeliveryVehicle vehicle)
+    {
+        if (!vehicles.Contains(vehicle))
+        {
+            vehicles.Add(vehicle);
         }
     }
 
