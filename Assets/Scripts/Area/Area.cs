@@ -80,8 +80,7 @@ public abstract class Area : MonoBehaviour
         return true;
     }
 
-    protected void AddToQueue(MonoContainer monoCont)
-    {
+    protected void AddToQueue(MonoContainer monoCont) {
         if (monoCont.movement == null || !(game.currentState is OperationState)) return;
         Area nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
         if (!containerQueue.ContainsKey(nextArea))

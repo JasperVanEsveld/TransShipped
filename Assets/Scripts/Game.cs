@@ -65,6 +65,20 @@ public class Game : MonoBehaviour
         return areas.OfType<T>().Select(a => a).ToList();
     }
 
+    public VehicleGenerator GetGenerator(){
+        if(currentState is OperationState) {
+            return ((OperationState) currentState).generator;
+        }
+        return null;
+    }
+
+    public ContainerManager GetManager(){
+        if(currentState is OperationState) {
+            return ((OperationState) currentState).manager;
+        }
+        return null;
+    }
+
     public void ChangeState(GameState newState){
         if(stateChangeEvent != null){
             stateChangeEvent.Invoke(newState);

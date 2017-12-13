@@ -28,20 +28,19 @@ public class Ship : DeliveryVehicle
     // Use this for initialization
     private void Start()
     {
+        game.RegisterDeliveryVehicle(this);
         j = 0;
         k = 0;
         // TODO: This probably will relate to size
 
         height = -1.0f;
         spawnPos = new Vector3(100.0f, height, 40.0f);
-        spawnScale = new Vector3(20, 4, 2);
 
         //Debug.Log(spawnPos);
         //Debug.Log(transform.position);
         transform.position = spawnPos;
         //Debug.Log(spawnPos);
         //Debug.Log(transform.position);
-        transform.localScale = spawnScale;
         
         GenerateRandomContainers(32, 50);
         List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();

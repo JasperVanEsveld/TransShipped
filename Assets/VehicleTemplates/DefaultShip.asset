@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd947abe5f96444a811479ef41d1ca0, type: 3}
+  m_Name: DefaultShip
+  m_EditorClassIdentifier: 
+  type: 0
+  prefab: {fileID: 4227835453075452, guid: c9077471a67683849992de0dac7642f3, type: 2}
+  containerTypes: 
+  carryMin: 0
+  carryMax: 0
+  requestMax: 0
+  requestMin: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
