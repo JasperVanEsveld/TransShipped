@@ -49,4 +49,49 @@ public class OptionalArea : MonoBehaviour
         }
         i++;
     }
+
+
+//---- Implement this so that we can get rid of the clunky buy menu?   
+    private Color startingColor_;
+    void OnMouseEnter()
+    {
+        // if (in BUILDING stage)
+        //{ 
+            startingColor_ = GetComponent<Renderer>().material.color; // Move this to Start() so that it only needs to be exec once.
+            GetComponent<Renderer>().material.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        //}
+    }
+    void OnMouseExit()
+    {
+        // if (in BUILDING stage)
+        //{
+            GetComponent<Renderer>().material.color = startingColor_;
+        //}
+    }
+    void OnMouseDown()
+    {
+        // if (in BUILDING stage && have enough money) 
+        //{
+            Debug.Log(name + "selected.");
+        
+       // }
+    }
+    // Called when entering operation stage. If not bought.
+    public void HideAreaNotBought()
+    {
+        //if (not bought)
+        //{
+            GetComponent<MeshRenderer>().enabled = false;
+        //}
+    }
+    // Called when entering another buy stage, if previously hidden.
+    public void ShowAreaNotBought()
+    {
+        //if (not bought)
+        //{
+            //GetComponent<Renderer>().material.color = startingColor_;
+            GetComponent<MeshRenderer>().enabled = true;
+        //}
+    }
+    //---- Implement the above section so that we can get rid of the clunky buy menu?   ---------/
 }
