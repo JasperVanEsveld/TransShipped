@@ -18,6 +18,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     public void Awake(){
         game = (Game) FindObjectOfType(typeof(Game));
+        game.RegisterWaiting(this);
     }
 
     protected Vector3 getNextPos()
@@ -29,6 +30,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
     }
 
     public void EnterTerminal() {
+        game.vehicles.Remove(this);
         print("Entering");
         interPos.x = destPos.x;
         interPos.y = height;

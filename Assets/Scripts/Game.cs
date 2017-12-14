@@ -52,7 +52,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void RegisterDeliveryVehicle(DeliveryVehicle vehicle)
+    public void RegisterWaiting(DeliveryVehicle vehicle)
     {
         if (!vehicles.Contains(vehicle))
         {

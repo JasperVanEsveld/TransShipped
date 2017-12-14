@@ -11,8 +11,8 @@ public class VehicleTemplate : ScriptableObject
     public List<containerType> containerTypes;
     public int carryMin;
     public int carryMax;
-    public int requestMax;
     public int requestMin;
+    public int requestMax;
     public Vector3 spawnPosition;
     public Quaternion spawnRotation;
 }

@@ -23,7 +23,7 @@ public class VehicleGenerator {
         System.Random rnd = new System.Random();
         int conCount = rnd.Next(template.requestMin, template.requestMax);
         for (int i = 0; i < conCount; ++i) {
-            int typeIndex = rnd.Next(0, template.containerTypes.Count);
+            int typeIndex = rnd.Next(0, template.containerTypes.Count-1);
             Container cont = new Container(template.containerTypes[typeIndex]);
             vehicle.outgoing.Add(cont);
         }

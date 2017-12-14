@@ -28,7 +28,6 @@ public class Ship : DeliveryVehicle
     // Use this for initialization
     private void Start()
     {
-        game.RegisterDeliveryVehicle(this);
         j = 0;
         k = 0;
         // TODO: This probably will relate to size
@@ -50,10 +49,6 @@ public class Ship : DeliveryVehicle
 
         destPos = area.transform.position;
         destPos.y = height;
-
-        string info = name + "\nSize: " + transform.localScale.ToString() + "\nContainer: " + carrying.Count;
-
-        GameObject.Find("Canvas/CommandPanel/" + name + "_button").GetComponentInChildren<Text>().text = info;
     }
 
     private void Update()
