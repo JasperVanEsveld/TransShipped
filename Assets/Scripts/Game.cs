@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
     public Queue<Stage> stages;
     public int movements;
     public double money;
+    public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
@@ -51,9 +52,31 @@ public class Game : MonoBehaviour
         }
     }
 
+    public void RegisterWaiting(DeliveryVehicle vehicle)
+    {
+        if (!vehicles.Contains(vehicle))
+        {
+            vehicles.Add(vehicle);
+        }
+    }
+
     public List<T> GetAreasOfType<T>() where T : Area
     {
         return areas.OfType<T>().Select(a => a).ToList();
+    }
+
+    public VehicleGenerator GetGenerator(){
+        if(currentState is OperationState) {
+            return ((OperationState) currentState).generator;
+        }
+        return null;
+    }
+
+    public ContainerManager GetManager(){
+        if(currentState is OperationState) {
+            return ((OperationState) currentState).manager;
+        }
+        return null;
     }
 
     public void ChangeState(GameState newState){

@@ -6,8 +6,8 @@ public class OptionalArea : MonoBehaviour
     private Game game { get; set; }
 
     public List<Area> connected;
-
-    private GameObject stackPrefab;
+    public string areaName;
+    public Transform prefab;
 
     public double price = 10;
 
@@ -15,18 +15,9 @@ public class OptionalArea : MonoBehaviour
 
     private int i = 0;
 
-    private void Start()
-    {
+    private void Start() {
         game = (Game) FindObjectOfType(typeof(Game));
         game.RegisterArea(this);
-        stackPrefab = Resources.Load("Areas/Stack") as GameObject;
-    }
-
-    //todo binding BuyArea() function to a button instead of calling it in the Update()
-
-    private void Update()
-    {
-        //BuyArea();
     }
 
     public void BuyArea()
@@ -35,7 +26,7 @@ public class OptionalArea : MonoBehaviour
         if (((UpgradeState) game.currentState).Buy(price))
         {
             game.optionalAreas.Remove(this);
-            var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
+            var stack = Instantiate(prefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.max = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
             foreach (var connectArea in connected)
             {

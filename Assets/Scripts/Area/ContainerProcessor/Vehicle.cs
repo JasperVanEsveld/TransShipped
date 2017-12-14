@@ -64,7 +64,6 @@ public class Vehicle : MonoBehaviour
 
     private void MoveForThisFrame_()
     {
-        Debug.Log("MoveForThisFrame_()");
         if (movementQueue.Count == 0) return;
         else
         {
@@ -143,8 +142,6 @@ public class Vehicle : MonoBehaviour
             containers[i].transform.position = new Vector3(transform.position.x,
                 transform.position.y + transform.lossyScale.y / 2 + i, transform.position.z);
         if (isMoving) {
-            Debug.Log("Update: Branch 1");
-            //todo Moving
             MoveForThisFrame_();
 
             

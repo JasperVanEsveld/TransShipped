@@ -34,14 +34,12 @@ public class Ship : DeliveryVehicle
 
         height = -1.0f;
         spawnPos = new Vector3(100.0f, height, 40.0f);
-        spawnScale = new Vector3(20, 4, 2);
 
         //Debug.Log(spawnPos);
         //Debug.Log(transform.position);
         transform.position = spawnPos;
         //Debug.Log(spawnPos);
         //Debug.Log(transform.position);
-        transform.localScale = spawnScale;
         
         GenerateRandomContainers(32, 50);
         List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
@@ -51,10 +49,6 @@ public class Ship : DeliveryVehicle
 
         destPos = area.transform.position;
         destPos.y = height;
-
-        string info = name + "\nSize: " + transform.localScale.ToString() + "\nContainer: " + carrying.Count;
-
-        GameObject.Find("Canvas/CommandPanel/" + name + "_button").GetComponentInChildren<Text>().text = info;
     }
 
     private void Update()

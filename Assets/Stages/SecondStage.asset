@@ -16,3 +16,5 @@ MonoBehaviour:
   movementsRequired: 2
   reward: 50
   penalty: -100
+  vehicleTemplates:
+  - {fileID: 11400000, guid: 38ff07844339a6a49ac1375bbfb6df3e, type: 2}

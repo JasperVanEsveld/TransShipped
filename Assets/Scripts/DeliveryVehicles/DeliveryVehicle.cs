@@ -4,29 +4,21 @@ using UnityEngine;
 public abstract class DeliveryVehicle : MonoBehaviour
 {
     public List<MonoContainer> carrying = new List<MonoContainer>();
+    public List<Container> outgoing = new List<Container>();
     protected Game game { get; private set; }
-    private List<Container> outgoing = new List<Container>();
-
 
     protected readonly Queue<Vector3> movementQueue = new Queue<Vector3>();
 
     protected Vector3 destPos;
-    protected Vector3 spawnPos;
-    protected Vector3 spawnScale;
+    public Vector3 spawnPos;
     protected Vector3 interPos;
 
     protected float height = 0.0f;
-
     protected float speed = 20.0f;
-
-    public List<Container> Outgoing
-    {
-        get { return outgoing; }
-        set { outgoing = value; }
-    }
 
     public void Awake(){
         game = (Game) FindObjectOfType(typeof(Game));
+        game.RegisterWaiting(this);
     }
 
     protected Vector3 getNextPos()
@@ -38,6 +30,7 @@ public abstract class DeliveryVehicle : MonoBehaviour
     }
 
     public void EnterTerminal() {
+        game.vehicles.Remove(this);
         print("Entering");
         interPos.x = destPos.x;
         interPos.y = height;
@@ -64,38 +57,5 @@ public abstract class DeliveryVehicle : MonoBehaviour
 
     protected void GenerateRandomContainers(int from, int to)
     {
-        var rnd = new System.Random();
-        var conCount = rnd.Next(from, to);
-
-        for (var i = 0; i < conCount; ++i)
-        {
-            GameObject tempGO;
-            MonoContainer tempMC;
-            switch (rnd.Next(0, 3))
-            {
-                case 0:
-                    tempGO = Instantiate(Resources.Load("Container_Blue") as GameObject, transform.position,
-                        transform.rotation);
-                    tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Blue);
-                    break;
-                case 1:
-                    tempGO = Instantiate(Resources.Load("Container_Red") as GameObject, transform.position,
-                        transform.rotation);
-                    tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Red);
-                    break;
-                default:
-                    tempGO = Instantiate(Resources.Load("Container_Green") as GameObject, transform.position,
-                        transform.rotation);
-                    tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(rnd.Next(0, 2) != 0, containerType.Green);
-                    break;
-            }
-            tempGO.transform.SetParent(transform);
-            tempMC.movement = null;
-            tempMC.gameObject.transform.SetParent(transform);
-            carrying.Add(tempMC);
-        }
     }
 }

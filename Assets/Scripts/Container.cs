@@ -2,13 +2,11 @@
 
 public class Container
 {
-    public bool needsFridge { get; set; }
 
     public containerType transType { get; set; }
 
-    public Container(bool needsFridge, containerType transType)
+    public Container(containerType transType)
     {
-        this.needsFridge = needsFridge;
         this.transType = transType;
     }
 
@@ -17,13 +15,13 @@ public class Container
             return false;
         }
         Container other = obj as Container;
-        if(other.transType != this.transType || other.needsFridge != this.needsFridge) {
+        if(other.transType != this.transType ) {
             return false;
         }
         return base.Equals (obj);
     }
     
     public override int GetHashCode() {
-        return base.GetHashCode()*17 + needsFridge.GetHashCode() + transType.GetHashCode();
+        return base.GetHashCode()*17 + transType.GetHashCode();
     }
 }
