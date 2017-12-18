@@ -16,9 +16,11 @@ public class BuildingPanel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        /**
 		if(buttonCount != game.optionalAreas.Count){
             CreateButtons();
         }
+         */
 	}
 
     public void CreateButtons(){
