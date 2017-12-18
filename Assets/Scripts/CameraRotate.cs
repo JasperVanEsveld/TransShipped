@@ -11,7 +11,7 @@ public class CameraRotate : MonoBehaviour{
         transform.LookAt(cameraOrigin.transform.position);
         transform.RotateAround(cameraOrigin.transform.position, Vector3.up, -Input.GetAxis("Horizontal") * rotationSpeed);
         
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             transform.RotateAround(cameraOrigin.transform.position, Vector3.up, Input.GetAxis("Mouse X") * rotationSpeed2);
         }
