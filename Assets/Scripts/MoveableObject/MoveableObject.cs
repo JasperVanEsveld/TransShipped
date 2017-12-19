@@ -8,22 +8,22 @@ public class MoveableObject : MonoBehaviour
     // HOW TO USE:
     // for all vehicles (child class of this class), call Init() in their Start();
     // for all vehicles (child class of this class), call MovementUpdate() in their Update(); It will take care of all the movement thinggy
-    // For ship, invoke EnterTerminal(Vector3 i_dest) and LeaveTerminal() to... have it enter and leave. 
+    // For ship, invoke MOEnterTerminal(Vector3 i_dest) and MOLeaveTerminal() to... have it enter and leave. 
     // The i_dest should be the position of a parking spot for the ship, the east one of the west one.
-    // You can add a sth in the end of LeaveTerminal() to have the script destroy the GameObject after leaving the screen.
+    // You can add a sth in the end of MOLeaveTerminal() to have the script destroy the GameObject after leaving the screen.
     // For ground vehicle, just invoke PushNewDest(Vector3 i_dest) to have it move to that position. (the position has to on the ground, obviously)
-    // You can utilize IsObjectMoving() and IsAtTheThisPos(Vector3 i_pos) to help you with debugging, but ideally you should not need to use them anymore.
+    // You can utilize IsObjectMoving() and MOIsAtTheThisPos(Vector3 i_pos) to help you with debugging, but ideally you should not need to use them anymore.
 
 
     // CALL THIS IN Update() IN WHICHEVER CHILD CLASS YOU ARE USING
     // It will takes care of all the movement stuff so you would not need to worry about them in child class anymore.
-    protected void MovementUpdate()
+    protected void MOMovementUpdate()
     {
         transform.position = CalcPosForNextFrame_();
     }
 
     // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
-    protected void Init(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel, Vector3 i_scale)
+    protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel, Vector3 i_scale)
     {
         movementQueue_ = new Queue<Vector3>();
         lastPos_ = transform.position;
@@ -38,7 +38,7 @@ public class MoveableObject : MonoBehaviour
     }
 
     // or this if you dont want to modify the scale
-    protected void Init(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
+    protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {
         movementQueue_ = new Queue<Vector3>();
         lastPos_ = transform.position;
@@ -61,7 +61,7 @@ public class MoveableObject : MonoBehaviour
     }
 
     // For ground vehicles, tell to object to move to this place when it's done with wtever it is doing
-    public void PushNewDest(Vector3 i_dest)
+    public void MOPushNewDest(Vector3 i_dest)
     {
         int desRegion = GetRegion_(i_dest);
         int curRegion = GetRegion_(lastPos_);
@@ -102,7 +102,7 @@ public class MoveableObject : MonoBehaviour
     }
 
     // Check if the object is at this place
-    public bool IsAtTheThisPos(Vector3 i_pos)
+    public bool MOIsAtTheThisPos(Vector3 i_pos)
     {
         Vector3 cur = transform.position;
         cur.y = height_;
@@ -118,7 +118,7 @@ public class MoveableObject : MonoBehaviour
 
     // For ships, call this to have it enter terminal.
     // args: the position of the terminal area
-    public void EnterTerminal(Vector3 i_dest)
+    public void MOEnterTerminal(Vector3 i_dest)
     {
         int desRegion = GetRegion_(i_dest);
         Debug.Log(desRegion);
@@ -141,7 +141,7 @@ public class MoveableObject : MonoBehaviour
     }
 
     // For ships, call this to have it leave terminal.
-    public void LeaveTerminal()
+    public void MOLeaveTerminal()
     {
         int curRegion = GetRegion_(transform.position);
         if (curRegion == 5)
@@ -162,11 +162,9 @@ public class MoveableObject : MonoBehaviour
     }
 
 
-
-
-
     // ------------------- You should not need to worry about these below -----------------------//
     private Queue<Vector3> movementQueue_;
+
     private Vector3 lastPos_;
     private float speed_;
     private float height_;
@@ -207,7 +205,6 @@ public class MoveableObject : MonoBehaviour
                 {
                     return transform.position;
                 }
-                
             }
             float step = speed_ * Time.deltaTime;
             Vector3 cur = transform.position;

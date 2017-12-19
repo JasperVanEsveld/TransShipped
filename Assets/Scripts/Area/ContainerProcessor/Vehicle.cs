@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Vehicle : MonoBehaviour
+public class Vehicle : MoveableObject
 {
     private Game game;
     public Road road;
