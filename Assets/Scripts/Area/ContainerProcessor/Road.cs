@@ -20,9 +20,12 @@ public class Road : ContainerProcessor
         {
             if (vehicles[i].request.Count <= min)
             {
+                Game.print(vehicles[i].request.Count);
                 minIndex = i;
+                min = vehicles[i].request.Count;
             }
         }
+        Game.print(vehicles[minIndex]);
         return vehicles[minIndex];
     }
 
@@ -32,7 +35,6 @@ public class Road : ContainerProcessor
         if (vehicle != null) {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
-            Debug.Log("adding containers");
             return vehicle.AddContainer(monoContainer);
         }
         FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
@@ -42,5 +44,6 @@ public class Road : ContainerProcessor
     protected override void RemoveContainer(MonoContainer monoContainer)
     {
         containerVehicle[monoContainer].containers.Remove(monoContainer);
+        containerVehicle.Remove(monoContainer);
     }
 }

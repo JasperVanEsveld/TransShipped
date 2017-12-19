@@ -5,10 +5,17 @@ public abstract class ContainerProcessor : Area
     public float baseTime;
     private DateTime startTime;
     public MonoContainer container;
+    public Stack dump;
 
     public override bool AddContainer(MonoContainer toAddContainer)
     {
-        if (container != null) return false;
+        if (container != null){
+            if(dump != null){
+                dump.AddContainer(container);
+            } else{
+                return false;
+            }
+        }
         container = toAddContainer;
         startTime = DateTime.Now;
         return true;

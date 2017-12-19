@@ -12,7 +12,7 @@ public class Vehicle : MonoBehaviour
     public Area currentArea;
     private Area nextStop;
 
-    public Queue<Area> request { get; private set; }
+    public Queue<Area> request = new Queue<Area>();
     private Queue<Vector3> movementQueue;
 
     private void Awake()
@@ -24,7 +24,6 @@ public class Vehicle : MonoBehaviour
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        Debug.Log("AddContainer()");
         if (containers.Count >= capacity) return false;
         containers.Add(monoContainer);
         monoContainer.transform.SetParent(transform);
@@ -33,13 +32,11 @@ public class Vehicle : MonoBehaviour
 
     public bool IsFull()
     {
-        Debug.Log("IsFull()");
         return containers.Count >= capacity;
     }
 
     public void GoTo(Area targetArea)
     {
-        Debug.Log("GoTo()");
         isMoving = true;
         nextStop = targetArea;
         if (NeedIntermediatePoint_(targetArea))
@@ -136,7 +133,6 @@ public class Vehicle : MonoBehaviour
 
     private void Update()
     {
-        
         if (!(game.currentState is OperationState)) { return; }
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
@@ -150,7 +146,6 @@ public class Vehicle : MonoBehaviour
             if (containers.Count != 0) {
                 nextStop = ((OperationState)game.currentState).manager.GetNextArea(road, containers[0].movement);
                 GoTo(nextStop);
-                Debug.Log(currentArea);
                 if(currentArea == nextStop) {
                     road.MoveToNext(containers[0]);
                 }
@@ -158,7 +153,6 @@ public class Vehicle : MonoBehaviour
             else {
                 //Debug.Log("Update: Branch 3");
                 if (request.Count == 0) return;
-                Debug.Log("Update: Branch 3.1");
                 GoTo(request.Dequeue());
                 nextStop.AreaAvailable(road);
             }

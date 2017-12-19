@@ -32,7 +32,6 @@ public class VehicleGenerator {
     private void GenerateCarrying(DeliveryVehicle vehicle, VehicleTemplate template){
         System.Random rnd = new System.Random();
         int conCount = rnd.Next(template.carryMin, template.carryMax);
-        Game.print(vehicle);
         for (int i = 0; i < conCount; ++i)
         {
             GameObject tempGO;

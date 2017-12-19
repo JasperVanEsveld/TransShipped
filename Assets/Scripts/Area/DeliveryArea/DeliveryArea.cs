@@ -2,15 +2,15 @@
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
+    private List<Container> remainingRequests;
     private Queue<T> waiting = new Queue<T>();
     private T current;
+    private bool loading;
 
     public void OnVehicleEnter(T vehicle) {
-        
         if(vehicle == current || waiting.Contains(vehicle)) return;
         if (!(game.currentState is OperationState)) return;
-        if (current == null)
-        {
+        if (current == null) {
             current = vehicle;
             Service(current);
         }
@@ -20,18 +20,29 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         }
     }
 
-    private void Service(T vehicle){
+    private void Service(T vehicle) {
+        loading = false;
+        remainingRequests = new List<Container>(vehicle.outgoing);
         foreach (var container in vehicle.carrying)
         {
             ((OperationState) game.currentState).manager.Store(this, container);
         }
-        foreach (var container in vehicle.outgoing)
-        {
-            ((OperationState) game.currentState).manager.Request(this, container);
-        }
         for (var i = vehicle.carrying.Count - 1; i >= 0; i--) {
             if (!MoveToNext(vehicle.carrying[i])) {
                 AddToQueue(vehicle.carrying[i]);
+            }
+        }
+    }
+
+    public void requestOutgoing(){
+        print(remainingRequests.Count);
+        for(int i = remainingRequests.Count - 1; i >= 0; i--){
+            Container c = remainingRequests[i];
+            ContainerManager manager = game.GetManager();
+            if(manager != null){
+                if(manager.Request(this, c)){
+                    remainingRequests.RemoveAt(i);
+                }
             }
         }
     }
@@ -47,8 +58,15 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     }
 
     private void Update() {
-        if(current != null && current.carrying.Count == 0){
+        if(current != null ){
+        if(current.carrying.Count == 0 && !loading){
+            loading = true;
+        } else if(loading && remainingRequests.Count > 0){
+            requestOutgoing();
+        } else if(loading && current.outgoing.Count == current.carrying.Count){
+            print("? done");
             OnVehicleLeaves();
+        }
         }
     }
 
