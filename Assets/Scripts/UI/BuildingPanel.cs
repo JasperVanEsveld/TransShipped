@@ -6,6 +6,53 @@ using UnityEngine.UI;
 public class BuildingPanel : MonoBehaviour {
     private Game game;
     public Transform prefab;
+
+    public GameObject selected;
+    public Text text5, text1, text2, text3, text4;
+    GameObject buttonObject;
+
+
+    private void Start()
+    {
+        text5 = transform.Find("Text5").gameObject.GetComponent<Text>();
+        text1 = transform.Find("Text1").gameObject.GetComponent<Text>();
+        text2 = transform.Find("Text2").gameObject.GetComponent<Text>();
+        text3 = transform.Find("Text3").gameObject.GetComponent<Text>();
+        text4 = transform.Find("Text4").gameObject.GetComponent<Text>();
+        buttonObject = transform.Find("PurchaseButton").gameObject;
+
+    }
+
+    public void Select(GameObject go, string objectname, string attribute1, string attribute2, string attribute3, string attribute4, bool button, string buttontext)
+    {
+        selected = go;
+        
+        text5.text = objectname;
+        text1.text = attribute1;
+        text2.text = attribute2;
+        text3.text = attribute3;
+        text4.text = attribute4;
+
+       if (button)
+        {
+            buttonObject.SetActive(true);
+            buttonObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = buttontext;  // it was late
+            
+        }
+
+        Debug.Log(text1);
+        //text1 = "help";
+    }
+
+
+    private void ButtonClick()
+    {
+        //selected.GetComponent<Text>().Buy();
+    }
+
+
+
+
     int buttonCount = 0;
     List<Transform> buttons = new List<Transform>();
 	// Use this for initialization

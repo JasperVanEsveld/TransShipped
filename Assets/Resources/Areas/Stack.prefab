@@ -111,3 +111,4 @@ MonoBehaviour:
   listening: []
   containers: []
   max: 0
+  slider: {fileID: 1145669622895958, guid: e4ba2c845024ace40b70e46f96fa1b50, type: 2}

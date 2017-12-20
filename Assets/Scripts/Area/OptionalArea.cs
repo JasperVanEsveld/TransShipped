@@ -21,8 +21,17 @@ public class OptionalArea : MonoBehaviour
 
     private readonly Color stackColor = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
 
+
+    public BuildingPanel buildingPanel;
+
     private void Start()
+
+
     {
+
+        buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
+
+
         game = (Game) FindObjectOfType(typeof(Game));
         stackPrefab = Resources.Load("Areas/Stack") as GameObject;
         GetComponent<Renderer>().material.color = price <= game.money ? Color.green : Color.red;
@@ -53,8 +62,11 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!(game.currentState is UpgradeState)) return;
-        GetComponent<Renderer>().material.color = stackColor;
+        if ((game.currentState is UpgradeState))
+        {
+                GetComponent<Renderer>().material.color = stackColor;
+
+        }
     }
 
     private void OnMouseExit()
@@ -63,7 +75,20 @@ public class OptionalArea : MonoBehaviour
         GetComponent<Renderer>().material.color = originColor;
     }
 
+
+
+    public string objectname, attribute1, attribute2, attribute3, attribute4, buttontext;
+    public bool button;
+
     private void OnMouseDown()
+    {
+
+        buildingPanel.Select(gameObject, objectname, attribute1, attribute2, attribute3, attribute4, button, buttontext);
+        
+
+    }
+
+    private void Buy()
     {
         if (!(game.currentState is UpgradeState)) return;
         if (((UpgradeState) game.currentState).Buy(price))
