@@ -12,7 +12,7 @@ public class MoveableObject : MonoBehaviour
     // The i_dest should be the position of a parking spot for the ship, the east one of the west one.
     // You can add a sth in the end of MOLeaveTerminal() to have the script destroy the GameObject after leaving the screen.
     // For ground vehicle, just invoke PushNewDest(Vector3 i_dest) to have it move to that position. (the position has to on the ground, obviously)
-    // You can utilize IsObjectMoving() and MOIsAtTheThisPos(Vector3 i_pos) to help you with debugging, but ideally you should not need to use them anymore.
+    // You can utilize MOIsObjectMoving() and MOIsAtTheThisPos(Vector3 i_pos) to help you with debugging, but ideally you should not need to use them anymore.
 
 
     // CALL THIS IN Update() IN WHICHEVER CHILD CLASS YOU ARE USING
@@ -52,20 +52,25 @@ public class MoveableObject : MonoBehaviour
     }
 
     // If the object is not moving/ does not have anywhere to go, return true
-    public bool IsObjectMoving()
+    public bool MOIsObjectMoving()
     {
-        if (movementQueue_.Count != 0)
-            return true;
-        else
-            return false;
+        print(movementQueue_.Count);
+        return movementQueue_.Count != 0;
     }
 
     // For ground vehicles, tell to object to move to this place when it's done with wtever it is doing
     public void MOPushNewDest(Vector3 i_dest)
     {
+        if (MOIsAtTheThisPos(i_dest))
+        {
+            return;
+        }
         int desRegion = GetRegion_(i_dest);
         int curRegion = GetRegion_(lastPos_);
-        Debug.Log("desRegion: " + desRegion + " curRegion: " + curRegion);
+//        Debug.Log(i_dest);
+//        
+//        Debug.Log(lastPos_);
+        //Debug.Log("desRegion: " + desRegion + " curRegion: " + curRegion);
         if (curRegion == desRegion)
         {
             movementQueue_.Enqueue(new Vector3(lastPos_.x, height_, i_dest.z));
@@ -173,7 +178,7 @@ public class MoveableObject : MonoBehaviour
     // Check if the object has finished the current movement task
     private bool IsAtTheCurrentDest_()
     {
-        if (!IsObjectMoving()) return true;
+        if (!MOIsObjectMoving()) return true;
         else
         {
             Vector3 cur = transform.position;
@@ -192,7 +197,7 @@ public class MoveableObject : MonoBehaviour
     // Return a pos that the object is supposed to be for the next frame
     private Vector3 CalcPosForNextFrame_()
     {
-        if ((!IsObjectMoving()))
+        if ((!MOIsObjectMoving()))
         {
             return transform.position;
         }
@@ -201,7 +206,7 @@ public class MoveableObject : MonoBehaviour
             if (IsAtTheCurrentDest_())
             {
                 movementQueue_.Dequeue();
-                if (!IsObjectMoving())
+                if (!MOIsObjectMoving())
                 {
                     return transform.position;
                 }

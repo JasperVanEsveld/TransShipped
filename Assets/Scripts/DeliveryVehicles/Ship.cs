@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Ship : DeliveryVehicle
 {
     public ShipArea area;
+    private bool isAtDestination = false;
 
 
     // Use this for initialization
@@ -23,6 +24,9 @@ public class Ship : DeliveryVehicle
     {
         if (!(game.currentState is OperationState)) return;
         MOMovementUpdate();
+
+        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
+        isAtDestination = true;
 
         area.OnVehicleEnter(this);
     }
