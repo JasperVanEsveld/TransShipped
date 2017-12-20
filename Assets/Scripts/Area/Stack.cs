@@ -48,7 +48,9 @@ public class Stack : Area
         if (monoContainer.movement.TargetArea == this)
         {
             monoContainer.movement = null;
-            
+        }
+        if(script != null){
+            script.ChangeSliderValue((float)containers.Count / max); 
         }
         return true;
     }
@@ -70,10 +72,10 @@ public class Stack : Area
             sliderclone.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
             //sliderclone.transform.parent = GameObject.Find("Canvas").transform;
-            CapacitySlider script = sliderclone.GetComponent<CapacitySlider>();
-                script.target = this.transform;
-            GetComponent<Renderer>().material.color = Color.cyan;
+            script = sliderclone.GetComponent<CapacitySlider>();
+            script.target = this.transform;
             script.ChangeSliderValue((float)containers.Count / max); 
+            GetComponent<Renderer>().material.color = Color.cyan;
 
 
         }

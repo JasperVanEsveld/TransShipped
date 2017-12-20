@@ -9,39 +9,47 @@ public class BuildingPanel : MonoBehaviour {
 
     public GameObject selected;
     public Text text5, text1, text2, text3, text4;
-    GameObject buttonObject;
+    Button buttonObject;
 
 
     private void Start()
     {
-        text5 = transform.Find("Text5").gameObject.GetComponent<Text>();
         text1 = transform.Find("Text1").gameObject.GetComponent<Text>();
         text2 = transform.Find("Text2").gameObject.GetComponent<Text>();
         text3 = transform.Find("Text3").gameObject.GetComponent<Text>();
         text4 = transform.Find("Text4").gameObject.GetComponent<Text>();
-        buttonObject = transform.Find("PurchaseButton").gameObject;
+        buttonObject = transform.Find("PurchaseButton").GetComponent<Button>();
 
     }
 
-    public void Select(GameObject go, string objectname, string attribute1, string attribute2, string attribute3, string attribute4, bool button, string buttontext)
+    public void Select(OptionalArea go, string objectname, string attribute1, string attribute2, string attribute3, string attribute4, string buttontext)
     {
-        selected = go;
-        
-        text5.text = objectname;
+        buttonObject.onClick.RemoveAllListeners();
+        selected = go.gameObject;
         text1.text = attribute1;
         text2.text = attribute2;
         text3.text = attribute3;
         text4.text = attribute4;
+        text5.text = objectname;
+        buttonObject.gameObject.SetActive(true);
+        buttonObject.onClick.AddListener(go.Buy);
+        buttonObject.onClick.AddListener(Bought);
+    }
+    
+    public void Select(Area go, string objectname, string attribute1, string attribute2, string attribute3, string attribute4, string buttontext)
+    {
+        selected = go.gameObject;
+        
+        text1.text = attribute1;
+        text2.text = attribute2;
+        text3.text = attribute3;
+        text4.text = attribute4;
+        text5.text = objectname;
+    }
 
-       if (button)
-        {
-            buttonObject.SetActive(true);
-            buttonObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = buttontext;  // it was late
-            
-        }
-
-        Debug.Log(text1);
-        //text1 = "help";
+    public void Bought()
+    {
+        buttonObject.gameObject.SetActive(false);
     }
 
 
