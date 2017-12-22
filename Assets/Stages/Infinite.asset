@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f7f9494dde9542800b0e3e45f581b, type: 3}
   m_Name: Infinite
   m_EditorClassIdentifier: 
-  duration: 100000000000
+  duration: 1000
   moneyRequired: 0
   movementsRequired: 0
   reward: 0

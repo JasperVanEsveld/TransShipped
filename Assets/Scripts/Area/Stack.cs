@@ -27,8 +27,7 @@ public class Stack : Area
     {
         for (var i = containers.Count - 1; i >= 0; i--)
         {
-            if (MoveToNext(containers[i]))
-            {
+            if (MoveToNext(containers[i])) {
                 break;
             }
             var n = i % (max / 5);

@@ -10,15 +10,13 @@ public class Container
         this.transType = transType;
     }
 
-    public override bool Equals(object obj) {        
+    public override bool Equals(object obj) {
+
         if (obj == null || GetType() != obj.GetType()) {
             return false;
         }
         Container other = obj as Container;
-        if(other.transType != this.transType ) {
-            return false;
-        }
-        return base.Equals (obj);
+        return other.transType != this.transType;
     }
     
     public override int GetHashCode() {

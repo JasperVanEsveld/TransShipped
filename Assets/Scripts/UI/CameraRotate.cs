@@ -19,7 +19,6 @@ public class CameraRotate : MonoBehaviour{
 
         zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
         zoom = Mathf.Clamp(zoom, zoomMin, zoomMax);
-        Debug.Log(zoom);
         GetComponent<Camera>().fieldOfView =zoom;
 
 

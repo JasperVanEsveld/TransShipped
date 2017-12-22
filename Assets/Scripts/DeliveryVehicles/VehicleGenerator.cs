@@ -18,6 +18,8 @@ public class VehicleGenerator {
     private void ApplyTemplate(DeliveryVehicle vehicle, VehicleTemplate template){
         GenerateCarrying(vehicle, template);
         CreateRequestList(vehicle, template);
+        vehicle.reward = template.reward;
+        vehicle.timeOutTime = template.timeOutTime;
     }
     private void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template){
         System.Random rnd = new System.Random();
@@ -32,7 +34,6 @@ public class VehicleGenerator {
     private void GenerateCarrying(DeliveryVehicle vehicle, VehicleTemplate template){
         System.Random rnd = new System.Random();
         int conCount = rnd.Next(template.carryMin, template.carryMax);
-        Game.print(vehicle);
         for (int i = 0; i < conCount; ++i)
         {
             GameObject tempGO;

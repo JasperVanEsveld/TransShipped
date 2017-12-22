@@ -54,7 +54,6 @@ public class MoveableObject : MonoBehaviour
     // If the object is not moving/ does not have anywhere to go, return true
     public bool MOIsObjectMoving()
     {
-        print(movementQueue_.Count);
         return movementQueue_.Count != 0;
     }
 
@@ -126,7 +125,6 @@ public class MoveableObject : MonoBehaviour
     public void MOEnterTerminal(Vector3 i_dest)
     {
         int desRegion = GetRegion_(i_dest);
-        Debug.Log(desRegion);
         if (desRegion == 5)
         {
             Vector3 intPoint2 = new Vector3(i_dest.x, height_, 36.0f);
