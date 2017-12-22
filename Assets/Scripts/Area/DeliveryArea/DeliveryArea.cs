@@ -35,7 +35,6 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     }
 
     public void requestOutgoing(){
-        print(remainingRequests.Count);
         for(int i = remainingRequests.Count - 1; i >= 0; i--){
             Container c = remainingRequests[i];
             ContainerManager manager = game.GetManager();
@@ -73,6 +72,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     public override bool AddContainer(MonoContainer monoContainer)
     {
         current.carrying.Add(monoContainer);
+        monoContainer.transform.SetParent(current.transform);
         monoContainer.movement = null;
         return true;
     }

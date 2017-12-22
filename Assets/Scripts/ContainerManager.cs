@@ -32,8 +32,7 @@ public class ContainerManager
             Game.print("Request failed, no stack containing" + container.transType);
             return false;
         }
-        var i = stackContaining.Contains(container);
-        var monoCont = stackContaining.containers[i];
+        MonoContainer monoCont = stackContaining.containers.FirstOrDefault(item => item.container.Equals(container) && item.movement == null);
         monoCont.movement = new Movement(target);
         return true;
     }

@@ -20,12 +20,10 @@ public class Road : ContainerProcessor
         {
             if (vehicles[i].request.Count <= min)
             {
-                Game.print(vehicles[i].request.Count);
                 minIndex = i;
                 min = vehicles[i].request.Count;
             }
         }
-        Game.print(vehicles[minIndex]);
         return vehicles[minIndex];
     }
 
@@ -37,7 +35,9 @@ public class Road : ContainerProcessor
             containerVehicle.Add(monoContainer, vehicle);
             return vehicle.AddContainer(monoContainer);
         }
-        FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
+        if(!FindShortedQueueVehicle().request.Contains(monoContainer.movement.originArea)){
+            FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
+        }
         return false;
     }
 

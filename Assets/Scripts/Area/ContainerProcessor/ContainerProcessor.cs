@@ -5,17 +5,23 @@ public abstract class ContainerProcessor : Area
     public float baseTime;
     private DateTime startTime;
     public MonoContainer container;
-    public Stack dump;
 
     public override bool AddContainer(MonoContainer toAddContainer)
     {
         if (container != null){
-            if(dump != null){
-                dump.AddContainer(container);
+            print(container.movement.originArea);
+            if(toAddContainer.movement.originArea is Road){
+                Area previous = container.movement.originArea;
+                container.movement.originArea = this;
+                if (!previous.AddContainer(container)) return false;
+                container.transform.SetParent(previous.transform);
+                container.transform.position = previous.transform.position;
+                RemoveContainer(container);
             } else{
                 return false;
             }
         }
+        print(toAddContainer.movement.originArea);
         container = toAddContainer;
         startTime = DateTime.Now;
         return true;
