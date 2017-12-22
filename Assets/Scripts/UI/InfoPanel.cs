@@ -25,7 +25,7 @@ public class InfoPanel : MonoBehaviour {
 	void Update () {
         if(timeRemainingText.IsActive()){
             DateTime start = ((OperationState) game.currentState).startTime;
-            int difference = DateTime.Now.Subtract(start).Seconds;
+            int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
             timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
         }
     }

@@ -19,10 +19,11 @@ public class OperationState : GameState
     }
 
     public override void Update() {
-        if(this.game.currentStage.duration < DateTime.Now.Subtract(startTime).Seconds){
+        if(this.game.currentStage.duration < (DateTime.Now - startTime).TotalSeconds){
             game.ChangeState(new StageEndState(game));
         }
-        if(lastTime == null || DateTime.Now.Subtract(lastTime).Seconds >= 5 ){
+        int vehicles = Game.FindObjectsOfType<DeliveryVehicle>().Length;
+        if(lastTime == null || (DateTime.Now - lastTime).TotalSeconds >= game.currentStage.spawnInterval && vehicles < game.currentStage.maxVehicles){
             lastTime = DateTime.Now;
             generator.GenerateVehicle<Ship>(VehicleType.Ship);
         }

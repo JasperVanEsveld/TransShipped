@@ -46,7 +46,6 @@ public class Vehicle : MoveableObject
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
                 transform.position.y + transform.lossyScale.y / 2 + i, transform.position.z);
-        MOMovementUpdate();
         if (!MOIsObjectMoving())
         {
             if (containers.Count != 0)
@@ -64,5 +63,6 @@ public class Vehicle : MoveableObject
                 targetArea.AreaAvailable(road);
             }
         }
+        MOMovementUpdate();
     }
 }

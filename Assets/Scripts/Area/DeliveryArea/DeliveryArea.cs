@@ -61,7 +61,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
 
     private void Update() {
         if (current != null ){
-            if (start.Subtract(DateTime.Now).Seconds >= current.timeOutTime){
+            if (start.Subtract(DateTime.Now).TotalSeconds >= current.timeOutTime){
                 OnVehicleLeaves();
             } else if (current.carrying.Count == 0 && !loading){
                 loading = true;

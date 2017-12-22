@@ -30,7 +30,7 @@ public abstract class ContainerProcessor : Area
 
     private void Update()
     {
-        if (container != null && DateTime.Now.Subtract(startTime).Seconds >= baseTime)
+        if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
         {
             MoveToNext(container);
         } else if(container == null){

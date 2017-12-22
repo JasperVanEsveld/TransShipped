@@ -10,6 +10,8 @@ public class Stage : ScriptableObject
     public double reward;
     public double penalty;
     public List<VehicleTemplate> vehicleTemplates;
+    public double spawnInterval;
+    public double maxVehicles;
 
     public VehicleTemplate GetTemplate(VehicleType type){
         List<VehicleTemplate> templates =vehicleTemplates.FindAll(template => template.type == type);
