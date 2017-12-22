@@ -9,7 +9,8 @@ public class Road : ContainerProcessor
 
     private Vehicle FindAvailableVehicle(Area required)
     {
-        return vehicles.FirstOrDefault(vehicle => !vehicle.isMoving && !vehicle.IsFull() && vehicle.currentArea == required);
+        return vehicles.FirstOrDefault(vehicle =>
+            !vehicle.MOIsObjectMoving() && !vehicle.IsFull() && vehicle.MOIsAtTheThisPos(required.transform.position));
     }
 
     private Vehicle FindShortedQueueVehicle()
@@ -29,7 +30,8 @@ public class Road : ContainerProcessor
     public override bool AddContainer(MonoContainer monoContainer)
     {
         Vehicle vehicle = FindAvailableVehicle(monoContainer.movement.originArea);
-        if (vehicle != null) {
+        if (vehicle != null)
+        {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
             Debug.Log("adding containers");

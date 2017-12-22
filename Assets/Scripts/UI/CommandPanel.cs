@@ -34,6 +34,7 @@ public class CommandPanel : MonoBehaviour {
             buttons.Add(obj);
             obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x,0);
             x += 170f;
+            vehicle.areaPos = game.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
             obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
             obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType().ToString() + "\n Containers: " + vehicle.carrying.Count;
             i++;
