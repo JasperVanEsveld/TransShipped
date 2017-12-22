@@ -4,17 +4,14 @@ using UnityEngine;
 
 
 public class NewAGVButton : MonoBehaviour {
-
-    private Game game;
+    
     private Road road;
     
     void Start () {
-        game = FindObjectOfType<Game>();
         road = FindObjectOfType<Road>();
-        OnMouseDown();
     }
 
-    private void OnMouseDown()
+    public void AddVehicle()
     {
         GameObject v = Instantiate(GameObject.Find("Vehicle"));
         road.vehicles.Add(v.GetComponent(typeof(Vehicle)) as Vehicle);
