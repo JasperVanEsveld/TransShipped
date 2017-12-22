@@ -2431,7 +2431,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStage: {fileID: 0}
   stagesList:
-  - {fileID: 11400000, guid: d6f8286a25633114dae654b87cfc105d, type: 2}
+  - {fileID: 11400000, guid: 2c5ab9725ca80334cb9a2cddb4c53eba, type: 2}
+  - {fileID: 11400000, guid: a4501ba704a8b7b46a0434385a6818d9, type: 2}
   movements: 0
   money: 100
   vehicles: []
