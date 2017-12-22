@@ -16,7 +16,9 @@ MonoBehaviour:
   containerTypes: 000000000100000002000000
   carryMin: 30
   carryMax: 40
-  requestMin: 1
-  requestMax: 1
+  requestMin: 10
+  requestMax: 20
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0, w: 0}
+  reward: 20
+  timeOutTime: 30

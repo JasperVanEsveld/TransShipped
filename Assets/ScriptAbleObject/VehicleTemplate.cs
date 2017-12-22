@@ -15,4 +15,6 @@ public class VehicleTemplate : ScriptableObject
     public int requestMax;
     public Vector3 spawnPosition;
     public Quaternion spawnRotation;
+    public double reward;
+    public double timeOutTime;
 }

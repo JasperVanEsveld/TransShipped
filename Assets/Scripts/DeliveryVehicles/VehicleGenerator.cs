@@ -18,6 +18,8 @@ public class VehicleGenerator {
     private void ApplyTemplate(DeliveryVehicle vehicle, VehicleTemplate template){
         GenerateCarrying(vehicle, template);
         CreateRequestList(vehicle, template);
+        vehicle.reward = template.reward;
+        vehicle.timeOutTime = template.timeOutTime;
     }
     private void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template){
         System.Random rnd = new System.Random();
