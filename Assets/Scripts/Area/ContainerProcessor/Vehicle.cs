@@ -8,22 +8,21 @@ public class Vehicle : MoveableObject
     private static int countAGV_ = 0;
     private static int level_ = 0;
     private const int maxLevel_ = 4;
-    private static int[] costOfUpgrade_ = new int[maxLevel_ + 1] {0, 10, 20, 40, 80 };
-    private static float[] bonusOfUpgrade_ = new float[maxLevel_ + 1] {1.0f, 1.1f, 1.2f, 1.4f, 1.8f};
+    private static int[] costOfPurchase_ = new int[maxLevel_ + 1] { 2, 3, 5, 7, 10 };
+    private static int[] costOfUpgrade_ = new int[maxLevel_] {1, 2, 2, 3};
+    private static float[] speedAtEachLevel_ = new float[maxLevel_ + 1] { 5.0f, 6.0f, 7.5f, 8.0f, 30.0f };
     public static bool IsFullyUpgraded() { return ( level_ >= maxLevel_ ? true : false ); }
-    public static int PeekNextUpgradeCost() { return ( IsFullyUpgraded() ? -1 : costOfUpgrade_[level_ + 1] ); } // Return -1 if already maxed out
-    public static float PeekNextUpgradeBonus() { return (IsFullyUpgraded() ? -1 : bonusOfUpgrade_[level_ + 1]); } // Return -1 if already maxed out
-    public static bool CanAffordNextUpgrade() { return ( GetMoney() >= PeekNextUpgradeCost() * countAGV_ + 0.01 ? true : false ); } // Note: Do we really need money to be double? I think we should make it int.
+    public static int UpgradeCost() { return ( IsFullyUpgraded() ? -1 : costOfUpgrade_[level_] ); } // Return -1 if already maxed out
+    public static int PurchaseCost() { return costOfPurchase_[level_]; } // TODO: Invoke this after pressing buy AGV button.
+    public static bool CanAffordNextUpgrade() { return ( game.money >= UpgradeCost() * countAGV_ + 0.01 ? true : false ); } // Note: Do we really need money to be double? I think we should make it int.
     public static bool CanUpgrade() { return ((IsFullyUpgraded() || !CanAffordNextUpgrade()) ? false : true); }
     public static bool Upgrade()
     {
         if (CanUpgrade())
         {
-            Debug.Log("\nMoney: " + GetMoney() + "\nVehicleCount: " + countAGV_ + "\nCurrentSpeed: " + initSpeed_ + "\nUnitUpgradeCost:" + PeekNextUpgradeCost() + "\nTotalUpgradeCost" + PeekNextUpgradeCost() * countAGV_);
-            SubtractMoney(PeekNextUpgradeCost() * countAGV_);
-            initSpeed_ *= PeekNextUpgradeBonus();
+            game.money -= UpgradeCost() * countAGV_; // TODO: Currently the info panel doesnt update after upgrade
+            speed_ = speedAtEachLevel_[level_ + 1];
             ++level_;
-            Debug.Log("\nMoney: " + GetMoney() + "\nVehicleCount: " + countAGV_ + "\nCurrentSpeed: " + initSpeed_);
             return true;
         }
         else return false;
@@ -31,15 +30,11 @@ public class Vehicle : MoveableObject
     private void Start()
     {
         ++countAGV_;
-        //Debug.Log("AGV Count: " + countAGV_);
     }
-    private static float initSpeed_ = 5.0f;
-    // TODO: Impl these
-    private static double GetMoney() { return 999.0; }
-    private static void SubtractMoney(int i_amount) { int a = i_amount; }
+    private static float speed_ = speedAtEachLevel_[0];
     // End of upgrade related stuff
 
-    private Game game;
+    static private Game game;
     public Road road;
     public int capacity;
     public List<MonoContainer> containers = new List<MonoContainer>();
@@ -49,7 +44,7 @@ public class Vehicle : MoveableObject
     private void Awake() {
         request = new Queue<Area>();
         game = (Game) FindObjectOfType(typeof(Game));
-        MOInit(transform.position, 5.0f, false);
+        MOInit(transform.position, speed_, false);
     }
 
     public bool AddContainer(MonoContainer monoContainer)
@@ -74,6 +69,7 @@ public class Vehicle : MoveableObject
 
     private void Update()
     {
+        UpdateSpeed(speed_); // Hack
         if (!(game.currentState is OperationState))
         {
             return;
