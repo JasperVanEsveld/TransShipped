@@ -61,6 +61,7 @@ public class Vehicle : MoveableObject
                 targetArea.AreaAvailable(road);
             }
         }
+
         MOMovementUpdate();
     }
 }

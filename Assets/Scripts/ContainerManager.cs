@@ -50,6 +50,7 @@ public class ContainerManager
         var visited = new List<Area> {area};
         Pair<Area, int> next = FirstArea(movement.TargetArea, area, visited);
         return next.First;
+
     }
 
     private static Pair<Area, int> FirstArea(Area current, Area target, List<Area> visited)
@@ -92,6 +93,7 @@ public class ContainerManager
             result = stack;
             leastAmount = stack.containers.Count;
         }
+
         return result;
     }
 }

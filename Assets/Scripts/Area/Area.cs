@@ -49,6 +49,7 @@ public abstract class Area : MonoBehaviour
             area.listening.Remove(this);
             return;
         }
+
         MoveToNext(container);
         if (queue.Count == 0)
             area.listening.Remove(this);
