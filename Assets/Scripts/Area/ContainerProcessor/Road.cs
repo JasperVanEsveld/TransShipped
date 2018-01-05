@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Assets.Scripts;
 
 public class Road : ContainerProcessor
 {
@@ -15,15 +15,15 @@ public class Road : ContainerProcessor
 
     private Vehicle FindShortedQueueVehicle()
     {
-        int min = int.MaxValue, minIndex;
-        minIndex = 0;
+        var min = int.MaxValue;
+        var minIndex = 0;
         for (var i = 0; i < vehicles.Count; i++)
         {
-            if (vehicles[i].request.Count <= min)
-            {
-                minIndex = i;
-            }
+            if (vehicles[i].request.Count > min) continue;
+            minIndex = i;
+            min = vehicles[i].request.Count;
         }
+
         return vehicles[minIndex];
     }
 
@@ -34,15 +34,19 @@ public class Road : ContainerProcessor
         {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
-            Debug.Log("adding containers");
             return vehicle.AddContainer(monoContainer);
         }
+
+        if (FindShortedQueueVehicle().request.Contains(monoContainer.movement.originArea)) return false;
         FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
+
         return false;
+
     }
 
-    protected override void RemoveContainer(MonoContainer monoContainer)
+    public override void RemoveContainer(MonoContainer monoContainer)
     {
         containerVehicle[monoContainer].containers.Remove(monoContainer);
+        containerVehicle.Remove(monoContainer);
     }
 }

@@ -1,50 +1,65 @@
 ﻿using System;
 using UnityEngine;
 
-public class Crane : MonoBehaviour
+namespace Assets.Scripts
 {
-    private Game game;
-    public CraneArea craneArea;
-    public float bastTime;
-    public MonoContainer container { private get; set; }
-
-    public bool isAvailable { get; private set; }
-    private DateTime startTime;
-
-    private void Awake()
+    public class Crane : MonoBehaviour
     {
-        game = (Game) FindObjectOfType(typeof(Game));
-        isAvailable = true;
+        public float baseTime;
+        private DateTime startTime;
+        public MonoContainer container { private get; set; }
+        public CraneArea craneArea;
+        private Game game;
 
-        container = null;
-    }
-
-    public bool AddContainer(MonoContainer monoContainer)
-    {
-        if (!isAvailable) return false;
-        isAvailable = false;
-        container = monoContainer;
-        startTime = DateTime.Now;
-        monoContainer.transform.SetParent(transform);
-        return true;
-    }
-
-    private void Update()
-    {
-        if (!(game.currentState is OperationState)) return;
-        if (!isAvailable)
+        private void Awake()
         {
-            if (!(DateTime.Now.Subtract(startTime).Seconds >= bastTime)) return;
-            if (craneArea.MoveToNext(container))
-            {
-                isAvailable = true;
-            }
+            container = null;
+            game = (Game) FindObjectOfType(typeof(Game));
         }
-        else
-        {
-            craneArea.AreaAvailable();
 
-            print(craneArea + " now available");
+        /// <summary>
+        /// Check if the crane is available<br/>
+        /// Return true if it is available<br/>
+        /// Otherwise return false
+        /// </summary>
+        /// <returns>Available or not</returns>
+        public bool IsAvailable()
+        {
+            return container == null;
+        }
+
+        public bool AddContainer(MonoContainer monoContainer)
+        {
+            if (!IsAvailable())
+            {
+                if (container.movement.originArea != monoContainer.movement.originArea
+                    && monoContainer.movement.originArea is Road)
+                {
+//                    print("Holding container from: " + container.movement.originArea);
+//                    print("New container from: " + monoContainer.movement.originArea);
+                    Area previous = container.movement.originArea;
+                    container.movement.originArea = craneArea;
+                    if (!previous.AddContainer(container)) return false;
+                    craneArea.RemoveContainer(container);
+                }
+                else return false;
+            }
+
+//            print("Received container from: " + monoContainer.movement.originArea);
+            container = monoContainer;
+            container.transform.SetParent(transform);
+            container.transform.position = transform.position;
+            startTime = DateTime.Now;
+            return true;
+        }
+
+        private void Update()
+        {
+            if (!(game.currentState is OperationState)) return;
+            if (!IsAvailable() && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
+                craneArea.MoveToNext(container);
+            else if (IsAvailable())
+                craneArea.AreaAvailable();
         }
     }
 }

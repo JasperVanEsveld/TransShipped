@@ -43,7 +43,7 @@ public class ScrollDetailTexture : MonoBehaviour
 
     private void Update()
     {
-        Material mat = (mCopy != null) ? mCopy : mOriginal;
+        Material mat = mCopy != null ? mCopy : mOriginal;
 
         if (mat == null) return;
         Texture tex = mat.GetTexture("_DetailTex");

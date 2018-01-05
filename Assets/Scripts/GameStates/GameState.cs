@@ -8,7 +8,7 @@
         Game.print("Current state: " + this);
     }
 
-    public virtual void Update() {
-
+    public virtual void Update()
+    {
     }
 }

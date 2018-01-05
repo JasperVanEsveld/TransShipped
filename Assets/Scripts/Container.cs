@@ -1,27 +1,29 @@
-﻿public enum containerType{Red = 0,Blue = 1,Green = 2};
+﻿public enum containerType
+{
+    Red = 0,
+    Blue = 1,
+    Green = 2
+}
 
 public class Container
 {
-
-    public containerType transType { get; set; }
+    public containerType transType { get; private set; }
 
     public Container(containerType transType)
     {
         this.transType = transType;
     }
 
-    public override bool Equals(object obj) {        
-        if (obj == null || GetType() != obj.GetType()) {
-            return false;
-        }
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType()) return false;
         Container other = obj as Container;
-        if(other.transType != this.transType ) {
-            return false;
-        }
-        return base.Equals (obj);
+        return other.transType != transType;
+
     }
-    
-    public override int GetHashCode() {
-        return base.GetHashCode()*17 + transType.GetHashCode();
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode() * 17 + transType.GetHashCode();
     }
 }

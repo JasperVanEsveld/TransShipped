@@ -14,6 +14,7 @@ public class SettingsButtonOnClick : MonoBehaviour
         if(game.stages.Count == 0){
             game.ChangeState(new LevelEndState(game));
         } else{
+            game.SetStage(game.stages.Dequeue());
             game.ChangeState(new UpgradeState(game));
         }
     }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Pause : MonoBehaviour {
 
@@ -36,7 +35,7 @@ public class Pause : MonoBehaviour {
 	}
 
 
-	public void DoPause()
+	private void DoPause()
 	{
 		//Set isPaused to true
 		isPaused = true;
@@ -47,7 +46,7 @@ public class Pause : MonoBehaviour {
 	}
 
 
-	public void UnPause()
+	private void UnPause()
 	{
 		//Set isPaused to false
 		isPaused = false;
