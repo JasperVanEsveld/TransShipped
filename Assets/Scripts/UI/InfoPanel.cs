@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,23 +10,22 @@ public class InfoPanel : MonoBehaviour {
     public Text timeRemainingText;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
         game = FindObjectOfType<Game>();
-        game.moneyChangeEvent += new OnMoneyChanged(SetMoney);
-        game.stateChangeEvent += new OnStateChanged(StateChanged);
-        game.stageChangeEvent += new OnStageChanged(StageChanged);
+        game.moneyChangeEvent += SetMoney;
+        game.stateChangeEvent += StateChanged;
+        game.stageChangeEvent += StageChanged;
         moneyText.text = "Money :" + game.money;
 
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if(timeRemainingText.IsActive()){
-            DateTime start = ((OperationState) game.currentState).startTime;
-            int difference = DateTime.Now.Subtract(start).Seconds;
-            timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
-        }
-    }
+	private void Update () {
+	    if (!timeRemainingText.IsActive()) return;
+	    DateTime start = ((OperationState) game.currentState).startTime;
+	    int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
+	    timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
+	}
 
     public void SetMoney(double newMoney) {
         moneyText.text = "Money :" + newMoney;
@@ -38,11 +35,8 @@ public class InfoPanel : MonoBehaviour {
        targetText.text = "Target :" + newStage.moneyRequired;
     }
 
-    public void StateChanged(GameState newState) {
-        if(newState is OperationState){
-            timeRemainingText.gameObject.SetActive(true);
-        } else{
-            timeRemainingText.gameObject.SetActive(false);
-        }
+    public void StateChanged(GameState newState)
+    {
+        timeRemainingText.gameObject.SetActive(newState is OperationState);
     }
 }

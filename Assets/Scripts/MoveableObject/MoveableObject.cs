@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 
 public class MoveableObject : MonoBehaviour
 {
@@ -23,21 +21,6 @@ public class MoveableObject : MonoBehaviour
     }
 
     // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
-    protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel, Vector3 i_scale)
-    {
-        movementQueue_ = new Queue<Vector3>();
-        lastPos_ = transform.position;
-        transform.position = new Vector3(i_initPos.x, height_, i_initPos.z);
-        speed_ = i_speed;
-        isSeaVehicle_ = i_isAtSeaLevel;
-        if (isSeaVehicle_)
-            height_ = -2.0f;
-        else
-            height_ = 0.0f;
-        transform.localScale = i_scale;
-    }
-
-    // or this if you dont want to modify the scale
     protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {
         movementQueue_ = new Queue<Vector3>();
@@ -54,7 +37,6 @@ public class MoveableObject : MonoBehaviour
     // If the object is not moving/ does not have anywhere to go, return true
     public bool MOIsObjectMoving()
     {
-        print(movementQueue_.Count);
         return movementQueue_.Count != 0;
     }
 
@@ -85,7 +67,7 @@ public class MoveableObject : MonoBehaviour
                 movementQueue_.Enqueue(i_dest);
                 lastPos_ = i_dest;
             }
-            else if ((desRegion == 0) && (curRegion == 2) || (desRegion == 2) && (curRegion == 0))
+            else if (desRegion == 0 && curRegion == 2 || desRegion == 2 && curRegion == 0)
             {
                 movementQueue_.Enqueue(new Vector3(lastPos_.x, height_, i_dest.z));
                 movementQueue_.Enqueue(i_dest);
@@ -115,10 +97,7 @@ public class MoveableObject : MonoBehaviour
         des.y = height_;
 
         float dis = Vector3.Distance(cur, des);
-        if (dis <= speed_ * Time.deltaTime)
-            return true;
-        else
-            return false;
+        return dis <= speed_ * Time.deltaTime;
     }
 
     // For ships, call this to have it enter terminal.
@@ -126,7 +105,6 @@ public class MoveableObject : MonoBehaviour
     public void MOEnterTerminal(Vector3 i_dest)
     {
         int desRegion = GetRegion_(i_dest);
-        Debug.Log(desRegion);
         if (desRegion == 5)
         {
             Vector3 intPoint2 = new Vector3(i_dest.x, height_, 36.0f);
@@ -179,49 +157,38 @@ public class MoveableObject : MonoBehaviour
     private bool IsAtTheCurrentDest_()
     {
         if (!MOIsObjectMoving()) return true;
-        else
-        {
-            Vector3 cur = transform.position;
-            cur.y = height_;
-            Vector3 des = movementQueue_.Peek();
-            des.y = height_;
+        Vector3 cur = transform.position;
+        cur.y = height_;
+        Vector3 des = movementQueue_.Peek();
+        des.y = height_;
 
-            float dis = Vector3.Distance(cur, des);
-            if (dis <= speed_ * Time.deltaTime)
-                return true;
-            else
-                return false;
-        }
+        float dis = Vector3.Distance(cur, des);
+        return dis <= speed_ * Time.deltaTime;
     }
 
     // Return a pos that the object is supposed to be for the next frame
     private Vector3 CalcPosForNextFrame_()
     {
-        if ((!MOIsObjectMoving()))
-        {
+        if (!MOIsObjectMoving())
             return transform.position;
-        }
-        else
+
+        if (IsAtTheCurrentDest_())
         {
-            if (IsAtTheCurrentDest_())
-            {
-                movementQueue_.Dequeue();
-                if (!MOIsObjectMoving())
-                {
-                    return transform.position;
-                }
-            }
-            float step = speed_ * Time.deltaTime;
-            Vector3 cur = transform.position;
-            cur.y = height_;
-            Vector3 des = movementQueue_.Peek();
-            des.y = height_;
-            return Vector3.MoveTowards(cur, des, step);
+            movementQueue_.Dequeue();
+            if (!MOIsObjectMoving())
+                return transform.position;
         }
+
+        float step = speed_ * Time.deltaTime;
+        Vector3 cur = transform.position;
+        cur.y = height_;
+        Vector3 des = movementQueue_.Peek();
+        des.y = height_;
+        return Vector3.MoveTowards(cur, des, step);
     }
 
 
-    private int GetRegion_(Vector3 i_vec)
+    private static int GetRegion_(Vector3 i_vec)
     {
         float zp = 12.0f;
         float zn = -12.0f;
@@ -230,50 +197,8 @@ public class MoveableObject : MonoBehaviour
         float x = i_vec.x;
         float z = i_vec.z;
 
-        if (z <= zn)
-        {
-            if (x <= xc)
-            {
-                return 0;
-            }
-            else if (x >= xs)
-            {
-                return 6;
-            }
-            else
-            {
-                return 3;
-            }
-        }
-        else if (z >= zp)
-        {
-            if (x <= xc)
-            {
-                return 2;
-            }
-            else if (x >= xs)
-            {
-                return 8;
-            }
-            else
-            {
-                return 5;
-            }
-        }
-        else
-        {
-            if (x <= xc)
-            {
-                return 1;
-            }
-            else if (x >= xs)
-            {
-                return 7;
-            }
-            else
-            {
-                return 4;
-            }
-        }
+        return z <= zn
+            ? (x <= xc ? 0 : (x >= xs ? 6 : 3))
+            : (z >= zp ? (x <= xc ? 2 : (x >= xs ? 8 : 5)) : (x <= xc ? 1 : (x >= xs ? 7 : 4)));
     }
 }

@@ -10,10 +10,4 @@ public class MonoContainer : MonoBehaviour
         this.container = container;
         this.movement = movement;
     }
-
-    private void Start()
-    {
-        //movement = new Movement(this,first,target);
-        //todo This function initialize the MonoContainer with different colours according to their transType
-    }
 }

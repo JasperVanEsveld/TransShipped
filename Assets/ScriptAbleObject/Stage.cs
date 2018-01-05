@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using Random = System.Random;
 
 [CreateAssetMenu(menuName = "Stage")]
 public class Stage : ScriptableObject
@@ -10,10 +11,12 @@ public class Stage : ScriptableObject
     public double reward;
     public double penalty;
     public List<VehicleTemplate> vehicleTemplates;
+    public double spawnInterval;
+    public double maxVehicles;
 
     public VehicleTemplate GetTemplate(VehicleType type){
         List<VehicleTemplate> templates =vehicleTemplates.FindAll(template => template.type == type);
-        var rnd = new System.Random();
+        var rnd = new Random();
         int randomSelection = rnd.Next(0, templates.Count - 1);
 
 

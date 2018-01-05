@@ -18,13 +18,15 @@ public class OperationState : GameState
         game.movements += 1;
     }
 
-    public override void Update() {
-        if(this.game.currentStage.duration < DateTime.Now.Subtract(startTime).Seconds){
+    public override void Update()
+    {
+        if (game.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
             game.ChangeState(new StageEndState(game));
-        }
-        if(lastTime == null || DateTime.Now.Subtract(lastTime).Seconds >= 5 ){
-            lastTime = DateTime.Now;
-            generator.GenerateVehicle<Ship>(VehicleType.Ship);
-        }
+
+        int vehicles = Game.FindObjectsOfType<DeliveryVehicle>().Length;
+        if (!((DateTime.Now - lastTime).TotalSeconds >= game.currentStage.spawnInterval) ||
+            !(vehicles < game.currentStage.maxVehicles)) return;
+        lastTime = DateTime.Now;
+        generator.GenerateVehicle<Ship>(VehicleType.Ship);
     }
 }
