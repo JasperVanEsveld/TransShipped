@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StatePanelManager : MonoBehaviour {
 
@@ -18,7 +16,7 @@ public class StatePanelManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		game = FindObjectOfType<Game>();
-		game.stateChangeEvent += new OnStateChanged(stateChanged);
+		game.stateChangeEvent += stateChanged;
 		changeActions.Add(typeof(OperationState),OnOperationStart);
 		changeActions.Add(typeof(UpgradeState),OnUpgradeStart);
 		changeActions.Add(typeof(StageEndState),OnStageEnd);

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
@@ -9,43 +9,41 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     private T current;
     private bool loading;
 
-    public void OnVehicleEnter(T vehicle) {
-        if(vehicle == current || waiting.Contains(vehicle)) return;
+    public void OnVehicleEnter(T vehicle)
+    {
+        if (vehicle == current || waiting.Contains(vehicle)) return;
         if (!(game.currentState is OperationState)) return;
-        if (current == null) {
+        if (current == null)
+        {
             current = vehicle;
             Service(current);
         }
         else
-        {
             waiting.Enqueue(vehicle);
-        }
     }
 
-    private void Service(T vehicle) {
+    private void Service(T vehicle)
+    {
         start = DateTime.Now;
         loading = false;
         remainingRequests = new List<Container>(vehicle.outgoing);
         foreach (var container in vehicle.carrying)
-        {
             ((OperationState) game.currentState).manager.Store(this, container);
-        }
-        for (var i = vehicle.carrying.Count - 1; i >= 0; i--) {
-            if (!MoveToNext(vehicle.carrying[i])) {
+
+        for (var i = vehicle.carrying.Count - 1; i >= 0; i--)
+            if (!MoveToNext(vehicle.carrying[i]))
                 AddToQueue(vehicle.carrying[i]);
-            }
-        }
     }
 
-    public void requestOutgoing(){
-        for(int i = remainingRequests.Count - 1; i >= 0; i--){
+    public void requestOutgoing()
+    {
+        for (int i = remainingRequests.Count - 1; i >= 0; i--)
+        {
             Container c = remainingRequests[i];
             ContainerManager manager = game.GetManager();
-            if(manager != null){
-                if(manager.Request(this, c)){
-                    remainingRequests.RemoveAt(i);
-                }
-            }
+            if (manager == null) continue;
+            if (manager.Request(this, c))
+                remainingRequests.RemoveAt(i);
         }
     }
 
@@ -53,24 +51,24 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     {
         current.LeaveTerminal();
         current = null;
-        if (waiting.Count != 0) {
-            current = waiting.Dequeue();
-            Service(current);
-        }
+        if (waiting.Count == 0) return;
+        current = waiting.Dequeue();
+        Service(current);
     }
 
-    private void Update() {
-        if (current != null ){
-            if (start.Subtract(DateTime.Now).TotalSeconds >= current.timeOutTime){
-                OnVehicleLeaves();
-            } else if (current.carrying.Count == 0 && !loading){
-                loading = true;
-            } else if (loading && remainingRequests.Count > 0){
-                requestOutgoing();
-            } else if (loading && current.outgoing.Count == current.carrying.Count){
-                game.SetMoney(game.money + current.reward);
-                OnVehicleLeaves();
-            }
+    private void Update()
+    {
+        if (current == null) return;
+        if (start.Subtract(DateTime.Now).TotalSeconds >= current.timeOutTime)
+            OnVehicleLeaves();
+        else if (current.carrying.Count == 0 && !loading)
+            loading = true;
+        else if (loading && remainingRequests.Count > 0)
+            requestOutgoing();
+        else if (loading && current.outgoing.Count == current.carrying.Count)
+        {
+            game.SetMoney(game.money + current.reward);
+            OnVehicleLeaves();
         }
     }
 
@@ -82,7 +80,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         return true;
     }
 
-    protected override void RemoveContainer(MonoContainer monoContainer)
+    public override void RemoveContainer(MonoContainer monoContainer)
     {
         current.carrying.Remove(monoContainer);
     }

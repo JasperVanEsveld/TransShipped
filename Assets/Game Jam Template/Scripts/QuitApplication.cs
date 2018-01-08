@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class QuitApplication : MonoBehaviour {
 
@@ -14,7 +14,7 @@ public class QuitApplication : MonoBehaviour {
 		//If we are running in the editor
 	#if UNITY_EDITOR
 		//Stop playing the scene
-		UnityEditor.EditorApplication.isPlaying = false;
+		EditorApplication.isPlaying = false;
 	#endif
 	}
 }

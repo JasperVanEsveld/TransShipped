@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts;
+using Assets.Scripts.MoveableObject;
 using UnityEngine;
 
-
-public class NewAGVButton : MonoBehaviour {
-    
+public class NewAGVButton : MonoBehaviour
+{
     private Road road;
-    
-    void Start () {
+
+    private void Start()
+    {
         road = FindObjectOfType<Road>();
     }
 

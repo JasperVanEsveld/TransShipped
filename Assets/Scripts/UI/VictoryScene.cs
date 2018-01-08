@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class VictoryScene : MonoBehaviour {
-
-	public void ShowVictoryScreen()
+public class VictoryScene : MonoBehaviour
+{
+    private static void ShowVictoryScreen()
     {
         GameObject.Find("Canvas/VictoryPanel").GetComponent<RectTransform>().anchorMin = new Vector2(0.1f, 0.4f);
         GameObject.Find("Canvas/VictoryPanel").GetComponent<RectTransform>().anchorMax = new Vector2(0.9f, 0.9f);
     }
 
     //Placeholder. used to trigger ShowVictoryScreen after a certain time
-    private int count = 0;
+    private int count;
 
     private void Update()
     {
@@ -20,6 +18,6 @@ public class VictoryScene : MonoBehaviour {
         ++count;
         Debug.Log(count);
         if (count == 1000)
-        ShowVictoryScreen();
+            ShowVictoryScreen();
     }
 }

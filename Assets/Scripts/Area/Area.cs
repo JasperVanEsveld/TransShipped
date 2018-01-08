@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void OnAreaAvailable();
-
 public abstract class Area : MonoBehaviour
 {
     protected Game game { get; private set; }
@@ -22,81 +20,71 @@ public abstract class Area : MonoBehaviour
         connectArea.connected.Add(this);
     }
 
-    public void AddListener(Area area)
+    private void AddListener(Area area)
     {
         if (!listening.Contains(area))
-        {
             listening.Add(area);
-        }
     }
 
-    public void AreaAvailable(Area availableTo){
-        if(listening.Contains(availableTo)){
+    public void AreaAvailable(Area availableTo)
+    {
+        if (listening.Contains(availableTo))
             availableTo.OnAreaAvailable(this);
-        }
     }
 
-    protected void AreaAvailable()
+    public void AreaAvailable()
     {
         for (var i = listening.Count - 1; i >= 0; i--)
-        {
             listening[i].OnAreaAvailable(this);
-        }
     }
 
-    public void OnAreaAvailable(Area area)
+    private void OnAreaAvailable(Area area)
     {
         Queue<MonoContainer> queue = containerQueue[area];
         MonoContainer container;
         if (queue.Count > 0)
-        {
             container = queue.Dequeue();
-        }
         else
         {
             area.listening.Remove(this);
             return;
         }
+
         MoveToNext(container);
         if (queue.Count == 0)
-        {
             area.listening.Remove(this);
-        }
     }
 
     public abstract bool AddContainer(MonoContainer monoContainer);
 
-    protected abstract void RemoveContainer(MonoContainer monoCont);
+    public abstract void RemoveContainer(MonoContainer monoCont);
 
     public bool MoveToNext(MonoContainer monoCont)
     {
         if (monoCont.movement == null || !(game.currentState is OperationState)) return false;
-        var nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
-        Transform previousParent = monoCont.transform.parent;
-        monoCont.transform.SetParent(nextArea.transform);
+        var nextArea = ContainerManager.GetNextArea(this, monoCont.movement);
         Area previousOrigin = monoCont.movement.originArea;
         monoCont.movement.originArea = this;
-        if (!nextArea.AddContainer(monoCont)) {
+        if (!nextArea.AddContainer(monoCont))
+        {
             monoCont.movement.originArea = previousOrigin;
-            monoCont.transform.SetParent(previousParent);
             return false;
         }
-        monoCont.transform.position = nextArea.transform.position;
+
         RemoveContainer(monoCont);
         return true;
     }
 
-    protected void AddToQueue(MonoContainer monoCont) {
+    protected void AddToQueue(MonoContainer monoCont)
+    {
         if (monoCont.movement == null || !(game.currentState is OperationState)) return;
-        Area nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
+        Area nextArea = ContainerManager.GetNextArea(this, monoCont.movement);
         if (!containerQueue.ContainsKey(nextArea))
-        {
             containerQueue.Add(nextArea, new Queue<MonoContainer>());
-        }
+
         if (!containerQueue[nextArea].Contains(monoCont))
-        {
             containerQueue[nextArea].Enqueue(monoCont);
-        }
+
         nextArea.AddListener(this);
     }
 }
