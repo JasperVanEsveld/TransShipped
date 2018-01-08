@@ -15,18 +15,7 @@ public class Game : MonoBehaviour
     public List<Stage> stagesList;
     public Queue<Stage> stages;
     public int movements;
-    private double moneyValue = 100;
-    public double money {
-        get{
-            return this.moneyValue;
-        }
-        set{
-            this.moneyValue = value;
-            if(moneyChangeEvent != null){
-                moneyChangeEvent(money);
-            }
-        }
-    }
+    public double money;
     public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
     public List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
@@ -94,6 +83,8 @@ public class Game : MonoBehaviour
     public void SetMoney(double money)
     {
         this.money = money;
+        if (moneyChangeEvent != null)
+            moneyChangeEvent(money);
     }
 
     public void SetStage(Stage newStage)
