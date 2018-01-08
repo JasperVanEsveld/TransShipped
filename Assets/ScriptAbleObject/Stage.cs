@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Stage")]
 public class Stage : ScriptableObject
@@ -16,7 +15,7 @@ public class Stage : ScriptableObject
 
     public VehicleTemplate GetTemplate(VehicleType type){
         List<VehicleTemplate> templates =vehicleTemplates.FindAll(template => template.type == type);
-        var rnd = new Random();
+        var rnd = new System.Random();
         int randomSelection = rnd.Next(0, templates.Count - 1);
 
 

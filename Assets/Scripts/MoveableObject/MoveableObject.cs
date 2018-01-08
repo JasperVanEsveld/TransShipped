@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class MoveableObject : MonoBehaviour
 {
@@ -20,18 +22,28 @@ public class MoveableObject : MonoBehaviour
         transform.position = CalcPosForNextFrame_();
     }
 
-    protected void UpdateSpeed(float i_newSpeed)
+    // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
+    protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel, Vector3 i_scale)
     {
-        speed = i_newSpeed;
+        movementQueue_ = new Queue<Vector3>();
+        lastPos_ = transform.position;
+        transform.position = new Vector3(i_initPos.x, height_, i_initPos.z);
+        speed_ = i_speed;
+        isSeaVehicle_ = i_isAtSeaLevel;
+        if (isSeaVehicle_)
+            height_ = -2.0f;
+        else
+            height_ = 0.0f;
+        transform.localScale = i_scale;
     }
 
-    // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
+    // or this if you dont want to modify the scale
     protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {
         movementQueue_ = new Queue<Vector3>();
         lastPos_ = transform.position;
         transform.position = new Vector3(i_initPos.x, height_, i_initPos.z);
-        speed = i_speed;
+        speed_ = i_speed;
         isSeaVehicle_ = i_isAtSeaLevel;
         if (isSeaVehicle_)
             height_ = -2.0f;
@@ -52,7 +64,6 @@ public class MoveableObject : MonoBehaviour
         {
             return;
         }
-
         int desRegion = GetRegion_(i_dest);
         int curRegion = GetRegion_(lastPos_);
 //        Debug.Log(i_dest);
@@ -73,7 +84,7 @@ public class MoveableObject : MonoBehaviour
                 movementQueue_.Enqueue(i_dest);
                 lastPos_ = i_dest;
             }
-            else if (desRegion == 0 && curRegion == 2 || desRegion == 2 && curRegion == 0)
+            else if ((desRegion == 0) && (curRegion == 2) || (desRegion == 2) && (curRegion == 0))
             {
                 movementQueue_.Enqueue(new Vector3(lastPos_.x, height_, i_dest.z));
                 movementQueue_.Enqueue(i_dest);
@@ -103,7 +114,10 @@ public class MoveableObject : MonoBehaviour
         des.y = height_;
 
         float dis = Vector3.Distance(cur, des);
-        return dis <= speed * Time.deltaTime;
+        if (dis <= speed_ * Time.deltaTime)
+            return true;
+        else
+            return false;
     }
 
     // For ships, call this to have it enter terminal.
@@ -147,7 +161,6 @@ public class MoveableObject : MonoBehaviour
             movementQueue_.Enqueue(intPoint1);
             movementQueue_.Enqueue(intPoint2);
         }
-
         // TODO: Delete the parent GameObject
     }
 
@@ -156,7 +169,7 @@ public class MoveableObject : MonoBehaviour
     private Queue<Vector3> movementQueue_;
 
     private Vector3 lastPos_;
-    private float speed;
+    private float speed_;
     private float height_;
     private bool isSeaVehicle_;
 
@@ -164,38 +177,49 @@ public class MoveableObject : MonoBehaviour
     private bool IsAtTheCurrentDest_()
     {
         if (!MOIsObjectMoving()) return true;
-        Vector3 cur = transform.position;
-        cur.y = height_;
-        Vector3 des = movementQueue_.Peek();
-        des.y = height_;
+        else
+        {
+            Vector3 cur = transform.position;
+            cur.y = height_;
+            Vector3 des = movementQueue_.Peek();
+            des.y = height_;
 
-        float dis = Vector3.Distance(cur, des);
-        return dis <= speed * Time.deltaTime;
+            float dis = Vector3.Distance(cur, des);
+            if (dis <= speed_ * Time.deltaTime)
+                return true;
+            else
+                return false;
+        }
     }
 
     // Return a pos that the object is supposed to be for the next frame
     private Vector3 CalcPosForNextFrame_()
     {
-        if (!MOIsObjectMoving())
-            return transform.position;
-
-        if (IsAtTheCurrentDest_())
+        if ((!MOIsObjectMoving()))
         {
-            movementQueue_.Dequeue();
-            if (!MOIsObjectMoving())
-                return transform.position;
+            return transform.position;
         }
-
-        float step = speed * Time.deltaTime;
-        Vector3 cur = transform.position;
-        cur.y = height_;
-        Vector3 des = movementQueue_.Peek();
-        des.y = height_;
-        return Vector3.MoveTowards(cur, des, step);
+        else
+        {
+            if (IsAtTheCurrentDest_())
+            {
+                movementQueue_.Dequeue();
+                if (!MOIsObjectMoving())
+                {
+                    return transform.position;
+                }
+            }
+            float step = speed_ * Time.deltaTime;
+            Vector3 cur = transform.position;
+            cur.y = height_;
+            Vector3 des = movementQueue_.Peek();
+            des.y = height_;
+            return Vector3.MoveTowards(cur, des, step);
+        }
     }
 
 
-    private static int GetRegion_(Vector3 i_vec)
+    private int GetRegion_(Vector3 i_vec)
     {
         float zp = 12.0f;
         float zn = -12.0f;
@@ -204,8 +228,50 @@ public class MoveableObject : MonoBehaviour
         float x = i_vec.x;
         float z = i_vec.z;
 
-        return z <= zn
-            ? (x <= xc ? 0 : (x >= xs ? 6 : 3))
-            : (z >= zp ? (x <= xc ? 2 : (x >= xs ? 8 : 5)) : (x <= xc ? 1 : (x >= xs ? 7 : 4)));
+        if (z <= zn)
+        {
+            if (x <= xc)
+            {
+                return 0;
+            }
+            else if (x >= xs)
+            {
+                return 6;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        else if (z >= zp)
+        {
+            if (x <= xc)
+            {
+                return 2;
+            }
+            else if (x >= xs)
+            {
+                return 8;
+            }
+            else
+            {
+                return 5;
+            }
+        }
+        else
+        {
+            if (x <= xc)
+            {
+                return 1;
+            }
+            else if (x >= xs)
+            {
+                return 7;
+            }
+            else
+            {
+                return 4;
+            }
+        }
     }
 }

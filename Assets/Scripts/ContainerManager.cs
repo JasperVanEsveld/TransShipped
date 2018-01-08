@@ -28,29 +28,27 @@ public class ContainerManager
     public bool Request(Area target, Container container)
     {
         var stackContaining = FindStackContaining(container);
-        if (stackContaining == null)
-        {
+        if (stackContaining == null) {
             Game.print("Request failed, no stack containing" + container.transType);
             return false;
         }
-
-        MonoContainer monoCont =
-            stackContaining.containers.FirstOrDefault(item =>
-                item.container.Equals(container) && item.movement == null);
-        if (monoCont == null)
+        MonoContainer monoCont = stackContaining.containers.FirstOrDefault(item => item.container.Equals(container) && item.movement == null);
+        if(monoCont == null){
             return false;
-
+        }
         monoCont.movement = new Movement(target);
         return true;
     }
 
-    public static Area GetNextArea(Area area, Movement movement)
+    public Area GetNextArea(Area area, Movement movement)
     {
-        if (movement.TargetArea == area) return null;
+        if (movement.TargetArea == area)
+        {
+            return null;
+        }
         var visited = new List<Area> {area};
         Pair<Area, int> next = FirstArea(movement.TargetArea, area, visited);
         return next.First;
-
     }
 
     private static Pair<Area, int> FirstArea(Area current, Area target, List<Area> visited)
@@ -60,8 +58,9 @@ public class ContainerManager
         foreach (var area in current.connected)
         {
             if (area == target)
+            {
                 return new Pair<Area, int>(current, 1);
-
+            }
             if (visited.Contains(area)) continue;
             visited.Add(area);
             var areaDistance = FirstArea(area, target, visited);
@@ -69,7 +68,6 @@ public class ContainerManager
             areaDistance.Second += 1;
             result = areaDistance;
         }
-
         return result;
     }
 
@@ -77,9 +75,12 @@ public class ContainerManager
     {
         Stack result = null;
         foreach (Stack stack in stacks)
+        {
             if (stack.Contains(container) >= 0)
+            {
                 result = stack;
-
+            }
+        }
         return result;
     }
 
@@ -93,7 +94,8 @@ public class ContainerManager
             result = stack;
             leastAmount = stack.containers.Count;
         }
-
         return result;
     }
+
+    
 }

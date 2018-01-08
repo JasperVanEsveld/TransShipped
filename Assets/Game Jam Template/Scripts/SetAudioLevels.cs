@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SetAudioLevels : MonoBehaviour {
 

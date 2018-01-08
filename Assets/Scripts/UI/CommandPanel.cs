@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CommandPanel : MonoBehaviour {
     private Game game;
     public Transform prefab;
-    int buttonCount;
+    int buttonCount = 0;
     List<Transform> buttons = new List<Transform>();
 
 	void Awake () {
@@ -25,16 +26,18 @@ public class CommandPanel : MonoBehaviour {
         }
         buttons.Clear();
         float x = 85f;
+        int i = 0;
         buttonCount = game.vehicles.Count;
         foreach(DeliveryVehicle vehicle  in game.vehicles){
             Transform obj = Instantiate(prefab);
-            obj.SetParent(transform, false);
+            obj.SetParent(this.transform, false);
             buttons.Add(obj);
             obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x,0);
             x += 170f;
             vehicle.areaPos = game.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
             obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
-            obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
+            obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType().ToString() + "\n Containers: " + vehicle.carrying.Count;
+            i++;
         }
     }
 }

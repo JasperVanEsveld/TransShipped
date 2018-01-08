@@ -11,7 +11,6 @@ public class UpgradeState : GameState
         return true;
     }
 
-    public override void Update()
-    {
+    public override void Update() {
     }
 }

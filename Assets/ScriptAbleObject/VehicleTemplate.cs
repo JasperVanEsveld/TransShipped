@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public enum VehicleType{Ship = 0, Truck = 1, Train = 2}
+public enum VehicleType{Ship = 0, Truck = 1, Train = 2};
 
 [CreateAssetMenu(menuName = "VehicleTemplate")]
 public class VehicleTemplate : ScriptableObject

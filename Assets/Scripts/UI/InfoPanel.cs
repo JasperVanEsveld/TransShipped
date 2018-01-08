@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +12,7 @@ public class InfoPanel : MonoBehaviour {
     public Text timeRemainingText;
 
 	// Use this for initialization
-	private void Start () {
+	void Start () {
         game = FindObjectOfType<Game>();
         game.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
         game.stateChangeEvent += new OnStateChanged(StateChanged);
@@ -20,12 +22,13 @@ public class InfoPanel : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	private void Update () {
-	    if (!timeRemainingText.IsActive()) return;
-	    DateTime start = ((OperationState) game.currentState).startTime;
-	    int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
-	    timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
-	}
+	void Update () {
+        if(timeRemainingText.IsActive()){
+            DateTime start = ((OperationState) game.currentState).startTime;
+            int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
+            timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
+        }
+    }
 
     public void MoneyChanged(double newMoney) {
         moneyText.text = "Money :" + newMoney;
@@ -35,8 +38,11 @@ public class InfoPanel : MonoBehaviour {
        targetText.text = "Target :" + newStage.moneyRequired;
     }
 
-    public void StateChanged(GameState newState)
-    {
-        timeRemainingText.gameObject.SetActive(newState is OperationState);
+    public void StateChanged(GameState newState) {
+        if(newState is OperationState){
+            timeRemainingText.gameObject.SetActive(true);
+        } else{
+            timeRemainingText.gameObject.SetActive(false);
+        }
     }
 }

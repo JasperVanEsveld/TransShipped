@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +16,7 @@ public class PlayMusic : MonoBehaviour {
 	private float resetTime = .01f;					//Very short time used to fade in near instantly without a click
 
 
-	private void Awake () 
+	void Awake () 
 	{
 		//Get a component reference to the AudioSource attached to the UI game object
 		musicSource = GetComponent<AudioSource> ();
