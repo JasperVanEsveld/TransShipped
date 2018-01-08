@@ -12,9 +12,9 @@ public class InfoPanel : MonoBehaviour {
 	// Use this for initialization
 	private void Start () {
         game = FindObjectOfType<Game>();
-        game.moneyChangeEvent += SetMoney;
-        game.stateChangeEvent += StateChanged;
-        game.stageChangeEvent += StageChanged;
+        game.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
+        game.stateChangeEvent += new OnStateChanged(StateChanged);
+        game.stageChangeEvent += new OnStageChanged(StageChanged);
         moneyText.text = "Money :" + game.money;
 
     }
@@ -27,7 +27,7 @@ public class InfoPanel : MonoBehaviour {
 	    timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
 	}
 
-    public void SetMoney(double newMoney) {
+    public void MoneyChanged(double newMoney) {
         moneyText.text = "Money :" + newMoney;
     }
 

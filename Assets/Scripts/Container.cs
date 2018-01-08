@@ -18,7 +18,8 @@ public class Container
     {
         if (obj == null || GetType() != obj.GetType()) return false;
         Container other = obj as Container;
-        return other.transType != transType;
+
+        return other.transType == this.transType;
 
     }
 
