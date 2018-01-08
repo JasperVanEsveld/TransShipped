@@ -20,6 +20,11 @@ public class MoveableObject : MonoBehaviour
         transform.position = CalcPosForNextFrame_();
     }
 
+    protected void UpdateSpeed(float i_newSpeed)
+    {
+        speed_ = i_newSpeed;
+    }
+
     // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
     protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {
