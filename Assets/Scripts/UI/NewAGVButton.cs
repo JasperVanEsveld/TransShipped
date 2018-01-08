@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using Assets.Scripts.MoveableObject;
+using UnityEngine;
 
-public class NewAGVButton : MonoBehaviour {
-    
+public class NewAGVButton : MonoBehaviour
+{
     private Road road;
 
-    private void Start () {
+    private void Start()
+    {
         road = FindObjectOfType<Road>();
     }
 

@@ -1,48 +1,57 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Assets.Scripts.MoveableObject;
 
-public class Road : Area
+namespace Assets.Scripts
 {
-    private readonly Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
-    public List<Vehicle> vehicles = new List<Vehicle>();
-
-    private Vehicle FindAvailableVehicle(Area required)
+    public class Road : Area
     {
-        return vehicles.FirstOrDefault(vehicle => !vehicle.MOIsObjectMoving() && !vehicle.IsFull() && vehicle.MOIsAtTheThisPos(required.transform.position));
-    }
+        private readonly Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
+        public List<Vehicle> vehicles = new List<Vehicle>();
 
-    private Vehicle FindShortedQueueVehicle()
-    {
-        int min = int.MaxValue;
-        int minIndex = 0;
-        for (var i = 0; i < vehicles.Count; i++)
+        private Vehicle FindAvailableVehicle(Area required)
         {
-            if (vehicles[i].request.Count > min) continue;
-            minIndex = i;
-            min = vehicles[i].request.Count;
+            return vehicles.FirstOrDefault(vehicle =>
+                !vehicle.MOIsObjectMoving() && !vehicle.IsFull() &&
+                vehicle.MOIsAtTheThisPos(required.transform.position));
         }
-        return vehicles[minIndex];
-    }
 
-    public override bool AddContainer(MonoContainer monoContainer)
-    {
-        Vehicle vehicle = FindAvailableVehicle(monoContainer.movement.originArea);
-        if (vehicle != null)
+        private Vehicle FindShortedQueueVehicle()
         {
-            vehicle.GoTo(monoContainer.movement.originArea);
-            containerVehicle.Add(monoContainer, vehicle);
-            return vehicle.AddContainer(monoContainer);
-        }
-        if(!FindShortedQueueVehicle().request.Contains(monoContainer.movement.originArea)){
-            FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
-        }
-        return false;
-    }
+            int min = int.MaxValue;
+            int minIndex = 0;
+            for (var i = 0; i < vehicles.Count; i++)
+            {
+                if (vehicles[i].request.Count > min) continue;
+                minIndex = i;
+                min = vehicles[i].request.Count;
+            }
 
-    public override void RemoveContainer(MonoContainer monoContainer)
-    {
-        containerVehicle[monoContainer].containers.Remove(monoContainer);
-        containerVehicle.Remove(monoContainer);
+            return vehicles[minIndex];
+        }
+
+        public override bool AddContainer(MonoContainer monoContainer)
+        {
+            Vehicle vehicle = FindAvailableVehicle(monoContainer.movement.originArea);
+            if (vehicle != null)
+            {
+                vehicle.GoTo(monoContainer.movement.originArea);
+                containerVehicle.Add(monoContainer, vehicle);
+                return vehicle.AddContainer(monoContainer);
+            }
+
+            if (!FindShortedQueueVehicle().request.Contains(monoContainer.movement.originArea))
+            {
+                FindShortedQueueVehicle().request.Enqueue(monoContainer.movement.originArea);
+            }
+
+            return false;
+        }
+
+        public override void RemoveContainer(MonoContainer monoContainer)
+        {
+            containerVehicle[monoContainer].containers.Remove(monoContainer);
+            containerVehicle.Remove(monoContainer);
+        }
     }
 }

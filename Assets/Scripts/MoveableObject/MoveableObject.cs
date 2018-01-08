@@ -22,7 +22,7 @@ public class MoveableObject : MonoBehaviour
 
     protected void UpdateSpeed(float i_newSpeed)
     {
-        speed_ = i_newSpeed;
+        speed = i_newSpeed;
     }
 
     // CALL THIS IN Start() FIRST IN WHICHEVER CHILD CLASS YOU ARE USING
@@ -31,7 +31,7 @@ public class MoveableObject : MonoBehaviour
         movementQueue_ = new Queue<Vector3>();
         lastPos_ = transform.position;
         transform.position = new Vector3(i_initPos.x, height_, i_initPos.z);
-        speed_ = i_speed;
+        speed = i_speed;
         isSeaVehicle_ = i_isAtSeaLevel;
         if (isSeaVehicle_)
             height_ = -2.0f;
@@ -52,6 +52,7 @@ public class MoveableObject : MonoBehaviour
         {
             return;
         }
+
         int desRegion = GetRegion_(i_dest);
         int curRegion = GetRegion_(lastPos_);
 //        Debug.Log(i_dest);
@@ -102,7 +103,7 @@ public class MoveableObject : MonoBehaviour
         des.y = height_;
 
         float dis = Vector3.Distance(cur, des);
-        return dis <= speed_ * Time.deltaTime;
+        return dis <= speed * Time.deltaTime;
     }
 
     // For ships, call this to have it enter terminal.
@@ -146,6 +147,7 @@ public class MoveableObject : MonoBehaviour
             movementQueue_.Enqueue(intPoint1);
             movementQueue_.Enqueue(intPoint2);
         }
+
         // TODO: Delete the parent GameObject
     }
 
@@ -154,7 +156,7 @@ public class MoveableObject : MonoBehaviour
     private Queue<Vector3> movementQueue_;
 
     private Vector3 lastPos_;
-    private float speed_;
+    private float speed;
     private float height_;
     private bool isSeaVehicle_;
 
@@ -168,7 +170,7 @@ public class MoveableObject : MonoBehaviour
         des.y = height_;
 
         float dis = Vector3.Distance(cur, des);
-        return dis <= speed_ * Time.deltaTime;
+        return dis <= speed * Time.deltaTime;
     }
 
     // Return a pos that the object is supposed to be for the next frame
@@ -184,7 +186,7 @@ public class MoveableObject : MonoBehaviour
                 return transform.position;
         }
 
-        float step = speed_ * Time.deltaTime;
+        float step = speed * Time.deltaTime;
         Vector3 cur = transform.position;
         cur.y = height_;
         Vector3 des = movementQueue_.Peek();
