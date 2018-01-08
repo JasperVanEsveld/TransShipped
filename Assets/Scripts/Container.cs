@@ -16,7 +16,7 @@ public class Container
             return false;
         }
         Container other = obj as Container;
-        return other.transType != this.transType;
+        return other.transType == this.transType;
     }
     
     public override int GetHashCode() {

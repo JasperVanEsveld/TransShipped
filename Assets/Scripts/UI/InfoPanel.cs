@@ -14,7 +14,7 @@ public class InfoPanel : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         game = FindObjectOfType<Game>();
-        game.moneyChangeEvent += new OnMoneyChanged(SetMoney);
+        game.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
         game.stateChangeEvent += new OnStateChanged(StateChanged);
         game.stageChangeEvent += new OnStageChanged(StageChanged);
         moneyText.text = "Money :" + game.money;
@@ -30,7 +30,7 @@ public class InfoPanel : MonoBehaviour {
         }
     }
 
-    public void SetMoney(double newMoney) {
+    public void MoneyChanged(double newMoney) {
         moneyText.text = "Money :" + newMoney;
     }
 
