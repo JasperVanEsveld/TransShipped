@@ -33,7 +33,7 @@ public class Vehicle : MoveableObject
 
     public void GoTo(Area i_targetArea)
     {
-        MOPushNewDest(i_targetArea.transform.position);
+        MOPushDestination(i_targetArea.transform.position);
         targetArea = i_targetArea;
     }
 

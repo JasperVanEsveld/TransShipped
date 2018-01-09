@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Train : DeliveryVehicle
 {
-    public TrainArea area;
+    public Railway area;
 
     private void Start()
     {
-        MOInit(new Vector3(65, 0, 35), 20, true);
+        MOInit(new Vector3(-5, 0, 35), 20, false);
 
-        List<TrainArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<TrainArea>();
+        List<Railway> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<Railway>();
 
         //TODO:get the first free area
         area = areaList[0];
@@ -19,10 +19,10 @@ public class Train : DeliveryVehicle
     {
         if (!(game.currentState is OperationState)) return;
         MOMovementUpdate();
-        
-        if(isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
+
+        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
         isAtDestination = true;
-        
+
         area.OnVehicleEnter(this);
     }
 }

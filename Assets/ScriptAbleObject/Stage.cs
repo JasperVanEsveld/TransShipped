@@ -14,14 +14,15 @@ public class Stage : ScriptableObject
     public double spawnInterval;
     public double maxVehicles;
 
-    public VehicleTemplate GetTemplate(VehicleType type){
-        List<VehicleTemplate> templates =vehicleTemplates.FindAll(template => template.type == type);
+    public VehicleTemplate GetTemplate(VehicleType type)
+    {
+        List<VehicleTemplate> templates = vehicleTemplates.FindAll(template => template.type == type);
         var rnd = new Random();
         int randomSelection = rnd.Next(0, templates.Count - 1);
 
-
         return templates[randomSelection];
     }
+
     public bool IsSuccess(GameState state)
     {
         return state.game.money >= moneyRequired && state.game.movements >= movementsRequired;

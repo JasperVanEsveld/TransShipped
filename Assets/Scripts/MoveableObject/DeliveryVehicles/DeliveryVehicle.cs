@@ -20,11 +20,17 @@ public abstract class DeliveryVehicle : MoveableObject
     public void EnterTerminal()
     {
         game.vehicles.Remove(this);
-        MOEnterTerminal(areaPos);
+        if (GetType() == typeof(Ship))
+            MOShipEnterTerminal(areaPos);
+        else
+            MOPushDestination(areaPos);
     }
 
     public void LeaveTerminal()
     {
-        MOLeaveTerminal();
+        if (GetType() == typeof(Ship))
+            MOShipLeaveTerminal();
+        else
+            MOPushDestination(new Vector3(-50, 0, 42));
     }
 }

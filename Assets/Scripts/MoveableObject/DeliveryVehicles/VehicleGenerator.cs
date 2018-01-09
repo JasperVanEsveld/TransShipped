@@ -50,21 +50,21 @@ public class VehicleGenerator
             switch (rnd.Next(0, 3))
             {
                 case 0:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/Container_Blue") as GameObject,
+                    tempGO = Game.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.Blue);
                     break;
                 case 1:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/Container_Red") as GameObject,
+                    tempGO = Game.Instantiate(Resources.Load("Containers/RedContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.Red);
                     break;
                 default:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/Container_Green") as GameObject,
+                    tempGO = Game.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();

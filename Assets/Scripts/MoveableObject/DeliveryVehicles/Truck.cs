@@ -7,7 +7,7 @@ public class Truck : DeliveryVehicle
 
     private void Start()
     {
-        MOInit(new Vector3(65, 0, 35), 20, true);
+        MOInit(new Vector3(-50, 0, 42), 20, false);
 
         List<TruckArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<TruckArea>();
 

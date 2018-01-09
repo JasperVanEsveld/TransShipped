@@ -16,10 +16,9 @@ public class Container
 
     public override bool Equals(object obj)
     {
-        if (obj == null || GetType() != obj.GetType()) return false;
-        Container other = obj as Container;
-        return other.transType != transType;
-
+        if (obj == null) return false;
+        if (GetType() != obj.GetType()) return false;
+        return ((Container) obj).transType == transType;
     }
 
     public override int GetHashCode()
