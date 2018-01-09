@@ -37,6 +37,11 @@ public class MoveableObject : MonoBehaviour
         transform.localScale = i_scale;
     }
 
+    public void UpdateSpeed(float i_newSpeed)
+    {
+        speed_ = i_newSpeed;
+    }
+
     // or this if you dont want to modify the scale
     protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {

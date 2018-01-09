@@ -16,4 +16,9 @@ public class NewAGVButton : MonoBehaviour {
         GameObject v = Instantiate(GameObject.Find("Vehicle"));
         road.vehicles.Add(v.GetComponent(typeof(Vehicle)) as Vehicle);
     }
+
+    public void UpgradeAGV()
+    {
+        Vehicle.Upgrade();
+    }
 }
