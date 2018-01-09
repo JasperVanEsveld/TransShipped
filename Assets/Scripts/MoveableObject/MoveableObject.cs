@@ -29,8 +29,8 @@ public abstract class MoveableObject : MonoBehaviour
     protected void MOInit(Vector3 i_initPos, float i_speed, bool i_isAtSeaLevel)
     {
         movementQueue = new Queue<Vector3>();
-        lastPos_ = transform.position;
         transform.position = new Vector3(i_initPos.x, height_, i_initPos.z);
+        lastPos_ = transform.position;
         speed = i_speed;
         isSeaVehicle_ = i_isAtSeaLevel;
         if (isSeaVehicle_)
@@ -48,11 +48,8 @@ public abstract class MoveableObject : MonoBehaviour
     // For ground vehicles, tell to object to move to this place when it's done with wtever it is doing
     public void MOPushDestination(Vector3 i_dest)
     {
-        Debug.Log(i_dest);
         if (MOIsAtTheThisPos(i_dest))
-        {
             return;
-        }
 
         int desRegion = GetRegion_(i_dest);
         int curRegion = GetRegion_(lastPos_);

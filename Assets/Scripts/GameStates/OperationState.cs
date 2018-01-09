@@ -27,7 +27,7 @@ public class OperationState : GameState
         if (!((DateTime.Now - lastTime).TotalSeconds >= game.currentStage.spawnInterval) ||
             !(vehicles < game.currentStage.maxVehicles)) return;
         lastTime = DateTime.Now;
-        switch (new Random().Next(0, 1))
+        switch (new Random().Next(0, 2))
         {
             case 0:
                 generator.GenerateVehicle<Truck>(VehicleType.Truck);

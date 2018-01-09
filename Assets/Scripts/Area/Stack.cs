@@ -30,7 +30,7 @@ public class Stack : Area
             var n = i % (max / 5);
             containers[i].transform.position = new Vector3(
                 transform.position.x - transform.lossyScale.x / 2 + 2 + 2 * (int) (n / (transform.lossyScale.z - 2)),
-                i * 5 / max,
+                i * (5 / max),
                 transform.position.z - transform.lossyScale.z / 2 + 1.5f + n % (transform.lossyScale.z - 2));
         }
     }

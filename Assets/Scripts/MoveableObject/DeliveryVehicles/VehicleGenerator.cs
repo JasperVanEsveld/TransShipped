@@ -27,18 +27,6 @@ public class VehicleGenerator
         vehicle.timeOutTime = template.timeOutTime;
     }
 
-    private static void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template)
-    {
-        Random rnd = new Random();
-        int conCount = rnd.Next(template.requestMin, template.requestMax);
-        for (int i = 0; i < conCount; ++i)
-        {
-            int typeIndex = rnd.Next(0, template.containerTypes.Count - 1);
-            Container cont = new Container(template.containerTypes[typeIndex]);
-            vehicle.outgoing.Add(cont);
-        }
-    }
-
     private static void GenerateCarrying(DeliveryVehicle vehicle, VehicleTemplate template)
     {
         Random rnd = new Random();
@@ -54,21 +42,21 @@ public class VehicleGenerator
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(containerType.Blue);
+                    tempMC.container = new Container(containerType.ShipContainer);
                     break;
                 case 1:
                     tempGO = Game.Instantiate(Resources.Load("Containers/RedContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(containerType.Red);
+                    tempMC.container = new Container(containerType.TruckContainer);
                     break;
                 default:
                     tempGO = Game.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
-                    tempMC.container = new Container(containerType.Green);
+                    tempMC.container = new Container(containerType.TrainContainer);
                     break;
             }
 
@@ -77,5 +65,26 @@ public class VehicleGenerator
             tempMC.gameObject.transform.SetParent(vehicle.transform);
             vehicle.carrying.Add(tempMC);
         }
+    }
+
+    private static void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template)
+    {
+        int conCount = new Random().Next(template.requestMin, template.requestMax);
+        containerType type;
+        switch (template.type)
+        {
+            case VehicleType.Ship:
+                type = containerType.ShipContainer;
+                break;
+            case VehicleType.Truck:
+                type = containerType.TruckContainer;
+                break;
+            default:
+                type = containerType.TrainContainer;
+                break;
+        }
+
+        for (int i = 0; i < conCount; ++i)
+            vehicle.outgoing.Add(new Container(type));
     }
 }

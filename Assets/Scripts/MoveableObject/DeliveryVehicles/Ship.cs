@@ -7,7 +7,7 @@ public class Ship : DeliveryVehicle
 
     private void Start()
     {
-        MOInit(new Vector3(65, 0, 35), 20, true);
+        MOInit(shipSpawnPos, 20, true);
 
         List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
 

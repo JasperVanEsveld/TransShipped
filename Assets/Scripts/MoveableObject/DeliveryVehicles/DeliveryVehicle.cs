@@ -10,6 +10,9 @@ public abstract class DeliveryVehicle : MoveableObject
     protected Game game { get; private set; }
     protected bool isAtDestination { get; set; }
     public Vector3 areaPos;
+    protected static readonly Vector3 truckSpawnPos = new Vector3(-50, 0, 42);
+    protected static readonly Vector3 trainSpawnPos = new Vector3(-50, 0, -42);
+    protected static readonly Vector3 shipSpawnPos = new Vector3(65, 0, 35);
 
     public void Awake()
     {
@@ -30,7 +33,9 @@ public abstract class DeliveryVehicle : MoveableObject
     {
         if (GetType() == typeof(Ship))
             MOShipLeaveTerminal();
+        else if (GetType() == typeof(Truck))
+            MOPushDestination(truckSpawnPos);
         else
-            MOPushDestination(new Vector3(-50, 0, 42));
+            MOPushDestination(trainSpawnPos);
     }
 }

@@ -1,8 +1,8 @@
 ﻿public enum containerType
 {
-    Red = 0,
-    Blue = 1,
-    Green = 2
+    ShipContainer = 0,
+    TruckContainer = 1,
+    TrainContainer = 2
 }
 
 public class Container
