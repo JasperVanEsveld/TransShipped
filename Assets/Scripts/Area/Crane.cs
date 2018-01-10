@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Crane : MonoBehaviour
 {
-    const double upbound = 10.0; // Subjected to change
-    double speed; // for upgrade
-    double baseTime;
+    private const double upbound = 10;
+    private double speed;
+    private double baseTime;
     private DateTime startTime;
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
@@ -13,23 +13,27 @@ public class Crane : MonoBehaviour
     private Area reservedBy;
 
     // Upgrade and stuff
-    private const int maxLevel_ = 3;
-    private int level_ = 0;
-    static private int[] costOfNextUpgrade_ = new int[maxLevel_] { 5, 10, 20 };
-    static private double[] speedAtEachLevel_ = new double[maxLevel_ + 1] { 0.1, 2.0, 4.0, 8.0 };
-    public bool IsFullyUpgraded() { return (level_ < maxLevel_) ? false : true; }
-    public bool CanUpgrade() { if (IsFullyUpgraded() || Game.instance.money < costOfNextUpgrade_[level_]) return false; else return true; }
-    public bool Upgrade()
+    private const int maxLevel = 3;
+    private int level;
+    private static readonly int[] costOfNextUpgrade = {5, 10, 20};
+    private static readonly double[] speedAtEachLevel = {0.1, 2, 4, 8};
+
+    private bool IsFullyUpgraded()
     {
-        if (CanUpgrade())
-        {
-            Game.instance.money -= costOfNextUpgrade_[level_];
-            speed = speedAtEachLevel_[level_ + 1];
-            ++level_;
-            //Debug.Log("Money:"+ Game.instance.money + ", Level:"+level_+", Speed:"+speed);
-            return true;
-        }
-        else return false;
+        return level >= maxLevel;
+    }
+
+    private bool CanUpgrade()
+    {
+        return !IsFullyUpgraded() && !(Game.instance.money < costOfNextUpgrade[level]);
+    }
+
+    private bool Upgrade()
+    {
+        if (!CanUpgrade()) return false;
+        Game.instance.money -= costOfNextUpgrade[level];
+        speed = speedAtEachLevel[++level];
+        return true;
     }
     // End of Upgrade and stuff
 
@@ -37,10 +41,6 @@ public class Crane : MonoBehaviour
     {
         speed = 1;
         baseTime = upbound - speed;
-    }
-
-    private void Awake()
-    {
         container = null;
     }
 
@@ -52,8 +52,7 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     public bool IsReady(Area origin)
     {
-
-        return IsReady() || (container == null && reserved && reservedBy.Equals(origin));
+        return IsReady() || container == null && reserved && reservedBy.Equals(origin);
     }
 
     /// <summary>
@@ -62,7 +61,7 @@ public class Crane : MonoBehaviour
     /// Otherwise return false
     /// </summary>
     /// <returns>Available or not</returns>
-    public bool IsReady()
+    private bool IsReady()
     {
         return container == null && !reserved;
     }
@@ -71,20 +70,18 @@ public class Crane : MonoBehaviour
     {
         return reserved && reservedBy.Equals(reference);
     }
-    
+
     /// <summary>
     /// Reserves this crane if possible
     /// </summary>
     /// <param name="origin"></param>
     /// <returns></returns>
-    public bool ReserveCrane(Area origin){
-        if(!reserved){
-            reservedBy = origin;
-            reserved = true;
-            return true;
-        } else{
-            return false;
-        }
+    public bool ReserveCrane(Area origin)
+    {
+        if (reserved) return false;
+        reservedBy = origin;
+        reserved = true;
+        return true;
     }
 
 
@@ -96,9 +93,9 @@ public class Crane : MonoBehaviour
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        if (!IsReady(monoContainer.movement.originArea)) {
+        if (!IsReady(monoContainer.movement.originArea))
             return false;
-        }
+
         reserved = false;
         container = monoContainer;
         container.transform.SetParent(transform);
@@ -111,11 +108,9 @@ public class Crane : MonoBehaviour
     {
         baseTime = upbound - speed;
         if (!(Game.instance.currentState is OperationState)) return;
-        if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime) {
+        if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
             craneArea.MoveToNext(container);
-        }
-        else if (IsReady()){
+        else if (IsReady())
             craneArea.AreaAvailable();
-        }
     }
 }

@@ -8,7 +8,7 @@ public class OperationState : GameState
     public DateTime startTime = DateTime.Now;
     private DateTime lastTime;
 
-    public OperationState() : base()
+    public OperationState()
     {
         manager = new ContainerManager(Game.instance.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();

@@ -8,7 +8,7 @@ public delegate void OnMoneyChanged(double newValue);
 
 public class Game : MonoBehaviour
 {
-    public static Game instance = null;
+    public static Game instance;
     public GameState currentState {get;private set;}
     public Stage currentStage;
     public List<Stage> stagesList;
@@ -17,10 +17,10 @@ public class Game : MonoBehaviour
     private double moneyValue = 100;
     public double money {
         get{
-            return this.moneyValue;
+            return moneyValue;
         }
         set{
-            this.moneyValue = value;
+            moneyValue = value;
             if(moneyChangeEvent != null){
                 moneyChangeEvent(money);
             }
@@ -44,7 +44,7 @@ public class Game : MonoBehaviour
     public void Start() {
         stages = new Queue<Stage>(stagesList);
         if(stages.Count > 0){
-            this.SetStage(stages.Dequeue());
+            SetStage(stages.Dequeue());
         } else {
             ChangeState(new LevelEndState());
         }
@@ -111,7 +111,7 @@ public class Game : MonoBehaviour
     }
 
     public void SetStage(Stage newStage) {
-        this.currentStage = newStage;
+        currentStage = newStage;
         if(stageChangeEvent != null){
             stageChangeEvent(newStage);
         }

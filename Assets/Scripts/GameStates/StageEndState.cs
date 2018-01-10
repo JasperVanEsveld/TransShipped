@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StageEndState : GameState
 {
-    public StageEndState() : base()
+    public StageEndState()
     {
         MonoBehaviour.print(Game.instance.currentStage.IsSuccess(this) ? "Stage passed" : "Stage failed");
         if(Game.instance.currentStage.IsSuccess(this)){

@@ -1,8 +1,9 @@
 using UnityEngine;
+using Random = System.Random;
 
 public class VehicleGenerator {
 
-    private static System.Random rnd = new System.Random();
+    private static Random rnd = new Random();
 
     public DeliveryVehicle GenerateRandomVehicle()
     {

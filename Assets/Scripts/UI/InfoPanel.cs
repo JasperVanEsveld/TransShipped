@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +10,9 @@ public class InfoPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Game.instance.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
-        Game.instance.stateChangeEvent += new OnStateChanged(StateChanged);
-        Game.instance.stageChangeEvent += new OnStageChanged(StageChanged);
+        Game.instance.moneyChangeEvent += MoneyChanged;
+        Game.instance.stateChangeEvent += StateChanged;
+        Game.instance.stageChangeEvent += StageChanged;
         moneyText.text = "Money :" + Game.instance.money;
 
     }
