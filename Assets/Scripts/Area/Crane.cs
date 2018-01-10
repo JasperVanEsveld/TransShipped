@@ -10,6 +10,8 @@ public class Crane : MonoBehaviour
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
     static private Game game;
+    private bool reserved;
+    private Area reservedBy;
 
     // Upgrade and stuff
     private const int maxLevel_ = 3;
@@ -35,12 +37,24 @@ public class Crane : MonoBehaviour
     {
         speed = 1;
         baseTime = upbound - speed;
+        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     private void Awake()
     {
         container = null;
-        game = (Game) FindObjectOfType(typeof(Game));
+    }
+
+    /// <summary>
+    /// Check if the crane is available<br/>
+    /// Return true if it is available and not reserved or reserved by you<br/>
+    /// Otherwise return false
+    /// </summary>
+    /// <returns>Available or not</returns>
+    public bool IsAvailable(Area origin)
+    {
+
+        return IsAvailable() || (reserved && reservedBy.Equals(origin));
     }
 
     /// <summary>
@@ -51,27 +65,30 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     public bool IsAvailable()
     {
-        return container == null;
+        return container == null && !reserved;
+    }
+    
+    /// <summary>
+    /// Reserves this crane if possible
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <returns></returns>
+    public bool ReserveCrane(Area origin){
+        if(IsAvailable()){
+            reservedBy = origin;
+            reserved = true;
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        if (!IsAvailable())
-        {
-            if (container.movement.originArea != monoContainer.movement.originArea
-                && monoContainer.movement.originArea is Road)
-            {
-//                    print("Holding container from: " + container.movement.originArea);
-//                    print("New container from: " + monoContainer.movement.originArea);
-                Area previous = container.movement.originArea;
-                container.movement.originArea = craneArea;
-                if (!previous.AddContainer(container)) return false;
-                craneArea.RemoveContainer(container);
-            }
-            else return false;
+        if (!IsAvailable(monoContainer.movement.originArea)) {
+            return false;
         }
-
-//            print("Received container from: " + monoContainer.movement.originArea);
+        reserved = false;
         container = monoContainer;
         container.transform.SetParent(transform);
         container.transform.position = transform.position;
@@ -81,11 +98,13 @@ public class Crane : MonoBehaviour
 
     private void Update()
     {
-        baseTime = upbound - speed;
+        baseTime = 1;
         if (!(game.currentState is OperationState)) return;
-        if (!IsAvailable() && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
+        if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime) {
             craneArea.MoveToNext(container);
-        else if (IsAvailable())
+        }
+        else if (IsAvailable()){
             craneArea.AreaAvailable();
+        }
     }
 }

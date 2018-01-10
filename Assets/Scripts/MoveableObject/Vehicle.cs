@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Vehicle : MoveableObject
@@ -10,6 +11,28 @@ public class Vehicle : MoveableObject
     public float speed;
     private Area targetArea;
     public Queue<Area> request = new Queue<Area>();
+    public bool reserved;
+    private Area reservedBy;
+
+    public bool IsAvailable(Area origin)
+    {
+        return IsAvailable() || (!MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin));
+    }
+
+    public bool IsAvailable()
+    {
+        return !MOIsObjectMoving() && !IsFull() && !reserved;
+    }
+
+    public bool ReserveVehicle(Area origin){
+        if(IsAvailable()){
+            reservedBy = origin;
+            reserved = true;
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     private void Awake()
     {
@@ -20,7 +43,7 @@ public class Vehicle : MoveableObject
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        if (containers.Count >= capacity) return false;
+        if (!IsAvailable(monoContainer.movement.originArea)) return false;
         containers.Add(monoContainer);
         monoContainer.transform.SetParent(transform);
         return true;
@@ -63,5 +86,11 @@ public class Vehicle : MoveableObject
         }
 
         MOMovementUpdate();
+    }
+
+    internal void RemoveContainer(MonoContainer monoContainer)
+    {
+        reserved = false;
+        containers.Remove(monoContainer);
     }
 }

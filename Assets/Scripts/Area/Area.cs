@@ -20,6 +20,10 @@ public abstract class Area : MonoBehaviour
         connectArea.connected.Add(this);
     }
 
+    public virtual bool ReserveArea(Area origin){
+        return true;
+    }
+
     private void AddListener(Area area)
     {
         if (!listening.Contains(area))
@@ -42,17 +46,19 @@ public abstract class Area : MonoBehaviour
     {
         Queue<MonoContainer> queue = containerQueue[area];
         MonoContainer container;
-        if (queue.Count > 0)
-            container = queue.Dequeue();
-        else
-        {
-            area.listening.Remove(this);
+        if (queue.Count > 0) {
+            container = queue.Peek();
+        }
+        else {
             return;
         }
 
-        MoveToNext(container);
-        if (queue.Count == 0)
-            area.listening.Remove(this);
+        if(MoveToNext(container)){
+            queue.Dequeue();
+            if (queue.Count == 0) {
+                area.listening.Remove(this);
+            }
+        }
     }
 
     public abstract bool AddContainer(MonoContainer monoContainer);
