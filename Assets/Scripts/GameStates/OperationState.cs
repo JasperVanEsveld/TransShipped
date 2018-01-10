@@ -1,4 +1,5 @@
 using System;
+using Object = UnityEngine.Object;
 
 public class OperationState : GameState
 {
@@ -23,7 +24,7 @@ public class OperationState : GameState
         if (game.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
             game.ChangeState(new StageEndState(game));
 
-        int vehicles = Game.FindObjectsOfType<DeliveryVehicle>().Length;
+        int vehicles = Object.FindObjectsOfType<DeliveryVehicle>().Length;
         if (!((DateTime.Now - lastTime).TotalSeconds >= game.currentStage.spawnInterval) ||
             !(vehicles < game.currentStage.maxVehicles)) return;
         generator.GenerateRandomVehicle();

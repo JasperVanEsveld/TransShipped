@@ -10,11 +10,13 @@ public class VehicleGenerator
         this.game = game;
     }
 
-    public DeliveryVehicle GenerateRandomVehicle() {
+    public DeliveryVehicle GenerateRandomVehicle()
+    {
         int i = new Random().Next(0, game.currentStage.vehicleTemplates.Count);
         VehicleTemplate template = game.currentStage.vehicleTemplates[i];
         DeliveryVehicle vehicle = null;
-        switch (template.type) {
+        switch (template.type)
+        {
             case VehicleType.Truck:
                 vehicle = GenerateVehicle<Truck>(VehicleType.Truck);
                 break;
@@ -25,13 +27,14 @@ public class VehicleGenerator
                 vehicle = GenerateVehicle<Train>(VehicleType.Train);
                 break;
         }
+
         return vehicle;
     }
 
     public T GenerateVehicle<T>(VehicleType type) where T : DeliveryVehicle
     {
         VehicleTemplate template = game.currentStage.GetTemplate(type);
-        Transform transform = Game.Instantiate(template.prefab, template.spawnPosition, template.spawnRotation);
+        Transform transform = Object.Instantiate(template.prefab, template.spawnPosition, template.spawnRotation);
         T vehicle = transform.gameObject.AddComponent<T>();
         ApplyTemplate(vehicle, template);
         return vehicle;
@@ -56,21 +59,21 @@ public class VehicleGenerator
             switch (rnd.Next(0, 3))
             {
                 case 0:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject,
+                    tempGO = Object.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.ShipContainer);
                     break;
                 case 1:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/RedContainer") as GameObject,
+                    tempGO = Object.Instantiate(Resources.Load("Containers/RedContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.TruckContainer);
                     break;
                 default:
-                    tempGO = Game.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject,
+                    tempGO = Object.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject,
                         vehicle.transform.position,
                         vehicle.transform.rotation);
                     tempMC = tempGO.GetComponent<MonoContainer>();

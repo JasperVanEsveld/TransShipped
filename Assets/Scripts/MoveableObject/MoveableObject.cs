@@ -149,6 +149,10 @@ public abstract class MoveableObject : MonoBehaviour
         // TODO: Delete the parent GameObject
     }
 
+    protected void UpdateSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 
     // ------------------- You should not need to worry about these below -----------------------//
     protected Queue<Vector3> movementQueue;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class ContainerManager
 {
@@ -30,7 +31,7 @@ public class ContainerManager
         var stackContaining = FindStackContaining(container);
         if (stackContaining == null)
         {
-            Game.print("Request failed, no stack containing" + container.transType);
+            MonoBehaviour.print("Request failed, no stack containing" + container.transType);
             return false;
         }
 
