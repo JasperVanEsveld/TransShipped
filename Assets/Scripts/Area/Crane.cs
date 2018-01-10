@@ -37,12 +37,12 @@ public class Crane : MonoBehaviour
     {
         speed = 1;
         baseTime = upbound - speed;
-        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     private void Awake()
     {
         container = null;
+        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     /// <summary>
@@ -51,10 +51,10 @@ public class Crane : MonoBehaviour
     /// Otherwise return false
     /// </summary>
     /// <returns>Available or not</returns>
-    public bool IsAvailable(Area origin)
+    public bool IsReady(Area origin)
     {
 
-        return IsAvailable() || (reserved && reservedBy.Equals(origin));
+        return IsReady() || (reserved && reservedBy.Equals(origin));
     }
 
     /// <summary>
@@ -63,9 +63,14 @@ public class Crane : MonoBehaviour
     /// Otherwise return false
     /// </summary>
     /// <returns>Available or not</returns>
-    public bool IsAvailable()
+    public bool IsReady()
     {
         return container == null && !reserved;
+    }
+
+    public bool IsReservedBy(Area reference)
+    {
+        return reserved && reservedBy.Equals(reference);
     }
     
     /// <summary>
@@ -74,7 +79,7 @@ public class Crane : MonoBehaviour
     /// <param name="origin"></param>
     /// <returns></returns>
     public bool ReserveCrane(Area origin){
-        if(IsAvailable()){
+        if(!reserved){
             reservedBy = origin;
             reserved = true;
             return true;
@@ -85,14 +90,13 @@ public class Crane : MonoBehaviour
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        if (!IsAvailable(monoContainer.movement.originArea)) {
+        if (!IsReady(monoContainer.movement.originArea)) {
             return false;
         }
         reserved = false;
         container = monoContainer;
         container.transform.SetParent(transform);
         container.transform.position = transform.position;
-        print("Position set");
         startTime = DateTime.Now;
         return true;
     }
@@ -104,7 +108,7 @@ public class Crane : MonoBehaviour
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime) {
             craneArea.MoveToNext(container);
         }
-        else if (IsAvailable()){
+        else if (IsReady()){
             craneArea.AreaAvailable();
         }
     }

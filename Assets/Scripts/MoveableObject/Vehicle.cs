@@ -53,6 +53,11 @@ public class Vehicle : MoveableObject
         return level + 1;
     }
 
+    public bool IsReservedBy(Area reference)
+    {
+        return reserved && reservedBy.Equals(reference);
+    }
+
     public bool IsAvailable(Area origin)
     {
         return IsAvailable() || (!MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin));
@@ -64,7 +69,7 @@ public class Vehicle : MoveableObject
     }
 
     public bool ReserveVehicle(Area origin){
-        if(IsAvailable()){
+        if(!reserved){
             reservedBy = origin;
             reserved = true;
             return true;
@@ -133,7 +138,6 @@ public class Vehicle : MoveableObject
 
     internal void RemoveContainer(MonoContainer monoContainer)
     {
-        reserved = false;
         containers.Remove(monoContainer);
     }
 }

@@ -13,8 +13,18 @@ public class CraneArea : Area
     private Crane FindAvailableCrane()
     {
         foreach (var crane in cranes)
-            if (crane.IsAvailable())
+            if (!crane.reserved)
                 return crane;
+        return null;
+    }
+
+    private Crane CompleteReservation(Area reference){
+        foreach(Crane crane in cranes){
+            if(crane.IsReservedBy(reference) && crane.IsReady(reference)) {
+                crane.reserved = false;
+                return crane;
+            }
+        }
         return null;
     }
 
@@ -23,10 +33,10 @@ public class CraneArea : Area
     /// If found, return it, otherwise return null.
     /// </summary>
     /// <returns>Available crane found</returns>
-    private Crane FindAvailableCrane(Area origin)
+    private Crane FindReadyCrane(Area origin)
     {
-        foreach (var crane in cranes)
-            if (crane.IsAvailable(origin))
+        foreach (Crane crane in cranes)
+            if (crane.IsReady(origin))
                 return crane;
         return null;
     }
@@ -40,11 +50,21 @@ public class CraneArea : Area
     /// <returns>Whether the operation is a success</returns>
     public override bool AddContainer(MonoContainer monoContainer)
     {
-        var crane = FindAvailableCrane(monoContainer.movement.originArea);
-        Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
-        if (crane == null || !next.ReserveArea(this)) return false;
-        containerCrane.Add(monoContainer, crane);
-        return crane.AddContainer(monoContainer);
+        Crane crane = CompleteReservation(monoContainer.movement.originArea);
+        if(crane != null) {
+            containerCrane.Add(monoContainer, crane);
+            return crane.AddContainer(monoContainer);
+        }
+        crane = FindReadyCrane(monoContainer.movement.originArea);
+
+        if(crane != null){
+            Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
+            if(next.ReserveArea(this, monoContainer.movement)) {
+                containerCrane.Add(monoContainer, crane);
+                return crane.AddContainer(monoContainer);
+            }
+        }
+        return false;
     }
 
     protected override void RemoveContainer(MonoContainer monoContainer)
@@ -53,12 +73,15 @@ public class CraneArea : Area
         containerCrane.Remove(monoContainer);
     }
 
-    public override bool ReserveArea(Area origin) {
+    public override bool ReserveArea(Area origin, Movement move) {
         Crane crane = FindAvailableCrane();
-        if(crane != null){
+        print("Crane error?: " + game.GetManager().GetNextArea(this,move));
+        if(crane != null && game.GetManager().GetNextArea(this,move).ReserveArea(this, move)) {
             bool reserved = crane.ReserveCrane(origin);
-            print("This area wants to reserve a crane: " + origin + "\n" + "Result was: " + reserved);
             return reserved;
+        }
+        if(crane == null){
+            print("failed, no crane available.");
         }
         return false;
     }

@@ -20,6 +20,16 @@ public class Road : ContainerProcessor
         return vehicles.FirstOrDefault(vehicle => vehicle.IsAvailable(origin) && vehicle.MOIsAtTheThisPos(origin.transform.position));
     }
 
+    private Vehicle CompleteReservation(Area reference){
+        foreach(Vehicle vehicle in vehicles){
+            if(vehicle.IsReservedBy(reference) && vehicle.IsAvailable(reference) && vehicle.MOIsAtTheThisPos(reference.transform.position)) {
+                vehicle.reserved = false;
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
     private Vehicle FindShortedQueueVehicle()
     {
         int min = int.MaxValue, minIndex;
@@ -37,13 +47,21 @@ public class Road : ContainerProcessor
 
     public override bool AddContainer(MonoContainer monoContainer)
     {
-        Vehicle vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea);
-        Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
-        if (vehicle != null && next.ReserveArea(this)) 
+        Vehicle vehicle = CompleteReservation(monoContainer.movement.originArea);
+        if(vehicle != null)
         {
             vehicle.GoTo(monoContainer.movement.originArea);
             containerVehicle.Add(monoContainer, vehicle);
             return vehicle.AddContainer(monoContainer);
+        }
+        vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea); 
+        if(vehicle != null) {
+            Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
+            if(next.ReserveArea(this, monoContainer.movement)) {
+                vehicle.GoTo(monoContainer.movement.originArea);
+                containerVehicle.Add(monoContainer, vehicle);
+                return vehicle.AddContainer(monoContainer);
+            }
         }
         return false;
     }
@@ -54,14 +72,17 @@ public class Road : ContainerProcessor
         containerVehicle.Remove(monoContainer);
     }
 
-    public override bool ReserveArea(Area origin) {
+    public override bool ReserveArea(Area origin, Movement move) {
         Vehicle vehicle = FindAvailableVehicle();
         bool reserved = false;
-        if(vehicle != null){
+        if(vehicle != null &&  game.GetManager().GetNextArea(this,move).ReserveArea(this, move)){
             reserved = vehicle.ReserveVehicle(origin);
             vehicle.request.Enqueue(origin);
-            print("This area wants to reserve a vehicle: " + origin + "\n" + "Result was: " + reserved);
+            print("Success");
             return reserved;
+        }
+        if(vehicle == null){
+            print("failed, no vehicle available.");
         }
         return false;
     }

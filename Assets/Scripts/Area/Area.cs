@@ -22,7 +22,7 @@ public abstract class Area : MonoBehaviour
         connectArea.connected.Add(this);
     }
 
-    public virtual bool ReserveArea(Area origin){
+    public virtual bool ReserveArea(Area origin, Movement movement){
         return true;
     }
 
