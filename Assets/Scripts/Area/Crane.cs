@@ -9,7 +9,6 @@ public class Crane : MonoBehaviour
     private DateTime startTime;
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
-    static private Game game;
     public bool reserved;
     private Area reservedBy;
 
@@ -19,12 +18,12 @@ public class Crane : MonoBehaviour
     static private int[] costOfNextUpgrade_ = new int[maxLevel_] { 5, 10, 20 };
     static private double[] speedAtEachLevel_ = new double[maxLevel_ + 1] { 1.0, 2.0, 4.0, 6.0 };
     public bool IsFullyUpgraded() { return (level_ < maxLevel_) ? true : false; }
-    public bool CanUpgrade() { if (IsFullyUpgraded() || game.money < costOfNextUpgrade_[level_]) return false; else return true; }
+    public bool CanUpgrade() { if (IsFullyUpgraded() || Game.instance.money < costOfNextUpgrade_[level_]) return false; else return true; }
     public bool Upgrade()
     {
         if (CanUpgrade())
         {
-            game.money -= costOfNextUpgrade_[level_];
+            Game.instance.money -= costOfNextUpgrade_[level_];
             speed = speedAtEachLevel_[level_ + 1];
             ++level_;
             return true;
@@ -42,7 +41,6 @@ public class Crane : MonoBehaviour
     private void Awake()
     {
         container = null;
-        game = (Game) FindObjectOfType(typeof(Game));
     }
 
     /// <summary>
@@ -54,7 +52,7 @@ public class Crane : MonoBehaviour
     public bool IsReady(Area origin)
     {
 
-        return IsReady() || (reserved && reservedBy.Equals(origin));
+        return IsReady() || (container == null && reserved && reservedBy.Equals(origin));
     }
 
     /// <summary>
@@ -104,7 +102,7 @@ public class Crane : MonoBehaviour
     private void Update()
     {
         baseTime = 1;
-        if (!(game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime) {
             craneArea.MoveToNext(container);
         }

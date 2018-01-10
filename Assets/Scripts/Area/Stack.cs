@@ -62,7 +62,7 @@ public class Stack : Area
     private void OnMouseEnter()
     {
 
-        if ((game.currentState is OperationState))
+        if ((Game.instance.currentState is OperationState))
         {
 
 
@@ -87,7 +87,7 @@ public class Stack : Area
 
     private void OnMouseExit()
     {
-        if ((game.currentState is OperationState))
+        if ((Game.instance.currentState is OperationState))
         {
 
             Destroy(sliderclone);

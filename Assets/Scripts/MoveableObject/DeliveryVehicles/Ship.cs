@@ -9,7 +9,7 @@ public class Ship : DeliveryVehicle
     {
         MOInit(shipSpawnPos, 20, true);
 
-        List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
+        List<ShipArea> areaList = Game.instance.GetAreasOfType<ShipArea>();
 
         //TODO:get the first free area
         area = areaList[0];
@@ -17,7 +17,7 @@ public class Ship : DeliveryVehicle
 
     private void Update()
     {
-        if (!(game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

@@ -2,11 +2,8 @@
 
 public abstract class GameState
 {
-    public Game game;
-
-    protected GameState(Game game)
+    protected GameState()
     {
-        this.game = game;
         MonoBehaviour.print("Current state: " + this);
     }
 

@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class OptionalArea : MonoBehaviour
 {
-    private Game game { get; set; }
-
     public List<Area> connected;
 
     public string areaName;
@@ -30,19 +28,18 @@ public class OptionalArea : MonoBehaviour
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
 
 
-        game = (Game) FindObjectOfType(typeof(Game));
         stackPrefab = Resources.Load("Areas/Stack") as GameObject;
-        GetComponent<Renderer>().material.color = price <= game.money ? Color.green : Color.red;
-        game.RegisterArea(this);
+        GetComponent<Renderer>().material.color = price <= Game.instance.money ? Color.green : Color.red;
+        Game.instance.RegisterArea(this);
     }
 
     [System.Obsolete("This function is meant for the building panel, now it is obsolete.")]
     public void BuyArea()
     {
-        if (!(game.currentState is UpgradeState)) return;
-        if (((UpgradeState) game.currentState).Buy(price))
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (((UpgradeState) Game.instance.currentState).Buy(price))
         {
-            game.optionalAreas.Remove(this);
+            Game.instance.optionalAreas.Remove(this);
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.max = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
             foreach (var connectArea in connected)
@@ -60,7 +57,7 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if ((game.currentState is UpgradeState))
+        if ((Game.instance.currentState is UpgradeState))
         {
                 GetComponent<Renderer>().material.color = stackColor;
         }
@@ -68,7 +65,7 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!(game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
     }
 
@@ -78,10 +75,10 @@ public class OptionalArea : MonoBehaviour
 
     public void Buy()
     {
-        if (!(game.currentState is UpgradeState)) return;
-        if (((UpgradeState) game.currentState).Buy(price))
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (((UpgradeState) Game.instance.currentState).Buy(price))
         {
-            game.optionalAreas.Remove(this);
+            Game.instance.optionalAreas.Remove(this);
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.max = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
             foreach (var connectArea in connected)
@@ -99,14 +96,14 @@ public class OptionalArea : MonoBehaviour
 
     private void Update()
     {
-        if (!(game.currentState is UpgradeState))
+        if (!(Game.instance.currentState is UpgradeState))
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
         else
         {
             GetComponent<MeshRenderer>().enabled = true;
-            originColor = price <= game.money ? Color.green : Color.red;
+            originColor = price <= Game.instance.money ? Color.green : Color.red;
         }
     }
 }

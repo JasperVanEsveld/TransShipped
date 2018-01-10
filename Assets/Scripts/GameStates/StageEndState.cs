@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class StageEndState : GameState
 {
-    public StageEndState(Game game) : base(game)
+    public StageEndState() : base()
     {
-        MonoBehaviour.print(game.currentStage.IsSuccess(this) ? "Stage passed" : "Stage failed");
-        if(game.currentStage.IsSuccess(this)){
-            game.SetMoney(game.money + game.currentStage.reward);
+        MonoBehaviour.print(Game.instance.currentStage.IsSuccess(this) ? "Stage passed" : "Stage failed");
+        if(Game.instance.currentStage.IsSuccess(this)){
+            Game.instance.SetMoney(Game.instance.money + Game.instance.currentStage.reward);
         } else{
-            game.SetMoney(game.money + game.currentStage.penalty);
+            Game.instance.SetMoney(Game.instance.money + Game.instance.currentStage.penalty);
         }
     }
 }

@@ -6,18 +6,16 @@ using UnityEngine;
 public class NewAGVButton : MonoBehaviour
 {
     private Road road;
-    private Game game;
     private int i;
 
     private void Start()
     {
-        game = (Game) FindObjectOfType(typeof(Game));
         road = FindObjectOfType<Road>();
     }
 
     public void AddVehicle()
     {
-        if (((UpgradeState) game.currentState).Buy(Vehicle.PurchaseCost()))
+        if (((UpgradeState) Game.instance.currentState).Buy(Vehicle.PurchaseCost()))
         {
             GameObject v = Instantiate(GameObject.Find("Vehicle"));
             road.vehicles.Add(v.GetComponent(typeof(Vehicle)) as Vehicle);

@@ -8,6 +8,7 @@ public delegate void OnMoneyChanged(double newValue);
 
 public class Game : MonoBehaviour
 {
+    public static Game instance = null;
     public GameState currentState {get;private set;}
     public Stage currentStage;
     public List<Stage> stagesList;
@@ -32,14 +33,22 @@ public class Game : MonoBehaviour
     public event OnStageChanged stageChangeEvent;
     public event OnMoneyChanged moneyChangeEvent;
 
+    public void Awake() {
+        if(instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy(gameObject);
+        }
+    }
+
     public void Start() {
         stages = new Queue<Stage>(stagesList);
         if(stages.Count > 0){
             this.SetStage(stages.Dequeue());
         } else {
-            ChangeState(new LevelEndState(this));
+            ChangeState(new LevelEndState());
         }
-        ChangeState(new UpgradeState(this));
+        ChangeState(new UpgradeState());
     }
 
     public void Update()

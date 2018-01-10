@@ -5,15 +5,13 @@ public delegate void OnAreaAvailable();
 
 public abstract class Area : MonoBehaviour
 {
-    protected Game game { get; private set; }
     public List<Area> connected;
     private Dictionary<Area, Queue<MonoContainer>> containerQueue = new Dictionary<Area, Queue<MonoContainer>>();
     public List<Area> listening = new List<Area>();
 
-    public void Awake()
+    public void Start()
     {
-        game = (Game) FindObjectOfType(typeof(Game));
-        game.RegisterArea(this);
+        Game.instance.RegisterArea(this);
     }
 
     public void Connect(Area connectArea)
@@ -73,8 +71,8 @@ public abstract class Area : MonoBehaviour
 
     public bool MoveToNext(MonoContainer monoCont)
     {
-        if (monoCont.movement == null || !(game.currentState is OperationState)) return false;
-        var nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return false;
+        var nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
         Transform previousParent = monoCont.transform.parent;
         monoCont.transform.SetParent(nextArea.transform);
         Area previousOrigin = monoCont.movement.originArea;
@@ -89,8 +87,8 @@ public abstract class Area : MonoBehaviour
     }
 
     protected void AddToQueue(MonoContainer monoCont) {
-        if (monoCont.movement == null || !(game.currentState is OperationState)) return;
-        Area nextArea = ((OperationState) game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return;
+        Area nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
         if (!containerQueue.ContainsKey(nextArea))
         {
             containerQueue.Add(nextArea, new Queue<MonoContainer>());

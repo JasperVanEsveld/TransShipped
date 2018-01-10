@@ -6,27 +6,25 @@ using UnityEngine.UI;
 
 public class InfoPanel : MonoBehaviour {
 
-    private Game game;
     public Text targetText;
     public Text moneyText;
     public Text timeRemainingText;
 
 	// Use this for initialization
 	void Start () {
-        game = FindObjectOfType<Game>();
-        game.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
-        game.stateChangeEvent += new OnStateChanged(StateChanged);
-        game.stageChangeEvent += new OnStageChanged(StageChanged);
-        moneyText.text = "Money :" + game.money;
+        Game.instance.moneyChangeEvent += new OnMoneyChanged(MoneyChanged);
+        Game.instance.stateChangeEvent += new OnStateChanged(StateChanged);
+        Game.instance.stageChangeEvent += new OnStageChanged(StageChanged);
+        moneyText.text = "Money :" + Game.instance.money;
 
     }
 	
 	// Update is called once per frame
 	void Update () {
         if(timeRemainingText.IsActive()){
-            DateTime start = ((OperationState) game.currentState).startTime;
+            DateTime start = ((OperationState) Game.instance.currentState).startTime;
             int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
-            timeRemainingText.text = "Time left :" + (int)(game.currentStage.duration - difference);
+            timeRemainingText.text = "Time left :" + (int) (Game.instance.currentStage.duration - difference);
         }
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Vehicle : MoveableObject
 {
-    static private Game game;
     public Road road;
     public int capacity;
     public List<MonoContainer> containers = new List<MonoContainer>();
@@ -37,7 +36,7 @@ public class Vehicle : MoveableObject
 
     public static bool CanAffordNextUpgrade()
     {
-        return game.money >= UpgradeCost() * countAGV;
+        return Game.instance.money >= UpgradeCost() * countAGV;
     }
 
     public static int Upgrade()
@@ -48,7 +47,7 @@ public class Vehicle : MoveableObject
         if (!CanAffordNextUpgrade())
             return 0;
 
-        game.SetMoney(game.money - UpgradeCost() * countAGV);
+        Game.instance.SetMoney(Game.instance.money - UpgradeCost() * countAGV);
         speed = speedAtEachLevel[++level];
         return level + 1;
     }
@@ -84,7 +83,6 @@ public class Vehicle : MoveableObject
     {
         countAGV++;
         request = new Queue<Area>();
-        game = (Game) FindObjectOfType(typeof(Game));
         MOInit(transform.position, speed, false);
     }
 
@@ -111,7 +109,7 @@ public class Vehicle : MoveableObject
     private void Update()
     {
         UpdateSpeed(speed);
-        if (!(game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         UpdateSpeed(speed);
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
@@ -120,7 +118,7 @@ public class Vehicle : MoveableObject
         {
             if (containers.Count != 0)
             {
-                targetArea = game.GetManager().GetNextArea(road, containers[0].movement);
+                targetArea = Game.instance.GetManager().GetNextArea(road, containers[0].movement);
                 GoTo(targetArea);
                 if (MOIsAtTheThisPos(targetArea.transform.position))
                     road.MoveToNext(containers[0]);

@@ -7,7 +7,6 @@ public abstract class DeliveryVehicle : MoveableObject
     public double timeOutTime;
     public List<MonoContainer> carrying = new List<MonoContainer>();
     public List<Container> outgoing = new List<Container>();
-    protected Game game { get; private set; }
     protected bool isAtDestination { get; set; }
     public Vector3 areaPos;
     protected static readonly Vector3 truckSpawnPos = new Vector3(-50, 0, 42);
@@ -16,13 +15,12 @@ public abstract class DeliveryVehicle : MoveableObject
 
     public void Awake()
     {
-        game = (Game) FindObjectOfType(typeof(Game));
-        game.RegisterWaiting(this);
+        Game.instance.RegisterWaiting(this);
     }
 
     public void EnterTerminal()
     {
-        game.vehicles.Remove(this);
+        Game.instance.vehicles.Remove(this);
         if (GetType() == typeof(Ship))
             MOShipEnterTerminal(areaPos);
         else

@@ -13,12 +13,10 @@ public class StatePanelManager : MonoBehaviour {
 	public GameObject LevelCompletedPanel;
 
 	private delegate void StateChangeAction();
-	private Game game;
 	private Dictionary<Type,StateChangeAction> changeActions = new Dictionary<Type, StateChangeAction>();
 	// Use this for initialization
 	void Start () {
-		game = FindObjectOfType<Game>();
-		game.stateChangeEvent += new OnStateChanged(stateChanged);
+		Game.instance.stateChangeEvent += new OnStateChanged(stateChanged);
 		changeActions.Add(typeof(OperationState),OnOperationStart);
 		changeActions.Add(typeof(UpgradeState),OnUpgradeStart);
 		changeActions.Add(typeof(StageEndState),OnStageEnd);
@@ -38,7 +36,7 @@ public class StatePanelManager : MonoBehaviour {
 	}
 
 	public void OnStageEnd(){
-		if(game.currentStage.IsSuccess(game.currentState)){
+		if(Game.instance.currentStage.IsSuccess(Game.instance.currentState)){
 			StagePassedPanel.SetActive(true);
 			commandPanel.SetActive(false);
 		} else{

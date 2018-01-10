@@ -1,16 +1,10 @@
 using UnityEngine;
 
 public class VehicleGenerator {
-    private Game game;
-
-    public VehicleGenerator(Game game){
-        this.game = game;
-    }
-
     public DeliveryVehicle GenerateRandomVehicle()
     {
-        int i = new System.Random().Next(0, game.currentStage.vehicleTemplates.Count);
-        VehicleTemplate template = game.currentStage.vehicleTemplates[i];
+        int i = new System.Random().Next(0, Game.instance.currentStage.vehicleTemplates.Count);
+        VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[i];
         DeliveryVehicle vehicle = null;
         switch (template.type)
         {
@@ -30,7 +24,7 @@ public class VehicleGenerator {
 
     public T GenerateVehicle<T>(VehicleType type) where T : DeliveryVehicle
     {
-        VehicleTemplate template = game.currentStage.GetTemplate(type);
+        VehicleTemplate template = Game.instance.currentStage.GetTemplate(type);
         Transform transform = Object.Instantiate(template.prefab, template.spawnPosition, template.spawnRotation);
         T vehicle = transform.gameObject.AddComponent<T>();
         ApplyTemplate(vehicle, template);

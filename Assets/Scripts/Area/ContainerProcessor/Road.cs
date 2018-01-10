@@ -56,7 +56,7 @@ public class Road : ContainerProcessor
         }
         vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea); 
         if(vehicle != null) {
-            Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
+            Area next = Game.instance.GetManager().GetNextArea(this,monoContainer.movement);
             if(next.ReserveArea(this, monoContainer.movement)) {
                 vehicle.GoTo(monoContainer.movement.originArea);
                 containerVehicle.Add(monoContainer, vehicle);
@@ -75,14 +75,10 @@ public class Road : ContainerProcessor
     public override bool ReserveArea(Area origin, Movement move) {
         Vehicle vehicle = FindAvailableVehicle();
         bool reserved = false;
-        if(vehicle != null &&  game.GetManager().GetNextArea(this,move).ReserveArea(this, move)){
+        if(vehicle != null &&  Game.instance.GetManager().GetNextArea(this,move).ReserveArea(this, move)){
             reserved = vehicle.ReserveVehicle(origin);
             vehicle.request.Enqueue(origin);
-            print("Success");
             return reserved;
-        }
-        if(vehicle == null){
-            print("failed, no vehicle available.");
         }
         return false;
     }

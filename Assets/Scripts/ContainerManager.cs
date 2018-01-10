@@ -31,7 +31,6 @@ public class ContainerManager
         var stackContaining = FindStackContaining(container);
         if (stackContaining == null)
         {
-            MonoBehaviour.print("Request failed, no stack containing" + container.transType);
             return false;
         }
         MonoContainer monoCont = stackContaining.containers.FirstOrDefault(item => item.container.Equals(container) && item.movement == null);

@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class GenerateShip : MonoBehaviour
 {
-    private Game game;
     private VehicleGenerator generator;
     private int shipCount_ = 0;
 
     public void Start(){
-        game = FindObjectOfType<Game>();
-        generator = game.GetGenerator();
+        generator = Game.instance.GetGenerator();
     }
 
     public void generateShip()

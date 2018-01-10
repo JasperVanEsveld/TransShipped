@@ -9,7 +9,7 @@ public class Train : DeliveryVehicle
     {
         MOInit(trainSpawnPos, 20, false);
 
-        List<TrainArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<TrainArea>();
+        List<TrainArea> areaList = Game.instance.GetAreasOfType<TrainArea>();
 
         //TODO:get the first free area
         area = areaList[0];
@@ -17,7 +17,7 @@ public class Train : DeliveryVehicle
 
     private void Update()
     {
-        if (!(game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

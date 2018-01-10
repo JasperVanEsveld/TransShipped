@@ -11,7 +11,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
 
     public void OnVehicleEnter(T vehicle) {
         if(vehicle == current || waiting.Contains(vehicle)) return;
-        if (!(game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (current == null) {
             current = vehicle;
             Service(current);
@@ -28,7 +28,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         remainingRequests = new List<Container>(vehicle.outgoing);
         foreach (var container in vehicle.carrying)
         {
-            ((OperationState) game.currentState).manager.Store(this, container);
+            ((OperationState) Game.instance.currentState).manager.Store(this, container);
         }
         for (var i = vehicle.carrying.Count - 1; i >= 0; i--) {
             if (!MoveToNext(vehicle.carrying[i])) {
@@ -40,7 +40,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     public void requestOutgoing(){
         for(int i = remainingRequests.Count - 1; i >= 0; i--){
             Container c = remainingRequests[i];
-            ContainerManager manager = game.GetManager();
+            ContainerManager manager = Game.instance.GetManager();
             if(manager != null){
                 if(manager.Request(this, c)){
                     remainingRequests.RemoveAt(i);
@@ -68,7 +68,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
             } else if (loading && remainingRequests.Count > 0){
                 requestOutgoing();
             } else if (loading && current.outgoing.Count == current.carrying.Count){
-                game.SetMoney(game.money + current.reward);
+                Game.instance.SetMoney(Game.instance.money + current.reward);
                 OnVehicleLeaves();
             }
         }

@@ -12,15 +12,15 @@ public class SettingsButtonOnClick : MonoBehaviour
     public void ContinueSuccess()
     {
         if(game.stages.Count == 0){
-            game.ChangeState(new LevelEndState(game));
+            game.ChangeState(new LevelEndState());
         } else{
             game.SetStage(game.stages.Dequeue());
-            game.ChangeState(new UpgradeState(game));
+            game.ChangeState(new UpgradeState());
         }
     }
     public void ContinueFail()
     {
-        game.ChangeState(new UpgradeState(game));
+        game.ChangeState(new UpgradeState());
     }
 
     public void Restart(int sceneIndex)

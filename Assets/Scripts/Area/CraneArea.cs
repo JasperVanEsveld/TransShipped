@@ -58,7 +58,7 @@ public class CraneArea : Area
         crane = FindReadyCrane(monoContainer.movement.originArea);
 
         if(crane != null){
-            Area next = game.GetManager().GetNextArea(this,monoContainer.movement);
+            Area next = Game.instance.GetManager().GetNextArea(this,monoContainer.movement);
             if(next.ReserveArea(this, monoContainer.movement)) {
                 containerCrane.Add(monoContainer, crane);
                 return crane.AddContainer(monoContainer);
@@ -75,13 +75,9 @@ public class CraneArea : Area
 
     public override bool ReserveArea(Area origin, Movement move) {
         Crane crane = FindAvailableCrane();
-        print("Crane error?: " + game.GetManager().GetNextArea(this,move));
-        if(crane != null && game.GetManager().GetNextArea(this,move).ReserveArea(this, move)) {
+        if(crane != null && Game.instance.GetManager().GetNextArea(this,move).ReserveArea(this, move)) {
             bool reserved = crane.ReserveCrane(origin);
             return reserved;
-        }
-        if(crane == null){
-            print("failed, no crane available.");
         }
         return false;
     }
