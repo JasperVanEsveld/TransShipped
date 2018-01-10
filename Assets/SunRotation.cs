@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SunRotation : MonoBehaviour {
 
@@ -16,7 +14,7 @@ public class SunRotation : MonoBehaviour {
     }
 	
 	void Update () {
-        if ((Game.instance.currentState is OperationState))
+        if (Game.instance.currentState is OperationState)
         {
             transform.Rotate(Vector3.right * Time.deltaTime * rotationSpeed);
         }

@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CommandPanel : MonoBehaviour
 {
     public Transform prefab;
-    int buttonCount = 0;
+    int buttonCount;
     List<Transform> buttons = new List<Transform>();
 
     void Awake()
@@ -31,7 +30,7 @@ public class CommandPanel : MonoBehaviour
         foreach (DeliveryVehicle vehicle in Game.instance.vehicles)
         {
             Transform obj = Instantiate(prefab);
-            obj.SetParent(this.transform, false);
+            obj.SetParent(transform, false);
             buttons.Add(obj);
             obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, 0);
             x += 170;
@@ -44,7 +43,7 @@ public class CommandPanel : MonoBehaviour
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
             
             obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
-            obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType().ToString() + "\n Containers: " + vehicle.carrying.Count;
+            obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
         }
     }
 }

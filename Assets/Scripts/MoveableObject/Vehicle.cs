@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Vehicle : MoveableObject
@@ -59,7 +58,7 @@ public class Vehicle : MoveableObject
 
     public bool IsAvailable(Area origin)
     {
-        return IsAvailable() || (!MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin));
+        return IsAvailable() || !MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin);
     }
 
     public bool IsAvailable()
@@ -67,14 +66,15 @@ public class Vehicle : MoveableObject
         return !MOIsObjectMoving() && !IsFull() && !reserved;
     }
 
-    public bool ReserveVehicle(Area origin){
+    public bool ReserveVehicle(Area origin)
+    {
         if(!reserved){
             reservedBy = origin;
             reserved = true;
             return true;
-        } else{
-            return false;
         }
+
+        return false;
     }
 
 

@@ -33,11 +33,9 @@ public class Stack : Area
             var n = i % (max / 5);
             containers[i].transform.position = new Vector3(
                 transform.position.x - transform.lossyScale.x / 2 + 2 + 2 * (int) (n / (transform.lossyScale.z - 2)),
-                i * (5 / max),
+                i * 5 / max,
                 transform.position.z - transform.lossyScale.z / 2 + 1.5f + n % (transform.lossyScale.z - 2));
         }
-
-
     }
 
     public override bool AddContainer(MonoContainer monoContainer)
@@ -62,7 +60,7 @@ public class Stack : Area
     private void OnMouseEnter()
     {
 
-        if ((Game.instance.currentState is OperationState))
+        if (Game.instance.currentState is OperationState)
         {
 
 
@@ -72,7 +70,7 @@ public class Stack : Area
 
             //sliderclone.transform.parent = GameObject.Find("Canvas").transform;
             script = sliderclone.GetComponent<CapacitySlider>();
-            script.target = this.transform;
+            script.target = transform;
             script.ChangeSliderValue((float)containers.Count / max); 
             GetComponent<Renderer>().material.color = Color.cyan;
 
@@ -87,7 +85,7 @@ public class Stack : Area
 
     private void OnMouseExit()
     {
-        if ((Game.instance.currentState is OperationState))
+        if (Game.instance.currentState is OperationState)
         {
 
             Destroy(sliderclone);
@@ -95,4 +93,3 @@ public class Stack : Area
         }
     }
 }
-

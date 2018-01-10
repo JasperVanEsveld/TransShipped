@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {

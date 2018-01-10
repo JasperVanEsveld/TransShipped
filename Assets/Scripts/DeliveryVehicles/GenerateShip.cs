@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GenerateShip : MonoBehaviour
 {
     private VehicleGenerator generator;
-    private int shipCount_ = 0;
+    private int shipCount_;
 
     public void Start(){
         generator = Game.instance.GetGenerator();

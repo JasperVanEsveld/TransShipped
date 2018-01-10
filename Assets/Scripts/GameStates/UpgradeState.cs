@@ -1,9 +1,5 @@
 public class UpgradeState : GameState
 {
-    public UpgradeState() : base()
-    {
-    }
-
     public bool Buy(double price)
     {
         if (!(Game.instance.money - price >= 0)) return false;

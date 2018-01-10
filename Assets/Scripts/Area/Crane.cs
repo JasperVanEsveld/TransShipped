@@ -14,11 +14,15 @@ public class Crane : MonoBehaviour
 
     // Upgrade and stuff
     private const int maxLevel_ = 3;
-    private int level_ = 0;
+    private int level_;
     static private int[] costOfNextUpgrade_ = new int[maxLevel_] { 5, 10, 20 };
     static private double[] speedAtEachLevel_ = new double[maxLevel_ + 1] { 1.0, 2.0, 4.0, 6.0 };
-    public bool IsFullyUpgraded() { return (level_ < maxLevel_) ? true : false; }
-    public bool CanUpgrade() { if (IsFullyUpgraded() || Game.instance.money < costOfNextUpgrade_[level_]) return false; else return true; }
+    public bool IsFullyUpgraded() { return level_ < maxLevel_ ? true : false; }
+    public bool CanUpgrade()
+    {
+        if (IsFullyUpgraded() || Game.instance.money < costOfNextUpgrade_[level_]) return false;
+        return true;
+    }
     public bool Upgrade()
     {
         if (CanUpgrade())
@@ -28,7 +32,8 @@ public class Crane : MonoBehaviour
             ++level_;
             return true;
         }
-        else return false;
+
+        return false;
     }
     // End of Upgrade and stuff
 
@@ -52,7 +57,7 @@ public class Crane : MonoBehaviour
     public bool IsReady(Area origin)
     {
 
-        return IsReady() || (container == null && reserved && reservedBy.Equals(origin));
+        return IsReady() || container == null && reserved && reservedBy.Equals(origin);
     }
 
     /// <summary>
@@ -76,14 +81,15 @@ public class Crane : MonoBehaviour
     /// </summary>
     /// <param name="origin"></param>
     /// <returns></returns>
-    public bool ReserveCrane(Area origin){
+    public bool ReserveCrane(Area origin)
+    {
         if(!reserved){
             reservedBy = origin;
             reserved = true;
             return true;
-        } else{
-            return false;
         }
+
+        return false;
     }
 
     public bool AddContainer(MonoContainer monoContainer)

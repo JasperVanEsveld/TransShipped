@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VictoryScene : MonoBehaviour {
 
@@ -11,7 +9,7 @@ public class VictoryScene : MonoBehaviour {
     }
 
     //Placeholder. used to trigger ShowVictoryScreen after a certain time
-    private int count = 0;
+    private int count;
 
     private void Update()
     {

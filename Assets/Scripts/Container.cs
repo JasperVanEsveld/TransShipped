@@ -1,5 +1,5 @@
 
-public enum containerType{ShipContainer = 0,TruckContainer = 1,TrainContainer = 2};
+public enum containerType{ShipContainer = 0,TruckContainer = 1,TrainContainer = 2}
 
 public class Container
 {
@@ -17,7 +17,7 @@ public class Container
             return false;
         }
         Container other = obj as Container;
-        return other.transType == this.transType;
+        return other.transType == transType;
     }
     
     public override int GetHashCode() {
