@@ -26,18 +26,7 @@ public class OperationState : GameState
         int vehicles = Game.FindObjectsOfType<DeliveryVehicle>().Length;
         if (!((DateTime.Now - lastTime).TotalSeconds >= game.currentStage.spawnInterval) ||
             !(vehicles < game.currentStage.maxVehicles)) return;
+        generator.GenerateRandomVehicle();
         lastTime = DateTime.Now;
-        switch (new Random().Next(0, 2))
-        {
-            case 0:
-                generator.GenerateVehicle<Truck>(VehicleType.Truck);
-                break;
-            case 1:
-                generator.GenerateVehicle<Ship>(VehicleType.Ship);
-                break;
-            default:
-                generator.GenerateVehicle<Train>(VehicleType.Train);
-                break;
-        }
     }
 }

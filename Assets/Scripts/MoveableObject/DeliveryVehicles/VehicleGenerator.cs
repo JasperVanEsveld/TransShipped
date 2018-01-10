@@ -10,6 +10,24 @@ public class VehicleGenerator
         this.game = game;
     }
 
+    public DeliveryVehicle GenerateRandomVehicle() {
+        int i = new Random().Next(0, game.currentStage.vehicleTemplates.Count);
+        VehicleTemplate template = game.currentStage.vehicleTemplates[i];
+        DeliveryVehicle vehicle = null;
+        switch (template.type) {
+            case VehicleType.Truck:
+                vehicle = GenerateVehicle<Truck>(VehicleType.Truck);
+                break;
+            case VehicleType.Ship:
+                vehicle = GenerateVehicle<Ship>(VehicleType.Ship);
+                break;
+            case VehicleType.Train:
+                vehicle = GenerateVehicle<Train>(VehicleType.Train);
+                break;
+        }
+        return vehicle;
+    }
+
     public T GenerateVehicle<T>(VehicleType type) where T : DeliveryVehicle
     {
         VehicleTemplate template = game.currentStage.GetTemplate(type);
