@@ -78,6 +78,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     {
         current.carrying.Add(monoContainer);
         monoContainer.transform.SetParent(current.transform);
+        monoContainer.transform.position = current.transform.position;
         monoContainer.movement = null;
         return true;
     }

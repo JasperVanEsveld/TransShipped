@@ -22,7 +22,11 @@ public abstract class Area : MonoBehaviour
         connectArea.connected.Add(this);
     }
 
-    public void AddListener(Area area)
+    public virtual bool ReserveArea(Area origin){
+        return true;
+    }
+
+    private void AddListener(Area area)
     {
         if (!listening.Contains(area))
         {
@@ -36,7 +40,7 @@ public abstract class Area : MonoBehaviour
         }
     }
 
-    protected void AreaAvailable()
+    public void AreaAvailable()
     {
         for (var i = listening.Count - 1; i >= 0; i--)
         {
@@ -48,19 +52,18 @@ public abstract class Area : MonoBehaviour
     {
         Queue<MonoContainer> queue = containerQueue[area];
         MonoContainer container;
-        if (queue.Count > 0)
-        {
-            container = queue.Dequeue();
+        if (queue.Count > 0) {
+            container = queue.Peek();
         }
-        else
-        {
-            area.listening.Remove(this);
+        else {
             return;
         }
-        MoveToNext(container);
-        if (queue.Count == 0)
-        {
-            area.listening.Remove(this);
+
+        if(MoveToNext(container)){
+            queue.Dequeue();
+            if (queue.Count == 0) {
+                area.listening.Remove(this);
+            }
         }
     }
 

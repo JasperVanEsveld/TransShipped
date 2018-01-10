@@ -1,8 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Vehicle : MoveableObject
 {
+    static private Game game;
+    public Road road;
+    public int capacity;
+    public List<MonoContainer> containers = new List<MonoContainer>();
+    private Area targetArea;
+    public Queue<Area> request = new Queue<Area>();
+    public bool reserved;
+    private Area reservedBy;
+
     // Upgrade related stuff
     // They are static because I don't think we want user to upgrade individual AGV. Rather, upgrade all AGVs at once.
     private static int countAGV_ = 0;
@@ -33,15 +43,29 @@ public class Vehicle : MoveableObject
         ++countAGV_;
     }
     private static float speed_ = speedAtEachLevel_[0];
-    // End of upgrade related stuff
-    static private Game game;
-    public Road road;
-    public int capacity;
-    public List<MonoContainer> containers = new List<MonoContainer>();
-    private Area targetArea;
-    public Queue<Area> request = new Queue<Area>();
 
-    private void Awake() {
+    public bool IsAvailable(Area origin)
+    {
+        return IsAvailable() || (!MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin));
+    }
+
+    public bool IsAvailable()
+    {
+        return !MOIsObjectMoving() && !IsFull() && !reserved;
+    }
+
+    public bool ReserveVehicle(Area origin){
+        if(IsAvailable()){
+            reservedBy = origin;
+            reserved = true;
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    private void Awake()
+    {
         request = new Queue<Area>();
         game = (Game) FindObjectOfType(typeof(Game));
         MOInit(transform.position, speed_, false);
@@ -49,7 +73,7 @@ public class Vehicle : MoveableObject
 
     public bool AddContainer(MonoContainer monoContainer)
     {
-        if (containers.Count >= capacity) return false;
+        if (!IsAvailable(monoContainer.movement.originArea)) return false;
         containers.Add(monoContainer);
         monoContainer.transform.SetParent(transform);
         return true;
@@ -63,17 +87,14 @@ public class Vehicle : MoveableObject
     public void GoTo(Area i_targetArea)
     {
         MOPushNewDest(i_targetArea.transform.position);
-        this.targetArea = i_targetArea;
+        targetArea = i_targetArea;
     }
 
 
     private void Update()
     {
         UpdateSpeed(speed_);
-        if (!(game.currentState is OperationState))
-        {
-            return;
-        }
+        if (!(game.currentState is OperationState)) return;
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
                 transform.position.y + transform.lossyScale.y / 2 + i, transform.position.z);
@@ -81,7 +102,7 @@ public class Vehicle : MoveableObject
         {
             if (containers.Count != 0)
             {
-                targetArea = ((OperationState) game.currentState).manager.GetNextArea(road, containers[0].movement);
+                targetArea = game.GetManager().GetNextArea(road, containers[0].movement);
                 GoTo(targetArea);
                 if (MOIsAtTheThisPos(targetArea.transform.position))
                     road.MoveToNext(containers[0]);
@@ -95,5 +116,11 @@ public class Vehicle : MoveableObject
             }
         }
         MOMovementUpdate();
+    }
+
+    internal void RemoveContainer(MonoContainer monoContainer)
+    {
+        reserved = false;
+        containers.Remove(monoContainer);
     }
 }
