@@ -1,9 +1,12 @@
 using UnityEngine;
 
 public class VehicleGenerator {
+
+    private static System.Random rnd = new System.Random();
+
     public DeliveryVehicle GenerateRandomVehicle()
     {
-        int i = new System.Random().Next(0, Game.instance.currentStage.vehicleTemplates.Count);
+        int i = rnd.Next(0, Game.instance.currentStage.vehicleTemplates.Count);
         VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[i];
         DeliveryVehicle vehicle = null;
         switch (template.type)
@@ -39,7 +42,6 @@ public class VehicleGenerator {
     }
 
     private static void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template){
-        System.Random rnd = new System.Random();
         int conCount = rnd.Next(template.requestMin, template.requestMax);
         for (int i = 0; i < conCount; ++i) {
             int typeIndex = rnd.Next(0, template.containerTypes.Count-1);
@@ -50,7 +52,6 @@ public class VehicleGenerator {
     
     private static void GenerateCarrying(DeliveryVehicle vehicle, VehicleTemplate template)
     {
-        System.Random rnd = new System.Random();
         int conCount = rnd.Next(template.carryMin, template.carryMax);
         for (int i = 0; i < conCount; ++i)
         {
