@@ -16,8 +16,8 @@ public class Crane : MonoBehaviour
     private const int maxLevel_ = 3;
     private int level_ = 0;
     static private int[] costOfNextUpgrade_ = new int[maxLevel_] { 5, 10, 20 };
-    static private double[] speedAtEachLevel_ = new double[maxLevel_ + 1] { 1.0, 2.0, 4.0, 6.0 };
-    public bool IsFullyUpgraded() { return (level_ < maxLevel_) ? true : false; }
+    static private double[] speedAtEachLevel_ = new double[maxLevel_ + 1] { 0.1, 2.0, 4.0, 8.0 };
+    public bool IsFullyUpgraded() { return (level_ < maxLevel_) ? false : true; }
     public bool CanUpgrade() { if (IsFullyUpgraded() || Game.instance.money < costOfNextUpgrade_[level_]) return false; else return true; }
     public bool Upgrade()
     {
@@ -26,6 +26,7 @@ public class Crane : MonoBehaviour
             Game.instance.money -= costOfNextUpgrade_[level_];
             speed = speedAtEachLevel_[level_ + 1];
             ++level_;
+            //Debug.Log("Money:"+ Game.instance.money + ", Level:"+level_+", Speed:"+speed);
             return true;
         }
         else return false;
@@ -86,6 +87,13 @@ public class Crane : MonoBehaviour
         }
     }
 
+
+    // TODO: Associate this with sth in the GUI
+    private void OnMouseDown()
+    {
+        Upgrade();
+    }
+
     public bool AddContainer(MonoContainer monoContainer)
     {
         if (!IsReady(monoContainer.movement.originArea)) {
@@ -101,7 +109,7 @@ public class Crane : MonoBehaviour
 
     private void Update()
     {
-        baseTime = 1;
+        baseTime = upbound - speed;
         if (!(Game.instance.currentState is OperationState)) return;
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime) {
             craneArea.MoveToNext(container);
