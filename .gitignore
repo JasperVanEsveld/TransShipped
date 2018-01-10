@@ -34,6 +34,8 @@ sysinfo.txt
 *.unitypackage*.unitypackage*.unitypackage
 .vscode/launch.json
 UpgradeLog.htm
-Assets/Scripts/DeliveryVehicles/Ship.cs
-Assets/Scripts/Game.cs
-Assets/Scripts/Area/OptionalArea.cs
+
+# Rider IDE generated files
+.idea
+Assets/Plugins
+Plugins.meta
