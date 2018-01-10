@@ -1,4 +1,5 @@
-﻿public enum containerType{Red = 0,Blue = 1,Green = 2};
+
+public enum containerType{ShipContainer = 0,TruckContainer = 1,TrainContainer = 2};
 
 public class Container
 {

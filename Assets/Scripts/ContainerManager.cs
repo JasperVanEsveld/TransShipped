@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class ContainerManager
 {
@@ -28,8 +29,9 @@ public class ContainerManager
     public bool Request(Area target, Container container)
     {
         var stackContaining = FindStackContaining(container);
-        if (stackContaining == null) {
-            Game.print("Request failed, no stack containing" + container.transType);
+        if (stackContaining == null)
+        {
+            MonoBehaviour.print("Request failed, no stack containing" + container.transType);
             return false;
         }
         MonoContainer monoCont = stackContaining.containers.FirstOrDefault(item => item.container.Equals(container) && item.movement == null);

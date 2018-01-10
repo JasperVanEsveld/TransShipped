@@ -84,7 +84,6 @@ public abstract class Area : MonoBehaviour
             monoCont.transform.SetParent(previousParent);
             return false;
         }
-        monoCont.transform.position = nextArea.transform.position;
         RemoveContainer(monoCont);
         return true;
     }

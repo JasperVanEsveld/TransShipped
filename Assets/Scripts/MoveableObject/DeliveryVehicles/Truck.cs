@@ -1,20 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Ship : DeliveryVehicle
+public class Truck : DeliveryVehicle
 {
-    public ShipArea area;
-    private bool isAtDestination = false;
+    public TruckArea area;
 
-
-    // Use this for initialization
     private void Start()
     {
-        MOInit(new Vector3(65.0f, 0.0f, 35.0f), 20.0f, true);
+        MOInit(truckSpawnPos, 20, false);
 
-        GenerateRandomContainers(32, 50);
-        List<ShipArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<ShipArea>();
+        List<TruckArea> areaList = GameObject.Find("Game").GetComponent<Game>().GetAreasOfType<TruckArea>();
 
         //TODO:get the first free area
         area = areaList[0];

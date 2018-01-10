@@ -92,6 +92,7 @@ public class Crane : MonoBehaviour
         container = monoContainer;
         container.transform.SetParent(transform);
         container.transform.position = transform.position;
+        print("Position set");
         startTime = DateTime.Now;
         return true;
     }
