@@ -7,10 +7,17 @@ public class CommandPanel : MonoBehaviour
     public Transform prefab;
     int buttonCount;
     List<Transform> buttons = new List<Transform>();
+    Transform trans1;
+    Transform trans2;
+    Transform trans3;
+
 
     void Awake()
     {
         CreateButtons();
+        trans1 = transform.GetChild(5);
+        trans2 = transform.GetChild(4);
+        trans3 = transform.GetChild(3);
     }
 
     void Update()
@@ -30,6 +37,7 @@ public class CommandPanel : MonoBehaviour
         float x3 = 85;
         buttonCount = Game.instance.vehicles.Count;
 
+
         foreach (DeliveryVehicle vehicle in Game.instance.vehicles)
         {
             Transform obj = Instantiate(prefab);
@@ -38,7 +46,7 @@ public class CommandPanel : MonoBehaviour
             {
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
 
-                obj.SetParent(transform.GetChild(5), false);
+                obj.SetParent(trans1, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x1, 0);
                 x1 += 170;
@@ -48,7 +56,7 @@ public class CommandPanel : MonoBehaviour
             {
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
 
-                obj.SetParent(transform.GetChild(4), false);
+                obj.SetParent(trans2, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
                 x2 += 170;
@@ -56,7 +64,7 @@ public class CommandPanel : MonoBehaviour
             }
             else
             {
-                obj.SetParent(transform.GetChild(3), false);
+                obj.SetParent(trans3, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
                 x3 += 170;
