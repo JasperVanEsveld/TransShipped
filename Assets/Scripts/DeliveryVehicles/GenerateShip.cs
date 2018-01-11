@@ -6,7 +6,7 @@ public class GenerateShip : MonoBehaviour
     private int shipCount_;
 
     public void Start(){
-        generator = Game.instance.GetGenerator();
+        generator = Game.GetGenerator();
     }
 
     public void generateShip()

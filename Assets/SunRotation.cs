@@ -14,7 +14,7 @@ public class SunRotation : MonoBehaviour {
     }
 	
 	void Update () {
-        if (Game.instance.currentState is OperationState)
+        if (Game.currentState is OperationState)
         {
             transform.Rotate(Vector3.right * Time.deltaTime * rotationSpeed);
         }

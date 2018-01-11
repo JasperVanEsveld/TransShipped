@@ -4,42 +4,59 @@ using UnityEngine;
 public class Crane : MonoBehaviour
 {
     private const double upbound = 10;
-    private double speed;
+    public double speed { get; set; }
     private double baseTime;
     private DateTime startTime;
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
     public bool reserved;
     private Area reservedBy;
+    public BuildingPanel buildingPanel;
 
     // Upgrade and stuff
     private const int maxLevel = 3;
+
     private int level;
-    private static readonly int[] costOfNextUpgrade = {5, 10, 20};
+
+    public int Level
+    {
+        get { return level + 1; }
+    }
+
+    private static readonly int[] costOfUpgrade = {5, 10, 20};
     private static readonly double[] speedAtEachLevel = {0.1, 2, 4, 8};
 
-    private bool IsFullyUpgraded()
+    public bool IsFullyUpgraded()
     {
         return level >= maxLevel;
     }
 
-    private bool CanUpgrade()
+    public int CostOfUpgrade
     {
-        return !IsFullyUpgraded() && !(Game.instance.money < costOfNextUpgrade[level]);
+        get { return costOfUpgrade[level]; }
     }
 
-    private bool Upgrade()
+    private int i;
+
+    public void Upgrade()
     {
-        if (!CanUpgrade()) return false;
-        Game.instance.money -= costOfNextUpgrade[level];
-        speed = speedAtEachLevel[++level];
-        return true;
+        if (!(Game.currentState is UpgradeState)) return;
+        if (UpgradeState.Buy(costOfUpgrade[level]))
+        {
+            i = 0;
+            speed = speedAtEachLevel[++level];
+        }
+        else if (i == 1)
+            print("You don't have enough money!");
+
+        i++;
     }
     // End of Upgrade and stuff
 
     private void Start()
     {
-        speed = 1;
+        buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
+        speed = speedAtEachLevel[0];
         baseTime = upbound - speed;
         container = null;
     }
@@ -84,11 +101,9 @@ public class Crane : MonoBehaviour
         return true;
     }
 
-
-    // TODO: Associate this with sth in the GUI
     private void OnMouseDown()
     {
-        Upgrade();
+        buildingPanel.SelectCrane(this);
     }
 
     public bool AddContainer(MonoContainer monoContainer)
@@ -107,7 +122,7 @@ public class Crane : MonoBehaviour
     private void Update()
     {
         baseTime = upbound - speed;
-        if (!(Game.instance.currentState is OperationState)) return;
+        if (!(Game.currentState is OperationState)) return;
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
             craneArea.MoveToNext(container);
         else if (IsReady())

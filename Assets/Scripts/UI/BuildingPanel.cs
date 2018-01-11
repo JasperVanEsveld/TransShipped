@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingPanel : MonoBehaviour {
+public class BuildingPanel : MonoBehaviour
+{
     public Transform prefab;
 
     public GameObject selected;
@@ -21,32 +22,32 @@ public class BuildingPanel : MonoBehaviour {
         buttonText = buttonObject.GetComponentInChildren<Text>();
     }
 
-    public void SelectOptionalArea(OptionalArea go, string objectname, string attribute)
+    public void SelectOptionalArea(OptionalArea optionalArea, string objectname, string attribute)
     {
         buttonObject.onClick.RemoveAllListeners();
         buttonText.text = "Purchase";
-        text2.text = "Price for this area: " + go.price;
-        text3.text = "Capacity for this area: " + go.capacity;
+        text2.text = "Price for this area: " + optionalArea.price;
+        text3.text = "Capacity for this area: " + optionalArea.capacity;
         text4.text = attribute;
         text5.text = objectname;
         buttonObject.gameObject.SetActive(true);
-        buttonObject.onClick.AddListener(go.BuyStack);
+        buttonObject.onClick.AddListener(optionalArea.BuyStack);
         buttonObject.onClick.AddListener(Bought);
     }
 
-    public void SelectCraneArea(CraneArea go, string objectname, string attribute)
+    public void SelectCraneArea(CraneArea craneArea, string objectname, string attribute)
     {
         buttonObject.onClick.RemoveAllListeners();
         buttonText.text = "Buy a new Crane";
-        text2.text = "Price for one crane: " + go.priceForOneCrane;
+        text2.text = "Price for one crane: " + craneArea.priceForOneCrane;
         {
-            text3.text = "Currently there is " + go.cranes.Count + " crane";
-            if (go.cranes.Count > 1) text3.text += "s";
+            text3.text = "Currently there is " + craneArea.cranes.Count + " crane";
+            if (craneArea.cranes.Count > 1) text3.text += "s";
         }
         text4.text = attribute;
         text5.text = objectname;
         buttonObject.gameObject.SetActive(true);
-        buttonObject.onClick.AddListener(go.BuyCrane);
+        buttonObject.onClick.AddListener(craneArea.BuyCrane);
         buttonObject.onClick.AddListener(Bought);
     }
 
@@ -68,5 +69,26 @@ public class BuildingPanel : MonoBehaviour {
     public void beginGame()
     {
         Game.instance.ChangeState(new OperationState());
+    }
+
+    public void SelectCrane(Crane crane)
+    {
+        buttonObject.onClick.RemoveAllListeners();
+        buttonText.text = "Upgrade";
+        text2.text = "Current Level: " + crane.Level;
+        text4.text = "Current Efficiency: " + crane.speed;
+        text5.text = crane.GetType().ToString();
+        if (!crane.IsFullyUpgraded())
+        {
+            text3.text = "Price for Upgrading: " + crane.CostOfUpgrade;
+            buttonObject.gameObject.SetActive(true);
+            buttonObject.onClick.AddListener(crane.Upgrade);
+            buttonObject.onClick.AddListener(Bought);
+        }
+        else
+        {
+            buttonObject.gameObject.SetActive(false);
+            text3.text = "This crane has already been fully upgraded";
+        }
     }
 }

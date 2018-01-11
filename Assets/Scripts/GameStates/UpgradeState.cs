@@ -1,12 +1,13 @@
 public class UpgradeState : GameState
 {
-    public bool Buy(double price)
+    public static bool Buy(double price)
     {
-        if (!(Game.instance.money - price >= 0)) return false;
-        Game.instance.SetMoney(Game.instance.money - price);
+        if (Game.money < price) return false;
+        Game.money -= price;
         return true;
     }
 
-    public override void Update() {
+    public override void Update()
+    {
     }
 }

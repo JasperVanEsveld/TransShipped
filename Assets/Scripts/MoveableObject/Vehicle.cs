@@ -13,29 +13,19 @@ public class Vehicle : MoveableObject
     private static int countAGV;
     private static int level;
     private const int maxLevel = 4;
-    private static int[] costOfPurchase = {2, 3, 5, 7, 10};
-    private static int[] costOfUpgrade = {1, 2, 2, 3};
-    private static float[] speedAtEachLevel = {5, 6, 7.5f, 8, 30};
+    private static readonly int[] costOfPurchase = {2, 3, 5, 7, 10};
+    private static readonly int[] costOfUpgrade = {1, 2, 2, 3};
+    private static readonly float[] speedAtEachLevel = {5, 6, 7.5f, 8, 30};
     private static float speed = speedAtEachLevel[0];
 
-    public static bool IsFullyUpgraded()
+    private static bool IsFullyUpgraded()
     {
         return level >= maxLevel;
     }
 
-    public static int UpgradeCost()
+    public static int price
     {
-        return IsFullyUpgraded() ? -1 : costOfUpgrade[level];
-    }
-
-    public static int PurchaseCost()
-    {
-        return costOfPurchase[level];
-    }
-
-    public static bool CanAffordNextUpgrade()
-    {
-        return Game.instance.money >= UpgradeCost() * countAGV;
+        get { return costOfPurchase[level];}
     }
 
     public static int Upgrade()
@@ -43,10 +33,7 @@ public class Vehicle : MoveableObject
         if (IsFullyUpgraded())
             return -1;
 
-        if (!CanAffordNextUpgrade())
-            return 0;
-
-        Game.instance.SetMoney(Game.instance.money - UpgradeCost() * countAGV);
+        if (!UpgradeState.Buy(costOfUpgrade[level] * countAGV)) return 0;
         speed = speedAtEachLevel[++level];
         return level + 1;
     }
@@ -68,16 +55,11 @@ public class Vehicle : MoveableObject
 
     public bool ReserveVehicle(Area origin)
     {
-        if(!reserved){
-            reservedBy = origin;
-            reserved = true;
-            return true;
-        }
-
-        return false;
+        if (reserved) return false;
+        reservedBy = origin;
+        reserved = true;
+        return true;
     }
-
-
 
     private void Awake()
     {
@@ -94,7 +76,7 @@ public class Vehicle : MoveableObject
         return true;
     }
 
-    public bool IsFull()
+    private bool IsFull()
     {
         return containers.Count >= capacity;
     }
@@ -109,7 +91,7 @@ public class Vehicle : MoveableObject
     private void Update()
     {
         UpdateSpeed(speed);
-        if (!(Game.instance.currentState is OperationState)) return;
+        if (!(Game.currentState is OperationState)) return;
         UpdateSpeed(speed);
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
@@ -118,7 +100,7 @@ public class Vehicle : MoveableObject
         {
             if (containers.Count != 0)
             {
-                targetArea = Game.instance.GetManager().GetNextArea(road, containers[0].movement);
+                targetArea = Game.GetManager().GetNextArea(road, containers[0].movement);
                 GoTo(targetArea);
                 if (MOIsAtTheThisPos(targetArea.transform.position))
                     road.MoveToNext(containers[0]);

@@ -11,35 +11,33 @@ public class CraneArea : Area
     private readonly Color selected = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
     private readonly Color craneAreaColor = new Color32(169, 158, 16, 255);
     private BuildingPanel buildingPanel;
-    public string attribute;
+    public string areaName, attribute;
 
     private new void Start()
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         cranePrefab = Resources.Load("Areas/Crane") as GameObject;
-        Game.instance.RegisterArea(this);
+        Game.RegisterArea(this);
     }
 
     private int i;
-    public string areaName;
 
     public void BuyCrane()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
-        if (((UpgradeState) Game.instance.currentState).Buy(priceForOneCrane))
+        if (!(Game.currentState is UpgradeState)) return;
+        if (UpgradeState.Buy(priceForOneCrane))
         {
             i = 0;
             var crane = Instantiate(cranePrefab,
-                new Vector3(transform.position.x  + cranes.Count * 2 - 4, 5, transform.position.z),
+                new Vector3(transform.position.x + cranes.Count * 2 - 4, 5, transform.position.z),
                 transform.rotation).GetComponent<Crane>();
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
         }
         else if (i == 1)
-        {
             print("You don't have enough money!");
-        }
+
         i++;
     }
 
@@ -50,13 +48,13 @@ public class CraneArea : Area
 
     private void OnMouseEnter()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (!(Game.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = selected;
     }
 
     private void OnMouseExit()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (!(Game.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = craneAreaColor;
     }
 
@@ -77,11 +75,9 @@ public class CraneArea : Area
     {
         foreach (Crane crane in cranes)
         {
-            if (crane.IsReservedBy(reference) && crane.IsReady(reference))
-            {
-                crane.reserved = false;
-                return crane;
-            }
+            if (!crane.IsReservedBy(reference) || !crane.IsReady(reference)) continue;
+            crane.reserved = false;
+            return crane;
         }
 
         return null;
@@ -118,17 +114,12 @@ public class CraneArea : Area
 
         crane = FindReadyCrane(monoContainer.movement.originArea);
 
-        if (crane != null)
-        {
-            Area next = Game.instance.GetManager().GetNextArea(this, monoContainer.movement);
-            if (next.ReserveArea(this, monoContainer.movement))
-            {
-                containerCrane.Add(monoContainer, crane);
-                return crane.AddContainer(monoContainer);
-            }
-        }
+        if (crane == null) return false;
+        Area next = Game.GetManager().GetNextArea(this, monoContainer.movement);
+        if (!next.ReserveArea(this, monoContainer.movement)) return false;
+        containerCrane.Add(monoContainer, crane);
+        return crane.AddContainer(monoContainer);
 
-        return false;
     }
 
     protected override void RemoveContainer(MonoContainer monoContainer)
@@ -140,12 +131,9 @@ public class CraneArea : Area
     public override bool ReserveArea(Area origin, Movement move)
     {
         Crane crane = FindAvailableCrane();
-        if (crane != null && Game.instance.GetManager().GetNextArea(this, move).ReserveArea(this, move))
-        {
-            bool reserved = crane.ReserveCrane(origin);
-            return reserved;
-        }
+        if (crane == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
+        bool reserved = crane.ReserveCrane(origin);
+        return reserved;
 
-        return false;
     }
 }

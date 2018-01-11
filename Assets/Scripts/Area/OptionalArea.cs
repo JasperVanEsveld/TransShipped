@@ -23,17 +23,17 @@ public class OptionalArea : MonoBehaviour
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         stackPrefab = Resources.Load("Areas/Stack") as GameObject;
-        GetComponent<Renderer>().material.color = price <= Game.instance.money ? Color.green : Color.red;
-        Game.instance.RegisterArea(this);
+        GetComponent<Renderer>().material.color = price <= Game.money ? Color.green : Color.red;
+        Game.RegisterArea(this);
         capacity = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
     }
 
     public void BuyStack()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
-        if (((UpgradeState) Game.instance.currentState).Buy(price))
+        if (!(Game.currentState is UpgradeState)) return;
+        if (UpgradeState.Buy(price))
         {
-            Game.instance.optionalAreas.Remove(this);
+            Game.DeregisterArea(this);
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.max = capacity;
             foreach (var connectArea in connected)
@@ -53,13 +53,13 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (!(Game.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
     }
 
     private void OnMouseExit()
     {
-        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (!(Game.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
     }
 
@@ -70,14 +70,14 @@ public class OptionalArea : MonoBehaviour
 
     private void Update()
     {
-        if (!(Game.instance.currentState is UpgradeState))
+        if (!(Game.currentState is UpgradeState))
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
         else
         {
             GetComponent<MeshRenderer>().enabled = true;
-            originColor = price <= Game.instance.money ? Color.green : Color.red;
+            originColor = price <= Game.money ? Color.green : Color.red;
         }
     }
 }

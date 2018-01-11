@@ -36,11 +36,11 @@ public class CommandPanel : MonoBehaviour
             x += 170;
             
             if (vehicle.GetType() == typeof(Ship))
-                vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
+                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
             else if (vehicle.GetType() == typeof(Train))
-                vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
+                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
             else
-                vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
+                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
             
             obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
             obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
