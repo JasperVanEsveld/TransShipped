@@ -25,22 +25,45 @@ public class CommandPanel : MonoBehaviour
             Destroy(button.gameObject);
 
         buttons.Clear();
-        float x = 85;
+        float x1 = 85;
+        float x2 = 85;
+        float x3 = 85;
         buttonCount = Game.instance.vehicles.Count;
+
         foreach (DeliveryVehicle vehicle in Game.instance.vehicles)
         {
             Transform obj = Instantiate(prefab);
-            obj.SetParent(transform, false);
-            buttons.Add(obj);
-            obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, 0);
-            x += 170;
             
             if (vehicle.GetType() == typeof(Ship))
+            {
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
+
+                obj.SetParent(transform.GetChild(5), false);
+                buttons.Add(obj);
+                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x1, 0);
+                x1 += 170;
+
+            }
             else if (vehicle.GetType() == typeof(Train))
+            {
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
+
+                obj.SetParent(transform.GetChild(4), false);
+                buttons.Add(obj);
+                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
+                x2 += 170;
+
+            }
             else
+            {
+                obj.SetParent(transform.GetChild(3), false);
+                buttons.Add(obj);
+                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
+                x3 += 170;
+
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
+
+            }
             
             obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
             obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
