@@ -56,7 +56,7 @@ public class CommandPanel : MonoBehaviour
             {
                 vehicle.areaPos = Game.instance.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
 
-                obj.SetParent(trans2, false);
+                obj.SetParent(trans3, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
                 x2 += 170;
@@ -64,7 +64,7 @@ public class CommandPanel : MonoBehaviour
             }
             else
             {
-                obj.SetParent(trans3, false);
+                obj.SetParent(trans2, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
                 x3 += 170;
