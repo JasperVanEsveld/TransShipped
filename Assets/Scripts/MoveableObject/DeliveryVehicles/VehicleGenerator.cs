@@ -1,14 +1,14 @@
 using UnityEngine;
 using Random = System.Random;
 
-public class VehicleGenerator {
-
+public class VehicleGenerator
+{
     private static Random rnd = new Random();
 
     public DeliveryVehicle GenerateRandomVehicle()
     {
-        int i = rnd.Next(0, Game.instance.currentStage.vehicleTemplates.Count);
-        VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[i];
+        int i = rnd.Next(0, Game.currentStage.vehicleTemplates.Count);
+        VehicleTemplate template = Game.currentStage.vehicleTemplates[i];
         DeliveryVehicle vehicle = null;
         switch (template.type)
         {
@@ -28,29 +28,32 @@ public class VehicleGenerator {
 
     public T GenerateVehicle<T>(VehicleType type) where T : DeliveryVehicle
     {
-        VehicleTemplate template = Game.instance.currentStage.GetTemplate(type);
+        VehicleTemplate template = Game.currentStage.GetTemplate(type);
         Transform transform = Object.Instantiate(template.prefab, template.spawnPosition, template.spawnRotation);
         T vehicle = transform.gameObject.AddComponent<T>();
         ApplyTemplate(vehicle, template);
         return vehicle;
     }
 
-    private void ApplyTemplate(DeliveryVehicle vehicle, VehicleTemplate template){
+    private void ApplyTemplate(DeliveryVehicle vehicle, VehicleTemplate template)
+    {
         GenerateCarrying(vehicle, template);
         CreateRequestList(vehicle, template);
         vehicle.reward = template.reward;
         vehicle.timeOutTime = template.timeOutTime;
     }
 
-    private static void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template){
+    private static void CreateRequestList(DeliveryVehicle vehicle, VehicleTemplate template)
+    {
         int conCount = rnd.Next(template.requestMin, template.requestMax);
-        for (int i = 0; i < conCount; ++i) {
-            int typeIndex = rnd.Next(0, template.containerTypes.Count-1);
+        for (int i = 0; i < conCount; ++i)
+        {
+            int typeIndex = rnd.Next(0, template.containerTypes.Count - 1);
             Container cont = new Container(template.containerTypes[typeIndex]);
             vehicle.outgoing.Add(cont);
         }
     }
-    
+
     private static void GenerateCarrying(DeliveryVehicle vehicle, VehicleTemplate template)
     {
         int conCount = rnd.Next(template.carryMin, template.carryMax);
@@ -82,6 +85,7 @@ public class VehicleGenerator {
                     tempMC.container = new Container(containerType.TrainContainer);
                     break;
             }
+
             tempGO.transform.SetParent(vehicle.transform);
             tempMC.movement = null;
             tempMC.gameObject.transform.SetParent(vehicle.transform);

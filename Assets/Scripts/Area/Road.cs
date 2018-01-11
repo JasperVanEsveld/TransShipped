@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Road : ContainerProcessor
+public class Road : Area
 {
     private readonly Dictionary<MonoContainer, Vehicle> containerVehicle = new Dictionary<MonoContainer, Vehicle>();
     public List<Vehicle> vehicles = new List<Vehicle>();
@@ -21,25 +21,23 @@ public class Road : ContainerProcessor
 
     private Vehicle CompleteReservation(Area reference){
         foreach(Vehicle vehicle in vehicles){
-            if(vehicle.IsReservedBy(reference) && vehicle.IsAvailable(reference) && vehicle.MOIsAtTheThisPos(reference.transform.position)) {
-                vehicle.reserved = false;
-                return vehicle;
-            }
+            if (!vehicle.IsReservedBy(reference) || !vehicle.IsAvailable(reference) ||
+                !vehicle.MOIsAtTheThisPos(reference.transform.position)) continue;
+            vehicle.reserved = false;
+            return vehicle;
         }
         return null;
     }
 
     private Vehicle FindShortedQueueVehicle()
     {
-        int min = int.MaxValue, minIndex;
-        minIndex = 0;
+        int min = int.MaxValue;
+        int minIndex = 0;
         for (var i = 0; i < vehicles.Count; i++)
         {
-            if (vehicles[i].request.Count <= min)
-            {
-                minIndex = i;
-                min = vehicles[i].request.Count;
-            }
+            if (vehicles[i].request.Count > min) continue;
+            minIndex = i;
+            min = vehicles[i].request.Count;
         }
         return vehicles[minIndex];
     }
@@ -53,16 +51,13 @@ public class Road : ContainerProcessor
             containerVehicle.Add(monoContainer, vehicle);
             return vehicle.AddContainer(monoContainer);
         }
-        vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea); 
-        if(vehicle != null) {
-            Area next = Game.instance.GetManager().GetNextArea(this,monoContainer.movement);
-            if(next.ReserveArea(this, monoContainer.movement)) {
-                vehicle.GoTo(monoContainer.movement.originArea);
-                containerVehicle.Add(monoContainer, vehicle);
-                return vehicle.AddContainer(monoContainer);
-            }
-        }
-        return false;
+        vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea);
+        if (vehicle == null) return false;
+        Area next = Game.GetManager().GetNextArea(this,monoContainer.movement);
+        if (!next.ReserveArea(this, monoContainer.movement)) return false;
+        vehicle.GoTo(monoContainer.movement.originArea);
+        containerVehicle.Add(monoContainer, vehicle);
+        return vehicle.AddContainer(monoContainer);
     }
 
     protected override void RemoveContainer(MonoContainer monoContainer)
@@ -73,12 +68,10 @@ public class Road : ContainerProcessor
 
     public override bool ReserveArea(Area origin, Movement move) {
         Vehicle vehicle = FindAvailableVehicle();
-        bool reserved = false;
-        if(vehicle != null &&  Game.instance.GetManager().GetNextArea(this,move).ReserveArea(this, move)){
-            reserved = vehicle.ReserveVehicle(origin);
-            vehicle.request.Enqueue(origin);
-            return reserved;
-        }
-        return false;
+        bool reserved;
+        if (vehicle == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
+        reserved = vehicle.ReserveVehicle(origin);
+        vehicle.request.Enqueue(origin);
+        return reserved;
     }
 }

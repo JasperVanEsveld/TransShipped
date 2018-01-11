@@ -34,7 +34,7 @@ public class StatePanelManager : MonoBehaviour {
 	}
 
 	public void OnStageEnd(){
-		if(Game.instance.currentStage.IsSuccess(Game.instance.currentState)){
+		if(Game.currentStage.IsSuccess(Game.currentState)){
 			StagePassedPanel.SetActive(true);
 			commandPanel.SetActive(false);
 		} else{

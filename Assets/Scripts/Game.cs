@@ -3,51 +3,56 @@ using System.Linq;
 using UnityEngine;
 
 public delegate void OnStateChanged(GameState newState);
+
 public delegate void OnStageChanged(Stage newStage);
+
 public delegate void OnMoneyChanged(double newValue);
 
 public class Game : MonoBehaviour
 {
     public static Game instance;
-    public GameState currentState {get;private set;}
-    public Stage currentStage;
+    public static GameState currentState { get; private set; }
+    public static Stage currentStage;
     public List<Stage> stagesList;
     public Queue<Stage> stages;
     public int movements;
-    private double moneyValue = 100;
-    public double money {
-        get{
-            return moneyValue;
-        }
-        set{
+
+    private static double moneyValue = 100;
+
+    public static double money
+    {
+        get { return moneyValue; }
+        set
+        {
             moneyValue = value;
-            if(moneyChangeEvent != null){
+            if (moneyChangeEvent != null)
                 moneyChangeEvent(money);
-            }
         }
     }
+
     public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
-    public List<OptionalArea> optionalAreas = new List<OptionalArea>();
-    private readonly List<Area> areas = new List<Area>();
+    private static readonly List<OptionalArea> optionalAreas = new List<OptionalArea>();
+    private static readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
     public event OnStageChanged stageChangeEvent;
-    public event OnMoneyChanged moneyChangeEvent;
+    public static event OnMoneyChanged moneyChangeEvent;
 
-    public void Awake() {
-        if(instance == null) {
+    public void Awake()
+    {
+        if (instance == null)
             instance = this;
-        } else if (instance != this) {
+        else if (instance != this)
             Destroy(gameObject);
-        }
     }
 
-    public void Start() {
+    public void Start()
+    {
         stages = new Queue<Stage>(stagesList);
-        if(stages.Count > 0){
+        if (stages.Count > 0)
             SetStage(stages.Dequeue());
-        } else {
+        else
             ChangeState(new LevelEndState());
-        }
+
         ChangeState(new UpgradeState());
     }
 
@@ -56,64 +61,59 @@ public class Game : MonoBehaviour
         currentState.Update();
     }
 
-    public void RegisterArea(Area area)
+    public static void RegisterArea(Area area)
     {
         if (!areas.Contains(area))
-        {
             areas.Add(area);
-        }
     }
 
-    public void RegisterArea(OptionalArea area)
+    public static void RegisterArea(OptionalArea area)
     {
         if (!optionalAreas.Contains(area))
-        {
             optionalAreas.Add(area);
-        }
+    }
+
+    public static void DeregisterArea(OptionalArea area)
+    {
+        if (optionalAreas.Contains(area))
+            optionalAreas.Remove(area);
     }
 
     public void RegisterWaiting(DeliveryVehicle vehicle)
     {
         if (!vehicles.Contains(vehicle))
-        {
             vehicles.Add(vehicle);
-        }
     }
 
-    public List<T> GetAreasOfType<T>() where T : Area
+    public static List<T> GetAreasOfType<T>() where T : Area
     {
         return areas.OfType<T>().Select(a => a).ToList();
     }
 
-    public VehicleGenerator GetGenerator(){
-        if(currentState is OperationState) {
-            return ((OperationState) currentState).generator;
-        }
-        return null;
+    public static VehicleGenerator GetGenerator()
+    {
+        var state = currentState as OperationState;
+        return state != null ? state.generator : null;
     }
 
-    public ContainerManager GetManager(){
-        if(currentState is OperationState) {
-            return ((OperationState) currentState).manager;
-        }
-        return null;
+    public static ContainerManager GetManager()
+    {
+        var state = currentState as OperationState;
+        return state != null ? state.manager : null;
     }
 
-    public void ChangeState(GameState newState){
-        if(stateChangeEvent != null){
+    public void ChangeState(GameState newState)
+    {
+        if (stateChangeEvent != null)
             stateChangeEvent.Invoke(newState);
-        }
+
         currentState = newState;
     }
 
-    public void SetMoney(double money) {
-        this.money = money;
-    }
-
-    public void SetStage(Stage newStage) {
+    public void SetStage(Stage newStage)
+    {
         currentStage = newStage;
-        if(stageChangeEvent != null){
+        if (stageChangeEvent != null)
             stageChangeEvent(newStage);
-        }
     }
 }

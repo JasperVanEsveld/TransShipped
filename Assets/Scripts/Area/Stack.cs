@@ -59,37 +59,22 @@ public class Stack : Area
 
     private void OnMouseEnter()
     {
+        if (!(Game.currentState is OperationState)) return;
+        sliderclone = Instantiate(slider, transform.position, Quaternion.identity);
 
-        if (Game.instance.currentState is OperationState)
-        {
+        sliderclone.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
-
-            sliderclone = Instantiate(slider, transform.position, Quaternion.identity);
-
-            sliderclone.transform.SetParent(GameObject.Find("Canvas").transform, false);
-
-            //sliderclone.transform.parent = GameObject.Find("Canvas").transform;
-            script = sliderclone.GetComponent<CapacitySlider>();
-            script.target = transform;
-            script.ChangeSliderValue((float)containers.Count / max); 
-            GetComponent<Renderer>().material.color = Color.cyan;
-
-
-        }
-    }
-
-    private void OnMouseDown()
-    {
-
+        //sliderclone.transform.parent = GameObject.Find("Canvas").transform;
+        script = sliderclone.GetComponent<CapacitySlider>();
+        script.target = transform;
+        script.ChangeSliderValue((float)containers.Count / max); 
+        GetComponent<Renderer>().material.color = Color.cyan;
     }
 
     private void OnMouseExit()
     {
-        if (Game.instance.currentState is OperationState)
-        {
-
-            Destroy(sliderclone);
-            GetComponent<Renderer>().material.color = Color.grey;
-        }
+        if (!(Game.currentState is OperationState)) return;
+        Destroy(sliderclone);
+        GetComponent<Renderer>().material.color = Color.grey;
     }
 }

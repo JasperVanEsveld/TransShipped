@@ -12,7 +12,7 @@ public class NewAGVButton : MonoBehaviour
 
     public void AddVehicle()
     {
-        if (((UpgradeState) Game.instance.currentState).Buy(Vehicle.PurchaseCost()))
+        if (UpgradeState.Buy(Vehicle.price))
         {
             GameObject v = Instantiate(GameObject.Find("Vehicle"));
             road.vehicles.Add(v.GetComponent(typeof(Vehicle)) as Vehicle);

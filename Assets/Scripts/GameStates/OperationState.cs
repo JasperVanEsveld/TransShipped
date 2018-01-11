@@ -10,7 +10,7 @@ public class OperationState : GameState
 
     public OperationState()
     {
-        manager = new ContainerManager(Game.instance.GetAreasOfType<Stack>(), this);
+        manager = new ContainerManager(Game.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();
     }
 
@@ -21,12 +21,12 @@ public class OperationState : GameState
 
     public override void Update()
     {
-        if (Game.instance.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
+        if (Game.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
             Game.instance.ChangeState(new StageEndState());
 
         int vehicles = Object.FindObjectsOfType<DeliveryVehicle>().Length;
-        if (!((DateTime.Now - lastTime).TotalSeconds >= Game.instance.currentStage.spawnInterval) ||
-            !(vehicles < Game.instance.currentStage.maxVehicles)) return;
+        if (!((DateTime.Now - lastTime).TotalSeconds >= Game.currentStage.spawnInterval) ||
+            !(vehicles < Game.currentStage.maxVehicles)) return;
         generator.GenerateRandomVehicle();
         lastTime = DateTime.Now;
     }
