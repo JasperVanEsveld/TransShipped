@@ -11,7 +11,9 @@ public class SettingsButtonOnClick : MonoBehaviour
 
     public void ContinueSuccess()
     {
-        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
+        Debug.Log("Cur: " + SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Amount: " + SceneManager.sceneCountInBuildSettings);
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings-1)
         {
             game.ChangeState(new LevelEndState());
         } else{

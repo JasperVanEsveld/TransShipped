@@ -10,7 +10,7 @@ public class InfoPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Game.moneyChangeEvent += MoneyChanged;
+        Game.instance.moneyChangeEvent += MoneyChanged;
         Game.instance.stateChangeEvent += StateChanged;
         Game.instance.stageChangeEvent += StageChanged;
         moneyText.text = "Money :" + Game.money;
