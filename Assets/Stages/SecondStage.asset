@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f7f9494dde9542800b0e3e45f581b, type: 3}
   m_Name: SecondStage
   m_EditorClassIdentifier: 
-  duration: 120
-  moneyRequired: 250
+  duration: 80
+  moneyRequired: 80
   movementsRequired: -1
-  reward: 50
-  penalty: -100
+  reward: 200
+  penalty: -50
   vehicleTemplates:
   - {fileID: 11400000, guid: 38ff07844339a6a49ac1375bbfb6df3e, type: 2}
-  spawnInterval: 10
+  - {fileID: 11400000, guid: cd3d38b0918584349b600dc087d35414, type: 2}
+  spawnInterval: 1
   maxVehicles: 5
