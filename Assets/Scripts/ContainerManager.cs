@@ -47,7 +47,11 @@ public class ContainerManager
 
         var visited = new List<Area> {area};
         Pair<Area, int> next = FirstArea(movement.TargetArea, area, visited);
-        return next.First;
+        if(next != null){
+            return next.First;
+        } else{
+            return null;
+        }
     }
 
     private static Pair<Area, int> FirstArea(Area current, Area target, List<Area> visited)

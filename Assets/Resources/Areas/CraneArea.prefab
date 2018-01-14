@@ -110,3 +110,10 @@ MonoBehaviour:
   connected: []
   listening: []
   cranes: []
+  priceForOneCrane: 10
+  maxCranes: 2
+  offSet: 5
+  cranePrefab: {fileID: 1609709993846976, guid: 0d9a721d693024030810591576511803,
+    type: 2}
+  areaName: 
+  attribute: 

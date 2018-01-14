@@ -1,0 +1,505 @@
+fileFormatVersion: 2
+guid: c43586562df982b48aaab79095190175
+timeCreated: 1515956332
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: $$$DUMMY.Anchor01
+    100002: $$$DUMMY.Anchor02
+    100004: $$$DUMMY.Backpole
+    100006: $$$DUMMY.Backpole01
+    100008: $$$DUMMY.Box55
+    100010: $$$DUMMY.Box58
+    100012: $$$DUMMY.Box59
+    100014: $$$DUMMY.Box61
+    100016: $$$DUMMY.Box64
+    100018: $$$DUMMY.Box66
+    100020: $$$DUMMY.Box68
+    100022: $$$DUMMY.Item on 10
+    100024: $$$DUMMY.Item on 11
+    100026: $$$DUMMY.Item on 12
+    100028: $$$DUMMY.Item on 13
+    100030: $$$DUMMY.Item on 14
+    100032: $$$DUMMY.Item on 15
+    100034: $$$DUMMY.Item on 16
+    100036: $$$DUMMY.Item on 17
+    100038: $$$DUMMY.Item on 18
+    100040: $$$DUMMY.Item on 19
+    100042: $$$DUMMY.Item on 20
+    100044: $$$DUMMY.Item on 21
+    100046: $$$DUMMY.Item on 22
+    100048: $$$DUMMY.Item on 23
+    100050: $$$DUMMY.Item on 24
+    100052: $$$DUMMY.Item on 25
+    100054: $$$DUMMY.Item on 26
+    100056: $$$DUMMY.Item on 27
+    100058: $$$DUMMY.Item on 28
+    100060: $$$DUMMY.Item on 29
+    100062: $$$DUMMY.Item on d0
+    100064: $$$DUMMY.Item on d1
+    100066: $$$DUMMY.Item on d2
+    100068: $$$DUMMY.Item on d3
+    100070: $$$DUMMY.Item on d4
+    100072: $$$DUMMY.Item on d5
+    100074: $$$DUMMY.Item on d6
+    100076: $$$DUMMY.Item on d7
+    100078: $$$DUMMY.Item on d8
+    100080: $$$DUMMY.Item on d9
+    100082: $$$DUMMY.Item on de
+    100084: $$$DUMMY.Lifeboat
+    100086: $$$DUMMY.Lifeboat01
+    100088: $$$DUMMY.Lifeboat02
+    100090: $$$DUMMY.Lifeboat03
+    100092: $$$DUMMY.Pipe01
+    100094: $$$DUMMY.Pipes
+    100096: $$$DUMMY.Pipes0
+    100098: $$$DUMMY.Pipes01
+    100100: $$$DUMMY.Propellor
+    100102: $$$DUMMY.small mast
+    100104: Afterstruc
+    100106: Box01
+    100108: Box02
+    100110: Box03.Box03.Box0.Box03.Box1.Box03.Box2
+    100112: Box48
+    100114: Box49.Box49.Box5
+    100116: Box51
+    100118: Box53
+    100120: Box54
+    100122: Box56.Box56.Box5.Box56.Box6.Box56.Box0.Box56.Box1.Box56.Box2.Bo
+    100124: Box65
+    100126: Circle02
+    100128: Circle03.Circle03.C.Circle03.0.Circle03.1
+    100130: Circle07
+    100132: Circle08
+    100134: Cylinde126
+    100136: Cylinde127
+    100138: Cylinde128
+    100140: Cylinde129
+    100142: Cylinde130.Cylinde131
+    100144: Cylinde133.Cylinde134.Cylinde137.Cylinde138.Cylinde140.Cylinde1
+    100146: Cylinde148
+    100148: Cylinde165
+    100150: Cylinder01
+    100152: Cylinder02
+    100154: Cylinder13.Cylinder15.Cylinder17.Cylinder19.Cylinder21.Cylinder
+    100156: Cylinder47
+    100158: Cylinder48
+    100160: Cylinder56.Cylinder98.Cylinder99.Cylinde100.Cylinde101.Cylinde1
+    100162: Deck
+    100164: Deck01
+    100166: Floor leve
+    100168: Hull
+    100170: lijn12
+    100172: lijn13
+    100174: lijn14
+    100176: lijn17
+    100178: Line08
+    100180: Line09
+    100182: Line10
+    100184: Loft01
+    100186: Loft09.Loft09.Lof.Loft09.Lo0.Loft09.Lo1.Loft09.Lo2
+    100188: Loft18
+    100190: Loft19
+    100192: Loft20
+    100194: Shape02
+    100196: Shape04
+    100198: //RootNode
+    100200: Sphere01
+    100202: Sphere02.Sphere02.S
+    100204: Sphere04
+    100206: Super01
+    100208: Super02
+    100210: Super05
+    100212: Super06
+    100214: Super07
+    100216: Super08
+    100218: Super09
+    100220: Supers02
+    100222: Upper par0
+    100224: Upper part
+    400000: $$$DUMMY.Anchor01
+    400002: $$$DUMMY.Anchor02
+    400004: $$$DUMMY.Backpole
+    400006: $$$DUMMY.Backpole01
+    400008: $$$DUMMY.Box55
+    400010: $$$DUMMY.Box58
+    400012: $$$DUMMY.Box59
+    400014: $$$DUMMY.Box61
+    400016: $$$DUMMY.Box64
+    400018: $$$DUMMY.Box66
+    400020: $$$DUMMY.Box68
+    400022: $$$DUMMY.Item on 10
+    400024: $$$DUMMY.Item on 11
+    400026: $$$DUMMY.Item on 12
+    400028: $$$DUMMY.Item on 13
+    400030: $$$DUMMY.Item on 14
+    400032: $$$DUMMY.Item on 15
+    400034: $$$DUMMY.Item on 16
+    400036: $$$DUMMY.Item on 17
+    400038: $$$DUMMY.Item on 18
+    400040: $$$DUMMY.Item on 19
+    400042: $$$DUMMY.Item on 20
+    400044: $$$DUMMY.Item on 21
+    400046: $$$DUMMY.Item on 22
+    400048: $$$DUMMY.Item on 23
+    400050: $$$DUMMY.Item on 24
+    400052: $$$DUMMY.Item on 25
+    400054: $$$DUMMY.Item on 26
+    400056: $$$DUMMY.Item on 27
+    400058: $$$DUMMY.Item on 28
+    400060: $$$DUMMY.Item on 29
+    400062: $$$DUMMY.Item on d0
+    400064: $$$DUMMY.Item on d1
+    400066: $$$DUMMY.Item on d2
+    400068: $$$DUMMY.Item on d3
+    400070: $$$DUMMY.Item on d4
+    400072: $$$DUMMY.Item on d5
+    400074: $$$DUMMY.Item on d6
+    400076: $$$DUMMY.Item on d7
+    400078: $$$DUMMY.Item on d8
+    400080: $$$DUMMY.Item on d9
+    400082: $$$DUMMY.Item on de
+    400084: $$$DUMMY.Lifeboat
+    400086: $$$DUMMY.Lifeboat01
+    400088: $$$DUMMY.Lifeboat02
+    400090: $$$DUMMY.Lifeboat03
+    400092: $$$DUMMY.Pipe01
+    400094: $$$DUMMY.Pipes
+    400096: $$$DUMMY.Pipes0
+    400098: $$$DUMMY.Pipes01
+    400100: $$$DUMMY.Propellor
+    400102: $$$DUMMY.small mast
+    400104: Afterstruc
+    400106: Box01
+    400108: Box02
+    400110: Box03.Box03.Box0.Box03.Box1.Box03.Box2
+    400112: Box48
+    400114: Box49.Box49.Box5
+    400116: Box51
+    400118: Box53
+    400120: Box54
+    400122: Box56.Box56.Box5.Box56.Box6.Box56.Box0.Box56.Box1.Box56.Box2.Bo
+    400124: Box65
+    400126: Circle02
+    400128: Circle03.Circle03.C.Circle03.0.Circle03.1
+    400130: Circle07
+    400132: Circle08
+    400134: Cylinde126
+    400136: Cylinde127
+    400138: Cylinde128
+    400140: Cylinde129
+    400142: Cylinde130.Cylinde131
+    400144: Cylinde133.Cylinde134.Cylinde137.Cylinde138.Cylinde140.Cylinde1
+    400146: Cylinde148
+    400148: Cylinde165
+    400150: Cylinder01
+    400152: Cylinder02
+    400154: Cylinder13.Cylinder15.Cylinder17.Cylinder19.Cylinder21.Cylinder
+    400156: Cylinder47
+    400158: Cylinder48
+    400160: Cylinder56.Cylinder98.Cylinder99.Cylinde100.Cylinde101.Cylinde1
+    400162: Deck
+    400164: Deck01
+    400166: Floor leve
+    400168: Hull
+    400170: lijn12
+    400172: lijn13
+    400174: lijn14
+    400176: lijn17
+    400178: Line08
+    400180: Line09
+    400182: Line10
+    400184: Loft01
+    400186: Loft09.Loft09.Lof.Loft09.Lo0.Loft09.Lo1.Loft09.Lo2
+    400188: Loft18
+    400190: Loft19
+    400192: Loft20
+    400194: Shape02
+    400196: Shape04
+    400198: //RootNode
+    400200: Sphere01
+    400202: Sphere02.Sphere02.S
+    400204: Sphere04
+    400206: Super01
+    400208: Super02
+    400210: Super05
+    400212: Super06
+    400214: Super07
+    400216: Super08
+    400218: Super09
+    400220: Supers02
+    400222: Upper par0
+    400224: Upper part
+    2100000: Mast
+    2100002: Default
+    2100004: Grey
+    2100006: White
+    2100008: Black1
+    2100010: RED
+    2100012: Brown
+    2100014: Black
+    2100016: Green
+    2100018: Logo 2
+    2100020: Logo
+    2100022: red
+    2300000: Afterstruc
+    2300002: Box01
+    2300004: Box02
+    2300006: Box03.Box03.Box0.Box03.Box1.Box03.Box2
+    2300008: Box48
+    2300010: Box49.Box49.Box5
+    2300012: Box51
+    2300014: Box53
+    2300016: Box54
+    2300018: Box56.Box56.Box5.Box56.Box6.Box56.Box0.Box56.Box1.Box56.Box2.Bo
+    2300020: Box65
+    2300022: Circle02
+    2300024: Circle03.Circle03.C.Circle03.0.Circle03.1
+    2300026: Circle07
+    2300028: Circle08
+    2300030: Cylinde126
+    2300032: Cylinde127
+    2300034: Cylinde128
+    2300036: Cylinde129
+    2300038: Cylinde130.Cylinde131
+    2300040: Cylinde133.Cylinde134.Cylinde137.Cylinde138.Cylinde140.Cylinde1
+    2300042: Cylinde148
+    2300044: Cylinde165
+    2300046: Cylinder01
+    2300048: Cylinder02
+    2300050: Cylinder13.Cylinder15.Cylinder17.Cylinder19.Cylinder21.Cylinder
+    2300052: Cylinder47
+    2300054: Cylinder48
+    2300056: Cylinder56.Cylinder98.Cylinder99.Cylinde100.Cylinde101.Cylinde1
+    2300058: Deck
+    2300060: Deck01
+    2300062: Floor leve
+    2300064: Hull
+    2300066: lijn12
+    2300068: lijn13
+    2300070: lijn14
+    2300072: lijn17
+    2300074: Line08
+    2300076: Line09
+    2300078: Line10
+    2300080: Loft01
+    2300082: Loft09.Loft09.Lof.Loft09.Lo0.Loft09.Lo1.Loft09.Lo2
+    2300084: Loft18
+    2300086: Loft19
+    2300088: Loft20
+    2300090: Shape02
+    2300092: Shape04
+    2300094: Sphere01
+    2300096: Sphere02.Sphere02.S
+    2300098: Sphere04
+    2300100: Super01
+    2300102: Super02
+    2300104: Super05
+    2300106: Super06
+    2300108: Super07
+    2300110: Super08
+    2300112: Super09
+    2300114: Supers02
+    2300116: Upper par0
+    2300118: Upper part
+    3300000: Afterstruc
+    3300002: Box01
+    3300004: Box02
+    3300006: Box03.Box03.Box0.Box03.Box1.Box03.Box2
+    3300008: Box48
+    3300010: Box49.Box49.Box5
+    3300012: Box51
+    3300014: Box53
+    3300016: Box54
+    3300018: Box56.Box56.Box5.Box56.Box6.Box56.Box0.Box56.Box1.Box56.Box2.Bo
+    3300020: Box65
+    3300022: Circle02
+    3300024: Circle03.Circle03.C.Circle03.0.Circle03.1
+    3300026: Circle07
+    3300028: Circle08
+    3300030: Cylinde126
+    3300032: Cylinde127
+    3300034: Cylinde128
+    3300036: Cylinde129
+    3300038: Cylinde130.Cylinde131
+    3300040: Cylinde133.Cylinde134.Cylinde137.Cylinde138.Cylinde140.Cylinde1
+    3300042: Cylinde148
+    3300044: Cylinde165
+    3300046: Cylinder01
+    3300048: Cylinder02
+    3300050: Cylinder13.Cylinder15.Cylinder17.Cylinder19.Cylinder21.Cylinder
+    3300052: Cylinder47
+    3300054: Cylinder48
+    3300056: Cylinder56.Cylinder98.Cylinder99.Cylinde100.Cylinde101.Cylinde1
+    3300058: Deck
+    3300060: Deck01
+    3300062: Floor leve
+    3300064: Hull
+    3300066: lijn12
+    3300068: lijn13
+    3300070: lijn14
+    3300072: lijn17
+    3300074: Line08
+    3300076: Line09
+    3300078: Line10
+    3300080: Loft01
+    3300082: Loft09.Loft09.Lof.Loft09.Lo0.Loft09.Lo1.Loft09.Lo2
+    3300084: Loft18
+    3300086: Loft19
+    3300088: Loft20
+    3300090: Shape02
+    3300092: Shape04
+    3300094: Sphere01
+    3300096: Sphere02.Sphere02.S
+    3300098: Sphere04
+    3300100: Super01
+    3300102: Super02
+    3300104: Super05
+    3300106: Super06
+    3300108: Super07
+    3300110: Super08
+    3300112: Super09
+    3300114: Supers02
+    3300116: Upper par0
+    3300118: Upper part
+    4300000: Cylinde165
+    4300002: Cylinder13.Cylinder15.Cylinder17.Cylinder19.Cylinder21.Cylinder
+    4300004: Box56.Box56.Box5.Box56.Box6.Box56.Box0.Box56.Box1.Box56.Box2.Bo
+    4300006: Cylinde133.Cylinde134.Cylinde137.Cylinde138.Cylinde140.Cylinde1
+    4300008: Cylinder56.Cylinder98.Cylinder99.Cylinde100.Cylinde101.Cylinde1
+    4300010: Loft09.Loft09.Lof.Loft09.Lo0.Loft09.Lo1.Loft09.Lo2
+    4300012: Circle03.Circle03.C.Circle03.0.Circle03.1
+    4300014: Hull
+    4300016: lijn17
+    4300018: lijn14
+    4300020: Box65
+    4300022: Cylinde148
+    4300024: Box54
+    4300026: Box53
+    4300028: Loft19
+    4300030: Loft18
+    4300032: Loft20
+    4300034: Box51
+    4300036: Box49.Box49.Box5
+    4300038: Cylinde130.Cylinde131
+    4300040: Cylinde129
+    4300042: Cylinde128
+    4300044: Line10
+    4300046: Sphere04
+    4300048: Line09
+    4300050: Cylinde127
+    4300052: Cylinde126
+    4300054: Box48
+    4300056: Line08
+    4300058: Sphere02.Sphere02.S
+    4300060: Cylinder48
+    4300062: Sphere01
+    4300064: Cylinder47
+    4300066: Circle08
+    4300068: Circle07
+    4300070: Box03.Box03.Box0.Box03.Box1.Box03.Box2
+    4300072: Box02
+    4300074: Loft01
+    4300076: Supers02
+    4300078: Floor leve
+    4300080: Upper par0
+    4300082: Deck01
+    4300084: Upper part
+    4300086: Afterstruc
+    4300088: Super09
+    4300090: Super06
+    4300092: Super08
+    4300094: Circle02
+    4300096: Shape04
+    4300098: Shape02
+    4300100: Super07
+    4300102: Super05
+    4300104: Super01
+    4300106: Super02
+    4300108: Cylinder02
+    4300110: Cylinder01
+    4300112: Box01
+    4300114: lijn13
+    4300116: Deck
+    4300118: lijn12
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

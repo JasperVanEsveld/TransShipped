@@ -6,8 +6,10 @@ public class CraneArea : Area
     private readonly Dictionary<MonoContainer, Crane> containerCrane = new Dictionary<MonoContainer, Crane>();
     public List<Crane> cranes = new List<Crane>();
     public double priceForOneCrane = 10;
+    public int maxCranes = 2;
+    public int offSet = 5;
 
-    private GameObject cranePrefab;
+    public GameObject cranePrefab;
     private readonly Color selected = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
     private readonly Color craneAreaColor = new Color32(169, 158, 16, 255);
     private BuildingPanel buildingPanel;
@@ -16,7 +18,6 @@ public class CraneArea : Area
     private new void Start()
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
-        cranePrefab = Resources.Load("Areas/Crane") as GameObject;
         Game.RegisterArea(this);
     }
 
@@ -25,11 +26,11 @@ public class CraneArea : Area
     public void BuyCrane()
     {
         if (!(Game.currentState is UpgradeState)) return;
-        if (UpgradeState.Buy(priceForOneCrane))
+        if (cranes.Count < maxCranes && UpgradeState.Buy(priceForOneCrane))
         {
             i = 0;
             var crane = Instantiate(cranePrefab,
-                new Vector3(transform.position.x + cranes.Count * 2 - 4, 5, transform.position.z),
+                new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
                 transform.rotation).GetComponent<Crane>();
             cranes.Add(crane);
             crane.craneArea = this;
