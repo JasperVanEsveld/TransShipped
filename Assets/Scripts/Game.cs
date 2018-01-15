@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
     public Queue<Stage> stages;
     public int movements;
 
-    private static double moneyValue = 100;
+    private static double moneyValue = 300;
 
     public static double money
     {

@@ -13,10 +13,9 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     
     private void OnMouseDown()
     {
-        if(highlight && Game.currentState is OperationState){
-            CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
-            commandPanel.SetDeliveryArea(this);
-        }
+        if (!highlight || !(Game.currentState is OperationState)) return;
+        CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
+        commandPanel.SetDeliveryArea(this);
     }
 
     public void OnVehicleEnter(T vehicle)

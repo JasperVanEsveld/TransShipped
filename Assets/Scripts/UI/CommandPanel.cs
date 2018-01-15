@@ -31,15 +31,18 @@ public class CommandPanel : MonoBehaviour {
     private void SendVehicleIn() {
         currentVehicle.targetStack = selectedStack;
         if (currentVehicle is Ship && selectedArea is ShipArea) {
-            (currentVehicle as Ship).area = selectedArea as ShipArea;
+            ((Ship) currentVehicle).area = (ShipArea) selectedArea;
+            ((Ship) currentVehicle).areaPos = selectedArea.transform.position;
             ((ShipArea) selectedArea).occupied = true;
         }
         else if (currentVehicle is Truck && selectedArea is TruckArea) {
-            (currentVehicle as Truck).area = selectedArea as TruckArea;
+            ((Truck) currentVehicle).area = (TruckArea) selectedArea;
+            ((Truck) currentVehicle).areaPos = selectedArea.transform.position;
             ((TruckArea) selectedArea).occupied = true;
         }
         else if (currentVehicle is Train && selectedArea is TrainArea) {
-            (currentVehicle as Train).area = selectedArea as TrainArea;
+            ((Train) currentVehicle).area = (TrainArea) selectedArea;
+            ((Train) currentVehicle).areaPos = selectedArea.transform.position;
             ((TrainArea) selectedArea).occupied = true;
         }
 
@@ -73,14 +76,12 @@ public class CommandPanel : MonoBehaviour {
             Transform obj = Instantiate(prefab);
 
             if (vehicle.GetType() == typeof(Ship)) {
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
                 obj.SetParent(ShipTab, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x1, 0);
                 x1 += 170;
             }
             else if (vehicle.GetType() == typeof(Train)) {
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
                 obj.SetParent(TrainTab, false);
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
@@ -91,11 +92,11 @@ public class CommandPanel : MonoBehaviour {
                 buttons.Add(obj);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
                 x3 += 170;
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
             }
 
             obj.GetComponent<Button>().onClick.AddListener(vehicle.OnSelected);
-            obj.GetComponent<Button>().onClick.AddListener(() => SetVehicle(vehicle));
+            var vehicle1 = vehicle;
+            obj.GetComponent<Button>().onClick.AddListener(() => SetVehicle(vehicle1));
             obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
         }
     }
