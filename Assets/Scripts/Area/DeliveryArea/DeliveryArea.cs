@@ -26,7 +26,6 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         if (current == null)
         {
             current = vehicle;
-            occupied = true;
             Service(current);
         }
         else

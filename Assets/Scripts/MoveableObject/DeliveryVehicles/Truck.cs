@@ -11,7 +11,9 @@ public class Truck : DeliveryVehicle {
         List<TruckArea> areas = Game.OnlyHighlight<TruckArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
-            commandPanel.SetDeliveryArea(areas[0]);
+            if (!areas[0].occupied)
+                commandPanel.SetDeliveryArea(areas[0]);
+
             areas[0].Highlight(false);
             return;
         }
