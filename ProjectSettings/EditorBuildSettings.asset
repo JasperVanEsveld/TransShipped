@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/menuscene.unity
     guid: 4406603a41adc0c4c8081c168b55f56c
   - enabled: 1
+    path: Assets/Scenes/LessSimpleScene.unity
+    guid: 0dddef36a18394cfab6edb16db47b8a8
+  - enabled: 1
     path: Assets/Scenes/SimpleScene.unity
     guid: 3022695b4385c924a88e3a3d9031a866
