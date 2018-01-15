@@ -37,6 +37,9 @@ public class Ship : DeliveryVehicle {
     }
 
     private void Update() {
+        DestroyIfDone();
+        if (!(Game.currentState is OperationState)) return;
+        MOMovementUpdate();
         for (var i = 0; i < carrying.Count; i++) {
             var n = i % 9;
             carrying[i].transform.position = new Vector3(
@@ -45,5 +48,10 @@ public class Ship : DeliveryVehicle {
                 transform.position.z - 1 + i % 3
             );
         }
+
+        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
+        isAtDestination = true;
+
+        Enter();
     }
 }
