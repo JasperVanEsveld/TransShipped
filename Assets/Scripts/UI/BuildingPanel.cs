@@ -32,7 +32,14 @@ public class BuildingPanel : MonoBehaviour
         text5.text = objectname;
         buttonObject.gameObject.SetActive(true);
         buttonObject.onClick.AddListener(optionalArea.BuyStack);
-        buttonObject.onClick.AddListener(Bought);
+        buttonObject.onClick.AddListener(StackBought);
+    }
+    
+    private void StackBought()
+    {
+        buttonObject.onClick.RemoveAllListeners();
+        text2.text = "";
+        buttonObject.gameObject.SetActive(false);
     }
 
     public void SelectCraneArea(CraneArea craneArea, string objectname, string attribute)
@@ -46,22 +53,18 @@ public class BuildingPanel : MonoBehaviour
         }
         text4.text = attribute;
         text5.text = objectname;
-        buttonObject.gameObject.SetActive(true);
-        buttonObject.onClick.AddListener(craneArea.BuyCrane);
-        buttonObject.onClick.AddListener(Bought);
+        if (!craneArea.NoMoreSpace())
+        {
+            buttonObject.gameObject.SetActive(true);
+            buttonObject.onClick.AddListener(craneArea.BuyCrane);
+            buttonObject.onClick.AddListener(() => SelectCraneArea(craneArea, objectname, attribute));
+        }
+        else
+        {
+            buttonObject.gameObject.SetActive(false);
+            text3.text = "There is " + craneArea.cranes.Count + " cranes and no more could be bought";
+        }
     }
-
-    private void Bought()
-    {
-        buttonObject.gameObject.SetActive(false);
-        text1.text = "";
-        text2.text = "";
-        text3.text = "";
-        text4.text = "";
-        text5.text = "";
-        buttonText.text = "";
-    }
-
 
     int buttonCount = 0;
     List<Transform> buttons = new List<Transform>();
@@ -83,7 +86,7 @@ public class BuildingPanel : MonoBehaviour
             text3.text = "Price for Upgrading: " + crane.CostOfUpgrade;
             buttonObject.gameObject.SetActive(true);
             buttonObject.onClick.AddListener(crane.Upgrade);
-            buttonObject.onClick.AddListener(Bought);
+            buttonObject.onClick.AddListener(() => SelectCrane(crane));
         }
         else
         {

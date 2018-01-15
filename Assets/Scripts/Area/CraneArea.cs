@@ -6,6 +6,7 @@ public class CraneArea : Area
     private readonly Dictionary<MonoContainer, Crane> containerCrane = new Dictionary<MonoContainer, Crane>();
     public List<Crane> cranes = new List<Crane>();
     public double priceForOneCrane = 10;
+    public int maxCranes = 2;
 
     private GameObject cranePrefab;
     private readonly Color selected = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
@@ -21,6 +22,11 @@ public class CraneArea : Area
     }
 
     private int i;
+
+    public bool NoMoreSpace()
+    {
+        return cranes.Count >= maxCranes;
+    }
 
     public void BuyCrane()
     {
@@ -119,7 +125,6 @@ public class CraneArea : Area
         if (!next.ReserveArea(this, monoContainer.movement)) return false;
         containerCrane.Add(monoContainer, crane);
         return crane.AddContainer(monoContainer);
-
     }
 
     protected override void RemoveContainer(MonoContainer monoContainer)
@@ -134,6 +139,5 @@ public class CraneArea : Area
         if (crane == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
         bool reserved = crane.ReserveCrane(origin);
         return reserved;
-
     }
 }
