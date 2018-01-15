@@ -3,11 +3,21 @@ using System.Collections.Generic;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
+    public bool occupied;
     private DateTime start;
     private List<Container> remainingRequests;
     private Queue<T> waiting = new Queue<T>();
     private T current;
     private bool loading;
+
+    
+    private void OnMouseDown()
+    {
+        if(highlight && Game.currentState is OperationState){
+            CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
+            commandPanel.SetDeliveryArea(this);
+        }
+    }
 
     public void OnVehicleEnter(T vehicle)
     {
@@ -16,6 +26,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         if (current == null)
         {
             current = vehicle;
+            occupied = true;
             Service(current);
         }
         else
@@ -28,7 +39,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         loading = false;
         remainingRequests = new List<Container>(vehicle.outgoing);
         foreach (var container in vehicle.carrying)
-            ((OperationState) Game.currentState).manager.Store(this, container);
+            ((OperationState) Game.currentState).manager.Store(this, container, vehicle.targetStack);
 
         for (var i = vehicle.carrying.Count - 1; i >= 0; i--)
             if (!MoveToNext(vehicle.carrying[i]))
@@ -50,6 +61,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     private void OnVehicleLeaves()
     {
         current.LeaveTerminal();
+        occupied = false;
         current = null;
         if (waiting.Count == 0) return;
         current = waiting.Dequeue();

@@ -64,28 +64,22 @@ public class VehicleGenerator
             switch (rnd.Next(0, 3))
             {
                 case 0:
-                    tempGO = Object.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject,
-                        vehicle.transform.position,
-                        vehicle.transform.rotation);
+                    tempGO = Object.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.ShipContainer);
                     break;
                 case 1:
-                    tempGO = Object.Instantiate(Resources.Load("Containers/RedContainer") as GameObject,
-                        vehicle.transform.position,
-                        vehicle.transform.rotation);
+                    tempGO = Object.Instantiate(Resources.Load("Containers/RedContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.TruckContainer);
                     break;
                 default:
-                    tempGO = Object.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject,
-                        vehicle.transform.position,
-                        vehicle.transform.rotation);
+                    tempGO = Object.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.TrainContainer);
                     break;
             }
-
+            tempGO.transform.position = vehicle.transform.position;
             tempGO.transform.SetParent(vehicle.transform);
             tempMC.movement = null;
             tempMC.gameObject.transform.SetParent(vehicle.transform);

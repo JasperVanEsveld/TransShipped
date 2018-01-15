@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,36 @@ public class CommandPanel : MonoBehaviour
     Transform ShipTab;
     Transform TruckTab;
     Transform TrainTab;
+    private Area selectedArea;
+    private Stack selectedStack;
+    private DeliveryVehicle currentVehicle;
 
+    public void SetVehicle(DeliveryVehicle vehicle){
+        currentVehicle = vehicle;
+    }
+
+    public void SetDeliveryArea(Area area){
+        selectedArea = area;
+        Game.OnlyHighlight<Stack>();
+    }
+
+    public void SetStackArea(Stack area){
+        selectedStack = area;
+        Game.RemoveHighlights();
+        SendVehicleIn();
+    }
+
+    private void SendVehicleIn() {
+        currentVehicle.targetStack = selectedStack;
+        if(currentVehicle is Ship && selectedArea is ShipArea){
+            (currentVehicle as Ship).area = selectedArea as ShipArea;
+        } else if(currentVehicle is Truck && selectedArea is TruckArea){
+            (currentVehicle as Truck).area = selectedArea as TruckArea;
+        } else if(currentVehicle is Train && selectedArea is TrainArea){
+            (currentVehicle as Train).area = selectedArea as TrainArea;
+        }
+        currentVehicle.EnterTerminal();
+    }
 
     void Awake()
     {
@@ -66,8 +96,8 @@ public class CommandPanel : MonoBehaviour
                 x3 += 170;
                 vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
             }
-
-            obj.GetComponent<Button>().onClick.AddListener(vehicle.EnterTerminal);
+            obj.GetComponent<Button>().onClick.AddListener(vehicle.OnSelected);
+            obj.GetComponent<Button>().onClick.AddListener(() => SetVehicle(vehicle));
             obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
         }
     }

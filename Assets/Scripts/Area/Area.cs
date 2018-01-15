@@ -3,16 +3,37 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
+    public bool highlight = false;
+    public Material defaultMat;
+    public Material highlightMat;
     public List<Area> connected;
+    public List<Area> listening = new List<Area>();
 
     private readonly Dictionary<Area, Queue<MonoContainer>> containerQueue =
         new Dictionary<Area, Queue<MonoContainer>>();
 
-    public List<Area> listening = new List<Area>();
-
+    
     public void Start()
     {
+        if(this.GetComponent<Renderer>() != null){
+            if(highlight){
+                this.GetComponent<Renderer>().material = highlightMat;
+            } else{
+                this.GetComponent<Renderer>().material = defaultMat;
+            }
+        }
         Game.RegisterArea(this);
+    }
+
+    public void Highlight(bool highlight){
+        this.highlight = highlight;
+        if(this.GetComponent<Renderer>() != null){
+            if(highlight) {
+                this.GetComponent<Renderer>().material = highlightMat;
+            } else{
+                this.GetComponent<Renderer>().material = defaultMat;
+            }
+        }
     }
 
     public void Connect(Area connectArea)

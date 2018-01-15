@@ -4,6 +4,20 @@ public class Ship : DeliveryVehicle
 {
     public ShipArea area;
 
+    public override void LeaveTerminal() {
+        MOShipLeaveTerminal();
+    }
+
+    public override void OnSelected()
+    {
+        List<ShipArea> areas = Game.OnlyHighlight<ShipArea>();
+        foreach(ShipArea currentArea in areas){
+            if( currentArea.occupied) {
+                currentArea.Highlight(false);
+            }
+        }
+    }
+
     private void Start()
     {
         MOInit(shipSpawnPos, 20, true);
@@ -14,14 +28,14 @@ public class Ship : DeliveryVehicle
         area = areaList[0];
     }
 
-    private void Update()
+    protected override void DestroyIfDone(){
+        if(isAtDestination && MOIsAtTheThisPos(shipSpawnPos)){
+            Destroy(this.gameObject);
+        }
+    }
+
+    protected override void Enter()
     {
-        if (!(Game.currentState is OperationState)) return;
-        MOMovementUpdate();
-
-        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
-        isAtDestination = true;
-
         area.OnVehicleEnter(this);
     }
 }

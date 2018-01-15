@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4408076523734674}
   - component: {fileID: 33011472609045686}
-  - component: {fileID: 65288903346024350}
   - component: {fileID: 23974097831473622}
   - component: {fileID: 114426549413654872}
+  - component: {fileID: 65288903346024350}
   m_Layer: 0
   m_Name: RedContainer
   m_TagString: Untagged
@@ -36,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1712654545125006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.1672325, y: 3.468378, z: 14.669971}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 11.1672325, y: 3.468378, z: 9.96}
+  m_LocalScale: {x: 24, y: 41.51132, z: 41.353638}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -83,7 +83,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1712654545125006}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 2263bc857efb52246af5511d29bf3cb5, type: 3}
 --- !u!65 &65288903346024350
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -94,7 +94,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.08128878, y: 0.024089785, z: 0.024181636}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114426549413654872
 MonoBehaviour:

@@ -22,7 +22,14 @@ public class ContainerManager
         var target = LeastFilledStack();
         if (target == null) return false;
         container.movement = new Movement(target);
-        return true;
+        return GetNextArea(start,container.movement) != null;
+    }
+
+    public bool Store(Area start, MonoContainer container, Stack target)
+    {
+        if (target == null) return false;
+        container.movement = new Movement(target);
+        return GetNextArea(start,container.movement) != null;
     }
 
     public bool Request(Area target, Container container)
@@ -47,7 +54,11 @@ public class ContainerManager
 
         var visited = new List<Area> {area};
         Pair<Area, int> next = FirstArea(movement.TargetArea, area, visited);
-        return next.First;
+        if(next != null){
+            return next.First;
+        } else{
+            return null;
+        }
     }
 
     private static Pair<Area, int> FirstArea(Area current, Area target, List<Area> visited)

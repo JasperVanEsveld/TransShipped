@@ -15,7 +15,7 @@ public class Vehicle : MoveableObject
     private const int maxLevel = 4;
     private static readonly int[] costOfPurchase = {2, 3, 5, 7, 10};
     private static readonly int[] costOfUpgrade = {1, 2, 2, 3};
-    private static readonly float[] speedAtEachLevel = {5, 6, 7.5f, 8, 30};
+    private static readonly float[] speedAtEachLevel = {10, 12, 14, 18, 24};
     private static float speed = speedAtEachLevel[0];
 
     private static bool IsFullyUpgraded()
@@ -76,7 +76,7 @@ public class Vehicle : MoveableObject
         return true;
     }
 
-    private bool IsFull()
+    public bool IsFull()
     {
         return containers.Count >= capacity;
     }

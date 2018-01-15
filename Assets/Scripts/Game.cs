@@ -90,6 +90,25 @@ public class Game : MonoBehaviour
         return areas.OfType<T>().Select(a => a).ToList();
     }
 
+    public static List<T> OnlyHighlight<T>() where T : Area
+    {
+        foreach(Area currentArea in areas){
+            if( currentArea is T) {
+                currentArea.Highlight(true);
+            } else if(!(currentArea is T)){
+                currentArea.Highlight(false);
+            }
+        }
+        return GetAreasOfType<T>();
+    }
+
+    public static void RemoveHighlights()
+    {
+        foreach(Area currentArea in areas){
+            currentArea.Highlight(false);
+        }
+    }
+
     public static VehicleGenerator GetGenerator()
     {
         var state = currentState as OperationState;

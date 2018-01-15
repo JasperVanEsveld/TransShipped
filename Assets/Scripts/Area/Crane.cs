@@ -24,7 +24,7 @@ public class Crane : MonoBehaviour
     }
 
     private static readonly int[] costOfUpgrade = {5, 10, 20};
-    private static readonly double[] speedAtEachLevel = {0.1, 2, 4, 8};
+    private static readonly double[] speedAtEachLevel = {5, 10, 20, 40};
 
     public bool IsFullyUpgraded()
     {

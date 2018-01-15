@@ -57,6 +57,13 @@ public class Stack : Area
         containers.Remove(monoContainer);
     }
 
+    private void OnMouseDown(){
+        if(highlight && Game.currentState is OperationState){
+            CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
+            commandPanel.SetStackArea(this);
+        }
+    }
+
     private void OnMouseEnter()
     {
         if (!(Game.currentState is OperationState)) return;
@@ -75,6 +82,10 @@ public class Stack : Area
     {
         if (!(Game.currentState is OperationState)) return;
         Destroy(sliderclone);
-        GetComponent<Renderer>().material.color = Color.grey;
+        if(highlight) {
+            GetComponent<Renderer>().material = highlightMat;
+        } else{
+            GetComponent<Renderer>().material = defaultMat;
+        }
     }
 }
