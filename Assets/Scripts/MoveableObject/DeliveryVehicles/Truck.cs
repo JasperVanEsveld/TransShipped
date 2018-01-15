@@ -13,6 +13,8 @@ public class Truck : DeliveryVehicle {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             commandPanel.SetDeliveryArea(areas[0]);
             areas[0].Highlight(false);
+            area = areas[0];
+            areaPos = area.transform.position;
             return;
         }
 
@@ -23,11 +25,6 @@ public class Truck : DeliveryVehicle {
 
     private void Start() {
         MOInit(truckSpawnPos, 20, false);
-
-        List<TruckArea> areaList = Game.GetAreasOfType<TruckArea>();
-
-        //TODO:get the first free area
-        area = areaList[0];
     }
 
     protected override void DestroyIfDone() {

@@ -14,6 +14,8 @@ public class Ship : DeliveryVehicle {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             commandPanel.SetDeliveryArea(areas[0]);
             areas[0].Highlight(false);
+            area = areas[0];
+            areaPos = area.transform.position;
             return;
         }
 
@@ -24,11 +26,6 @@ public class Ship : DeliveryVehicle {
 
     private void Start() {
         MOInit(shipSpawnPos, 20, true);
-
-        List<ShipArea> areaList = Game.GetAreasOfType<ShipArea>();
-
-        //TODO:get the first free area
-        area = areaList[0];
     }
 
     protected override void DestroyIfDone() {

@@ -13,6 +13,8 @@ public class Train : DeliveryVehicle {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             commandPanel.SetDeliveryArea(areas[0]);
             areas[0].Highlight(false);
+            area = areas[0];
+            areaPos = area.transform.position;
             return;
         }
 
@@ -23,11 +25,6 @@ public class Train : DeliveryVehicle {
 
     private void Start() {
         MOInit(trainSpawnPos, 20, false);
-
-        List<TrainArea> areaList = Game.GetAreasOfType<TrainArea>();
-
-        //TODO:get the first free area
-        area = areaList[0];
     }
 
     protected override void DestroyIfDone() {
