@@ -88,6 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4993700566609454}
   - component: {fileID: 114424531584816926}
+  - component: {fileID: 65023217442287374}
   m_Layer: 0
   m_Name: Crane
   m_TagString: Untagged
@@ -328,6 +329,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232518499213044}
   m_Mesh: {fileID: 4300002, guid: 8057d3c777fb43a4e9252b0a60a13abb, type: 3}
+--- !u!65 &65023217442287374
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609709993846976}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.37, y: 26.5, z: 59}
+  m_Center: {x: -4.7, y: 12.87, z: 1.4}
 --- !u!114 &114424531584816926
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -107,6 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6862e4b2b5440bb8fc3b5dc7205f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: 9f44b90feb7f64551a59d0f6587c172f, type: 2}
+  highlightMat: {fileID: 2100000, guid: 119793c510cac8e489c87a6ffa2c0225, type: 2}
   connected: []
   listening: []
   containers: []

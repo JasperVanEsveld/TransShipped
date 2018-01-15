@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class DeliveryVehicle : MoveableObject
 {
+    public Stack targetStack;
     public double reward;
     public double timeOutTime;
     public List<MonoContainer> carrying = new List<MonoContainer>();
@@ -18,6 +19,8 @@ public abstract class DeliveryVehicle : MoveableObject
         Game.instance.RegisterWaiting(this);
     }
 
+    public abstract void OnSelected();
+
     public void EnterTerminal()
     {
         Game.instance.vehicles.Remove(this);
@@ -27,13 +30,21 @@ public abstract class DeliveryVehicle : MoveableObject
             MOPushDestination(areaPos);
     }
 
-    public void LeaveTerminal()
+    public abstract void LeaveTerminal();
+
+    protected abstract void DestroyIfDone();
+    
+    protected abstract void Enter();
+
+    private void Update()
     {
-        if (GetType() == typeof(Ship))
-            MOShipLeaveTerminal();
-        else if (GetType() == typeof(Truck))
-            MOPushDestination(truckSpawnPos);
-        else
-            MOPushDestination(trainSpawnPos);
+        DestroyIfDone();
+        if (!(Game.currentState is OperationState)) return;
+        MOMovementUpdate();
+
+        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
+        isAtDestination = true;
+
+        Enter();
     }
 }

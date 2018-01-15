@@ -4,6 +4,20 @@ public class Train : DeliveryVehicle
 {
     public TrainArea area;
 
+    public override void LeaveTerminal() {
+        MOPushDestination(trainSpawnPos);
+    }
+
+    public override void OnSelected()
+    {
+        List<TrainArea> areas = Game.OnlyHighlight<TrainArea>();
+        foreach(TrainArea currentArea in areas){
+            if( currentArea.occupied) {
+                currentArea.Highlight(false);
+            }
+        }
+    }
+
     private void Start()
     {
         MOInit(trainSpawnPos, 20, false);
@@ -14,14 +28,14 @@ public class Train : DeliveryVehicle
         area = areaList[0];
     }
 
-    private void Update()
+    protected override void DestroyIfDone(){
+        if(isAtDestination && MOIsAtTheThisPos(trainSpawnPos)){
+            Destroy(this.gameObject);
+        }
+    }
+
+    protected override void Enter()
     {
-        if (!(Game.currentState is OperationState)) return;
-        MOMovementUpdate();
-
-        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
-        isAtDestination = true;
-
         area.OnVehicleEnter(this);
     }
 }
