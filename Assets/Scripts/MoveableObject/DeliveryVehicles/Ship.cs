@@ -10,11 +10,16 @@ public class Ship : DeliveryVehicle {
 
     public override void OnSelected() {
         List<ShipArea> areas = Game.OnlyHighlight<ShipArea>();
-        foreach (ShipArea currentArea in areas) {
-            if (currentArea.occupied) {
-                currentArea.Highlight(false);
-            }
+        if (areas.Count == 1) {
+            CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
+            commandPanel.SetDeliveryArea(areas[0]);
+            areas[0].Highlight(false);
+            return;
         }
+
+        foreach (ShipArea currentArea in areas)
+            if (currentArea.occupied)
+                currentArea.Highlight(false);
     }
 
     private void Start() {
@@ -27,9 +32,8 @@ public class Ship : DeliveryVehicle {
     }
 
     protected override void DestroyIfDone() {
-        if (isAtDestination && MOIsAtTheThisPos(shipSpawnPos)) {
+        if (isAtDestination && MOIsAtTheThisPos(shipSpawnPos))
             Destroy(gameObject);
-        }
     }
 
     protected override void Enter() {
