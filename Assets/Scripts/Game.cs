@@ -16,6 +16,7 @@ public class Game : MonoBehaviour
     public List<Stage> stagesList;
     public Queue<Stage> stages;
     public int movements;
+    public double startMoney;
 
     private static double moneyValue = 300;
 
@@ -47,6 +48,7 @@ public class Game : MonoBehaviour
 
     public void Start()
     {
+        money = startMoney;
         stages = new Queue<Stage>(stagesList);
         if (stages.Count > 0)
             SetStage(stages.Dequeue());
