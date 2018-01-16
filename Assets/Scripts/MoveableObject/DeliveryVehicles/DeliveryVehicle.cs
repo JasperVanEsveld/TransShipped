@@ -39,7 +39,7 @@ public abstract class DeliveryVehicle : MoveableObject
     private void Update()
     {
         DestroyIfDone();
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

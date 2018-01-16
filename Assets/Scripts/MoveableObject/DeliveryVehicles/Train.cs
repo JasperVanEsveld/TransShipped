@@ -42,7 +42,7 @@ public class Train : DeliveryVehicle {
 
     private void Update() {
         DestroyIfDone();
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
         for (int i = 0; i < carrying.Count; i++) {
             carrying[i].transform.position = new Vector3(

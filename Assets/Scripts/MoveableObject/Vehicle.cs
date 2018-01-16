@@ -91,7 +91,7 @@ public class Vehicle : MoveableObject
     private void Update()
     {
         UpdateSpeed(speed);
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         UpdateSpeed(speed);
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,

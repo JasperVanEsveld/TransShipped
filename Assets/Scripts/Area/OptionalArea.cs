@@ -30,7 +30,7 @@ public class OptionalArea : MonoBehaviour
 
     public void BuyStack()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (UpgradeState.Buy(price))
         {
             Game.DeregisterArea(this);
@@ -53,13 +53,13 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
     }
 
     private void OnMouseExit()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
     }
 
@@ -70,7 +70,7 @@ public class OptionalArea : MonoBehaviour
 
     private void Update()
     {
-        if (!(Game.currentState is UpgradeState))
+        if (!(Game.instance.currentState is UpgradeState))
         {
             GetComponent<MeshRenderer>().enabled = false;
         }

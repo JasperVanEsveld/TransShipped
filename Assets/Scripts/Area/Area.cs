@@ -86,8 +86,8 @@ public abstract class Area : MonoBehaviour
 
     public bool MoveToNext(MonoContainer monoCont)
     {
-        if (monoCont.movement == null || !(Game.currentState is OperationState)) return false;
-        var nextArea = ((OperationState) Game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return false;
+        var nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
         Transform previousParent = monoCont.transform.parent;
         monoCont.transform.SetParent(nextArea.transform);
         Area previousOrigin = monoCont.movement.originArea;
@@ -105,8 +105,8 @@ public abstract class Area : MonoBehaviour
 
     protected void AddToQueue(MonoContainer monoCont)
     {
-        if (monoCont.movement == null || !(Game.currentState is OperationState)) return;
-        Area nextArea = ((OperationState) Game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return;
+        Area nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
         if (!containerQueue.ContainsKey(nextArea))
             containerQueue.Add(nextArea, new Queue<MonoContainer>());
         if (!containerQueue[nextArea].Contains(monoCont))

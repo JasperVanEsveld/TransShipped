@@ -54,14 +54,14 @@ public class Stack : Area {
     }
 
     private void OnMouseDown() {
-        if (highlight && Game.currentState is OperationState) {
+        if (highlight && Game.instance.currentState is OperationState) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             commandPanel.SetStackArea(this);
         }
     }
 
     private void OnMouseEnter() {
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         sliderclone = Instantiate(slider, transform.position, Quaternion.identity);
 
         sliderclone.transform.SetParent(GameObject.Find("Canvas").transform, false);
@@ -74,7 +74,7 @@ public class Stack : Area {
     }
 
     private void OnMouseExit() {
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         Destroy(sliderclone);
         if (highlight) {
             GetComponent<Renderer>().material = highlightMat;

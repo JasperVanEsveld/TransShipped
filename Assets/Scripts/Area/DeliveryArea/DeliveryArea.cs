@@ -13,7 +13,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     
     private void OnMouseDown()
     {
-        if (!highlight || !(Game.currentState is OperationState)) return;
+        if (!highlight || !(Game.instance.currentState is OperationState)) return;
         CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
         commandPanel.SetDeliveryArea(this);
     }
@@ -21,7 +21,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     public void OnVehicleEnter(T vehicle)
     {
         if (vehicle == current || waiting.Contains(vehicle)) return;
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (current == null)
         {
             current = vehicle;
@@ -37,7 +37,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         loading = false;
         remainingRequests = new List<Container>(vehicle.outgoing);
         foreach (var container in vehicle.carrying)
-            ((OperationState) Game.currentState).manager.Store(this, container, vehicle.targetStack);
+            ((OperationState) Game.instance.currentState).manager.Store(this, container, vehicle.targetStack);
 
         for (var i = vehicle.carrying.Count - 1; i >= 0; i--)
             if (!MoveToNext(vehicle.carrying[i]))

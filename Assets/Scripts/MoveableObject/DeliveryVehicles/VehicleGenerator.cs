@@ -7,8 +7,8 @@ public class VehicleGenerator
 
     public DeliveryVehicle GenerateRandomVehicle()
     {
-        int i = rnd.Next(0, Game.currentStage.vehicleTemplates.Count);
-        VehicleTemplate template = Game.currentStage.vehicleTemplates[i];
+        int i = rnd.Next(0, Game.instance.currentStage.vehicleTemplates.Count);
+        VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[i];
         DeliveryVehicle vehicle = null;
         switch (template.type)
         {
@@ -28,7 +28,7 @@ public class VehicleGenerator
 
     public T GenerateVehicle<T>(VehicleType type) where T : DeliveryVehicle
     {
-        VehicleTemplate template = Game.currentStage.GetTemplate(type);
+        VehicleTemplate template = Game.instance.currentStage.GetTemplate(type);
         Transform transform = Object.Instantiate(template.prefab, template.spawnPosition, template.spawnRotation);
         T vehicle = transform.gameObject.AddComponent<T>();
         ApplyTemplate(vehicle, template);

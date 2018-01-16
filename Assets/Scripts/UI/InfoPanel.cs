@@ -20,9 +20,9 @@ public class InfoPanel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    if (!timeRemainingText.IsActive()) return;
-	    DateTime start = ((OperationState) Game.currentState).startTime;
+	    DateTime start = ((OperationState) Game.instance.currentState).startTime;
 	    int difference = (int) DateTime.Now.Subtract(start).TotalSeconds;
-	    timeRemainingText.text = "Time left :" + (int) (Game.currentStage.duration - difference);
+	    timeRemainingText.text = "Time left :" + (int) (Game.instance.currentStage.duration - difference);
 	}
 
     public void MoneyChanged(double newMoney) {

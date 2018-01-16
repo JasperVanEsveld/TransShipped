@@ -30,7 +30,7 @@ public class CraneArea : Area
 
     public void BuyCrane()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (cranes.Count < maxCranes && UpgradeState.Buy(priceForOneCrane))
         {
             i = 0;
@@ -54,13 +54,13 @@ public class CraneArea : Area
 
     private void OnMouseEnter()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = selected;
     }
 
     private void OnMouseExit()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = craneAreaColor;
     }
 

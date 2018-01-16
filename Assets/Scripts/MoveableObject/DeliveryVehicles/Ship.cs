@@ -42,7 +42,7 @@ public class Ship : DeliveryVehicle {
 
     private void Update() {
         DestroyIfDone();
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
         for (int i = 0; i < carrying.Count; i++) {
             int n = i % 9;

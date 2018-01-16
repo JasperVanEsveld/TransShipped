@@ -40,7 +40,7 @@ public class Crane : MonoBehaviour
 
     public void Upgrade()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (UpgradeState.Buy(costOfUpgrade[level]))
         {
             i = 0;
@@ -122,7 +122,7 @@ public class Crane : MonoBehaviour
     private void Update()
     {
         baseTime = upbound - speed;
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
             craneArea.MoveToNext(container);
         else if (IsReady())

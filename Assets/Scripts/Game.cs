@@ -11,8 +11,8 @@ public delegate void OnMoneyChanged(double newValue);
 public class Game : MonoBehaviour
 {
     public static Game instance;
-    public static GameState currentState { get; private set; }
-    public static Stage currentStage;
+    public GameState currentState { get; private set; }
+    public Stage currentStage;
     public List<Stage> stagesList;
     public Queue<Stage> stages;
     public int movements;
@@ -113,13 +113,13 @@ public class Game : MonoBehaviour
 
     public static VehicleGenerator GetGenerator()
     {
-        var state = currentState as OperationState;
+        var state = instance.currentState as OperationState;
         return state != null ? state.generator : null;
     }
 
     public static ContainerManager GetManager()
     {
-        var state = currentState as OperationState;
+        var state = instance.currentState as OperationState;
         return state != null ? state.manager : null;
     }
 
