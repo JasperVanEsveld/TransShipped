@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18154866, g: 0.22718975, b: 0.3074077, a: 1}
+  m_IndirectSpecularColor: {r: 0.18154864, g: 0.22718966, b: 0.30740702, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 125011656}
   - component: {fileID: 125011654}
   m_Layer: 0
-  m_Name: Ship Area(Right)
+  m_Name: Ship Area(Left)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1451,6 +1451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connected:
   - {fileID: 843454405}
+  - {fileID: 963305413}
   areaName: Stack Left
   price: 10
   buildingPanel: {fileID: 0}
@@ -1632,7 +1633,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1292293641598194, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
       propertyPath: m_Name
-      value: CraneArea-Ship(Left)-Buffer
+      value: CraneArea-Ship(Right)-Buffer
       objectReference: {fileID: 0}
     - target: {fileID: 114781244478696350, guid: f8342ccd01fb84a858810bff60613ed1,
         type: 2}
@@ -1800,7 +1801,7 @@ Prefab:
     - target: {fileID: 114781244478696350, guid: f8342ccd01fb84a858810bff60613ed1,
         type: 2}
       propertyPath: connected.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4478905090271034, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1848,7 +1849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1292293641598194, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
       propertyPath: m_Name
-      value: CraneArea-Ship(Right)-Buffer
+      value: CraneArea-Ship(Left)-Buffer
       objectReference: {fileID: 0}
     - target: {fileID: 114781244478696350, guid: f8342ccd01fb84a858810bff60613ed1,
         type: 2}
@@ -1864,7 +1865,7 @@ Prefab:
         type: 2}
       propertyPath: connected.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 125011654}
     - target: {fileID: 114781244478696350, guid: f8342ccd01fb84a858810bff60613ed1,
         type: 2}
       propertyPath: connected.Array.data[1]
@@ -2025,7 +2026,7 @@ RectTransform:
   - {fileID: 1615354410}
   - {fileID: 902273186}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2110,7 +2111,7 @@ GameObject:
   - component: {fileID: 1045386174}
   - component: {fileID: 1045386172}
   m_Layer: 0
-  m_Name: Ship Area(Left)
+  m_Name: Ship Area(Right)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

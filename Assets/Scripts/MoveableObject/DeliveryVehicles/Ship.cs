@@ -32,8 +32,7 @@ public class Ship : DeliveryVehicle {
     }
 
     protected override void DestroyIfDone() {
-        if (isAtDestination && MOIsAtTheThisPos(shipSpawnPos))
-            Destroy(gameObject);
+        if (isAtDestination && transform.position.x >= 75) Destroy(gameObject);
     }
 
     protected override void Enter() {
@@ -46,11 +45,9 @@ public class Ship : DeliveryVehicle {
         MOMovementUpdate();
         for (int i = 0; i < carrying.Count; i++) {
             int n = i % 9;
-            carrying[i].transform.position = new Vector3(
-                transform.position.x - 1.4f + n / 3 * 2,
-                transform.position.y + (int) (i / 9f) + 2.6f,
-                transform.position.z - 1 + i % 3
-            );
+            carrying[i].transform.position = new Vector3(transform.position.x - 1.4f + n / 3 * 2,
+                                                         transform.position.y + (int) (i / 9f) + 2.6f,
+                                                         transform.position.z - 1 + i % 3);
         }
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

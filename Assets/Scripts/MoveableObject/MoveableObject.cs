@@ -145,8 +145,6 @@ public abstract class MoveableObject : MonoBehaviour
             movementQueue.Enqueue(intPoint1);
             movementQueue.Enqueue(intPoint2);
         }
-
-        // TODO: Delete the parent GameObject
     }
 
     protected void UpdateSpeed(float newSpeed)
