@@ -25,17 +25,17 @@ public class Game : MonoBehaviour
         set
         {
             moneyValue = value;
-            if (moneyChangeEvent != null)
-                moneyChangeEvent(money);
+            if (instance.moneyChangeEvent != null)
+                instance.moneyChangeEvent(money);
         }
     }
 
     public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
-    private static readonly List<OptionalArea> optionalAreas = new List<OptionalArea>();
-    private static readonly List<Area> areas = new List<Area>();
+    private readonly List<OptionalArea> optionalAreas = new List<OptionalArea>();
+    private readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
     public event OnStageChanged stageChangeEvent;
-    public static event OnMoneyChanged moneyChangeEvent;
+    public event OnMoneyChanged moneyChangeEvent;
 
     public void Awake()
     {
@@ -63,20 +63,20 @@ public class Game : MonoBehaviour
 
     public static void RegisterArea(Area area)
     {
-        if (!areas.Contains(area))
-            areas.Add(area);
+        if (!instance.areas.Contains(area))
+            instance.areas.Add(area);
     }
 
     public static void RegisterArea(OptionalArea area)
     {
-        if (!optionalAreas.Contains(area))
-            optionalAreas.Add(area);
+        if (!instance.optionalAreas.Contains(area))
+            instance.optionalAreas.Add(area);
     }
 
     public static void DeregisterArea(OptionalArea area)
     {
-        if (optionalAreas.Contains(area))
-            optionalAreas.Remove(area);
+        if (instance.optionalAreas.Contains(area))
+            instance.optionalAreas.Remove(area);
     }
 
     public void RegisterWaiting(DeliveryVehicle vehicle)
@@ -87,12 +87,12 @@ public class Game : MonoBehaviour
 
     public static List<T> GetAreasOfType<T>() where T : Area
     {
-        return areas.OfType<T>().Select(a => a).ToList();
+        return instance.areas.OfType<T>().Select(a => a).ToList();
     }
 
     public static List<T> OnlyHighlight<T>() where T : Area
     {
-        foreach(Area currentArea in areas){
+        foreach(Area currentArea in instance.areas){
             if( currentArea is T) {
                 currentArea.Highlight(true);
             } else if(!(currentArea is T)){
@@ -104,7 +104,7 @@ public class Game : MonoBehaviour
 
     public static void RemoveHighlights()
     {
-        foreach(Area currentArea in areas){
+        foreach(Area currentArea in instance.areas){
             currentArea.Highlight(false);
         }
     }

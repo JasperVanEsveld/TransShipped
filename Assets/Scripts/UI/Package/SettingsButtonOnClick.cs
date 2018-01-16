@@ -11,10 +11,10 @@ public class SettingsButtonOnClick : MonoBehaviour
 
     public void ContinueSuccess()
     {
-        if(game.stages.Count == 0){
+        if(SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings){
             game.ChangeState(new LevelEndState());
         } else{
-            game.SetStage(game.stages.Dequeue());
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             game.ChangeState(new UpgradeState());
         }
     }
