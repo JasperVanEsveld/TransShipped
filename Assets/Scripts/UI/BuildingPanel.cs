@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class BuildingPanel : MonoBehaviour
 {
+    public delegate void BuildingPanelListener();
+    public static event BuildingPanelListener GameStarted;
+
     public Transform prefab;
 
     public GameObject selected;
@@ -71,6 +74,9 @@ public class BuildingPanel : MonoBehaviour
 
     public void beginGame()
     {
+        if(GameStarted != null){
+            GameStarted.Invoke();
+        }
         Game.instance.ChangeState(new OperationState());
     }
 

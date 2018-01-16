@@ -3,6 +3,8 @@ using Object = UnityEngine.Object;
 
 public class OperationState : GameState
 {
+    public delegate void OperationStateListener();
+    public static event OperationStateListener vehicleGeneratedEvent;
     public ContainerManager manager;
     public VehicleGenerator generator;
     public DateTime startTime = DateTime.Now;
@@ -28,6 +30,9 @@ public class OperationState : GameState
         if (!((DateTime.Now - lastTime).TotalSeconds >= Game.instance.currentStage.spawnInterval) ||
             !(vehicles < Game.instance.currentStage.maxVehicles)) return;
         generator.GenerateRandomVehicle();
+        if(vehicleGeneratedEvent != null){
+            vehicleGeneratedEvent.Invoke();
+        }
         lastTime = DateTime.Now;
     }
 }
