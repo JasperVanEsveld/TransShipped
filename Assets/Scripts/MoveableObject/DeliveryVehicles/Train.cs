@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Train : DeliveryVehicle {
     public TrainArea area;
@@ -37,5 +38,23 @@ public class Train : DeliveryVehicle {
 
     protected override void Enter() {
         area.OnVehicleEnter(this);
+    }
+
+    private void Update() {
+        DestroyIfDone();
+        if (!(Game.currentState is OperationState)) return;
+        MOMovementUpdate();
+        for (int i = 0; i < carrying.Count; i++) {
+            carrying[i].transform.position = new Vector3(
+                transform.position.x - (carrying.Count - i) * 2,
+                transform.position.y + 1,
+                transform.position.z
+            );
+        }
+
+        if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;
+        isAtDestination = true;
+
+        Enter();
     }
 }

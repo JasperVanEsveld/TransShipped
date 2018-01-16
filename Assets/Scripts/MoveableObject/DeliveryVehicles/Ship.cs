@@ -44,11 +44,11 @@ public class Ship : DeliveryVehicle {
         DestroyIfDone();
         if (!(Game.currentState is OperationState)) return;
         MOMovementUpdate();
-        for (var i = 0; i < carrying.Count; i++) {
-            var n = i % 9;
+        for (int i = 0; i < carrying.Count; i++) {
+            int n = i % 9;
             carrying[i].transform.position = new Vector3(
-                (float) (transform.position.x - 1.4 + n / 3 * 2),
-                (float) (transform.position.y + i / 9 + 2.6),
+                transform.position.x - 1.4f + n / 3 * 2,
+                transform.position.y + (int) (i / 9f) + 2.6f,
                 transform.position.z - 1 + i % 3
             );
         }
