@@ -1,8 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+
 public class OptionalArea : MonoBehaviour
 {
+    public delegate void OpAreaListener(OptionalArea source);
+    public static event OpAreaListener MouseDownEvent;
+    public static event OpAreaListener AreaBought;
+    public static event OpAreaListener NotEnough;
+
     public List<Area> connected;
 
     public string areaName;
@@ -42,10 +48,15 @@ public class OptionalArea : MonoBehaviour
             }
 
             Destroy(gameObject);
+            if(AreaBought != null){
+                AreaBought.Invoke(this);
+            }
         }
         else if (i == 0)
         {
-            print("You don't have enough money!");
+            if(NotEnough != null){
+                NotEnough.Invoke(this);
+            }
         }
 
         i++;
@@ -65,6 +76,9 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(MouseDownEvent != null){
+            MouseDownEvent.Invoke(this);
+        }
         buildingPanel.SelectOptionalArea(this, areaName, attribute);
     }
 

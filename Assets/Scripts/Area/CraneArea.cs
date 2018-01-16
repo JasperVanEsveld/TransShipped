@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class CraneArea : Area
 {
+    public delegate void CraneAreaListener(CraneArea source);
+    public static event CraneAreaListener MouseDownEvent;
+    public static event CraneAreaListener CraneBought;
+    public static event CraneAreaListener NotEnough;
+
     private readonly Dictionary<MonoContainer, Crane> containerCrane = new Dictionary<MonoContainer, Crane>();
     public List<Crane> cranes = new List<Crane>();
     public double priceForOneCrane = 10;
@@ -40,15 +45,23 @@ public class CraneArea : Area
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
+            if(CraneBought != null){
+                CraneBought.Invoke(this);
+            }
         }
         else if (i == 1)
             print("You don't have enough money!");
-
+            if(NotEnough != null){
+                NotEnough.Invoke(this);
+            }
         i++;
     }
 
     private void OnMouseDown()
     {
+        if(MouseDownEvent != null){
+            MouseDownEvent.Invoke(this);
+        }
         buildingPanel.SelectCraneArea(this, areaName, attribute);
     }
 
