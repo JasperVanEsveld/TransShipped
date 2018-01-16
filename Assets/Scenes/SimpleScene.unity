@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18154864, g: 0.22718966, b: 0.30740702, a: 1}
+  m_IndirectSpecularColor: {r: 0.18154866, g: 0.22718975, b: 0.3074077, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3764,10 +3764,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd9b0b5dc64946958787157853ce9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStage: {fileID: 0}
   stagesList:
   - {fileID: 11400000, guid: 2c5ab9725ca80334cb9a2cddb4c53eba, type: 2}
   - {fileID: 11400000, guid: a4501ba704a8b7b46a0434385a6818d9, type: 2}
   movements: 0
+  startMoney: 3000
   vehicles: []
 --- !u!4 &870149825
 Transform:
