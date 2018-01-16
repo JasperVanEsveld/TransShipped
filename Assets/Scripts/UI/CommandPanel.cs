@@ -6,9 +6,9 @@ public class CommandPanel : MonoBehaviour {
     public Transform prefab;
     int buttonCount;
     readonly List<Transform> buttons = new List<Transform>();
-    Transform ShipTab;
-    Transform TruckTab;
-    Transform TrainTab;
+    GameObject ShipTab;
+    GameObject TruckTab;
+    GameObject TrainTab;
     private Area selectedArea;
     private Stack selectedStack;
     private DeliveryVehicle currentVehicle;
@@ -51,9 +51,9 @@ public class CommandPanel : MonoBehaviour {
 
     void Awake() {
         CreateButtons();
-        ShipTab = transform.GetChild(5);
-        TruckTab = transform.GetChild(4);
-        TrainTab = transform.GetChild(3);
+        ShipTab = GameObject.Find("ShipCommand");
+        TruckTab = GameObject.Find("TruckCommand");
+        TrainTab = GameObject.Find("TrainCommand");
     }
 
     void Update() {
@@ -66,32 +66,38 @@ public class CommandPanel : MonoBehaviour {
             Destroy(button.gameObject);
 
         buttons.Clear();
-        float x1 = 85;
-        float x2 = 85;
-        float x3 = 85;
+        float x_max1 = 0;
+        float x_max2 = 0;
+        float x_max3 = 0;
         buttonCount = Game.instance.vehicles.Count;
 
 
         foreach (DeliveryVehicle vehicle in Game.instance.vehicles) {
             Transform obj = Instantiate(prefab);
 
-            if (vehicle.GetType() == typeof(Ship)) {
-                obj.SetParent(ShipTab, false);
+            if (vehicle.GetType() == typeof(Ship) && ShipTab != null) {
+                obj.SetParent(ShipTab.transform, false);
                 buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x1, 0);
-                x1 += 170;
+                RectTransform rectTrans = obj.GetComponent<RectTransform>();
+                rectTrans.anchorMin = new Vector2(x_max1 + 0.01f, 0.1f);
+                x_max1 += 0.2f;
+                rectTrans.anchorMax = new Vector2(x_max1 - 0.01f, 0.9f);
             }
             else if (vehicle.GetType() == typeof(Train)) {
-                obj.SetParent(TrainTab, false);
+                obj.SetParent(TrainTab.transform, false);
                 buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
-                x2 += 170;
+                RectTransform rectTrans = obj.GetComponent<RectTransform>();
+                rectTrans.anchorMin = new Vector2(x_max2 + 0.01f, 0.1f);
+                x_max2 += 0.2f;
+                rectTrans.anchorMax = new Vector2(x_max2 - 0.01f, 0.9f);
             }
             else {
-                obj.SetParent(TruckTab, false);
+                obj.SetParent(TruckTab.transform, false);
                 buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
-                x3 += 170;
+                RectTransform rectTrans = obj.GetComponent<RectTransform>();
+                rectTrans.anchorMin = new Vector2(x_max3 + 0.01f, 0.1f);
+                x_max3 += 0.2f;
+                rectTrans.anchorMax = new Vector2(x_max3 - 0.01f, 0.9f);
             }
 
             obj.GetComponent<Button>().onClick.AddListener(vehicle.OnSelected);
