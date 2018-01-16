@@ -5,10 +5,14 @@ public class VehicleGenerator
 {
     private static Random rnd = new Random();
 
+    private int currentType = 0;
+
     public DeliveryVehicle GenerateRandomVehicle()
     {
-        int i = rnd.Next(0, Game.instance.currentStage.vehicleTemplates.Count);
-        VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[i];
+        if(currentType >= Game.instance.currentStage.vehicleTemplates.Count){
+            currentType = 0;
+        }
+        VehicleTemplate template = Game.instance.currentStage.vehicleTemplates[currentType];
         DeliveryVehicle vehicle = null;
         switch (template.type)
         {
@@ -22,7 +26,7 @@ public class VehicleGenerator
                 vehicle = GenerateVehicle<Train>(VehicleType.Train);
                 break;
         }
-
+        currentType++;
         return vehicle;
     }
 
@@ -48,8 +52,8 @@ public class VehicleGenerator
         int conCount = rnd.Next(template.requestMin, template.requestMax);
         for (int i = 0; i < conCount; ++i)
         {
-            int typeIndex = rnd.Next(0, template.containerTypes.Count - 1);
-            Container cont = new Container(template.containerTypes[typeIndex]);
+            int typeIndex = rnd.Next(0, template.requestTypes.Count - 1);
+            Container cont = new Container(template.requestTypes[typeIndex]);
             vehicle.outgoing.Add(cont);
         }
     }
@@ -59,21 +63,24 @@ public class VehicleGenerator
         int conCount = rnd.Next(template.carryMin, template.carryMax);
         for (int i = 0; i < conCount; ++i)
         {
-            GameObject tempGO;
-            MonoContainer tempMC;
-            switch (rnd.Next(0, 3))
+            GameObject tempGO = null;
+            MonoContainer tempMC = null;
+            int maxTypes = template.carryingTypes.Count;
+            int index = rnd.Next(0, maxTypes);
+            
+            switch (template.carryingTypes[index])
             {
-                case 0:
+                case containerType.ShipContainer:
                     tempGO = Object.Instantiate(Resources.Load("Containers/BlueContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.ShipContainer);
                     break;
-                case 1:
+                case containerType.TruckContainer:
                     tempGO = Object.Instantiate(Resources.Load("Containers/RedContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.TruckContainer);
                     break;
-                default:
+                case containerType.TrainContainer:
                     tempGO = Object.Instantiate(Resources.Load("Containers/GreenContainer") as GameObject);
                     tempMC = tempGO.GetComponent<MonoContainer>();
                     tempMC.container = new Container(containerType.TrainContainer);

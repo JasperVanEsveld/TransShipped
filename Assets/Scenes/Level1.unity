@@ -3096,11 +3096,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd9b0b5dc64946958787157853ce9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStage: {fileID: 0}
   stagesList:
   - {fileID: 11400000, guid: e26f4a1cf39ca574c8e9d31841f1eecf, type: 2}
   - {fileID: 11400000, guid: 26a50031878c34f438d6d92d4919d319, type: 2}
   - {fileID: 11400000, guid: 0874985f2f523dc4ab8f573febea1e6a, type: 2}
   movements: 0
+  startMoney: 20
   vehicles: []
 --- !u!4 &1209286560
 Transform:
