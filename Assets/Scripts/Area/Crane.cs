@@ -23,8 +23,8 @@ public class Crane : MonoBehaviour
         get { return level + 1; }
     }
 
-    private static readonly int[] costOfUpgrade = {5, 10, 20};
-    private static readonly double[] speedAtEachLevel = {5, 10, 20, 40};
+    private static readonly int[] costOfUpgrade = {10, 20, 30};
+    private static readonly double[] speedAtEachLevel = {7, 8, 9, 10};
 
     public bool IsFullyUpgraded()
     {
