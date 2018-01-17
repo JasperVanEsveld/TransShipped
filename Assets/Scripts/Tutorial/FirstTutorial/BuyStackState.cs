@@ -1,8 +1,6 @@
-using UnityEngine;
-
 public class BuyStackState : TutorialState {
     public BuyStackState(Tutorial tutorial) : base(tutorial) {
-        this.text = "To now buy this area you click the purchase button";
+        text = "To now buy this area you click the purchase button";
     }
 
     public void AreaBought(OptionalArea area) {

@@ -1,17 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
-using cakeslice;
 
 public abstract class HighlightAble : MonoBehaviour {
     
     protected Outline outline;
-    protected bool lastClicked = false;
+    protected bool lastClicked;
     public bool highlight;
     public Material defaultMat;
     public Material highlightMat;
 
     public void InitHighlight(){
-        outline = this.gameObject.AddComponent<Outline>();
+        outline = gameObject.AddComponent<Outline>();
         if(GetComponent<Renderer>() != null){
             if(highlight){
                 GetComponent<Renderer>().material = highlightMat;

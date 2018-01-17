@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using cakeslice;
 
 public abstract class Area : HighlightAble
 {
@@ -13,7 +12,7 @@ public abstract class Area : HighlightAble
     
     public void Start()
     {
-        this.InitHighlight();
+        InitHighlight();
         Game.RegisterArea(this);
     }
 

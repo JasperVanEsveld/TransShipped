@@ -26,43 +26,39 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace cakeslice {
-    [ExecuteInEditMode]
-    [RequireComponent(typeof(Renderer))]
-    public class Outline : MonoBehaviour {
-        public Renderer Renderer { get; private set; }
+[ExecuteInEditMode]
+[RequireComponent(typeof(Renderer))]
+public class Outline : MonoBehaviour {
+    public Renderer Renderer { get; private set; }
 
-        public int color;
-        public bool eraseRenderer;
+    public int color;
+    public bool eraseRenderer;
 
-        [HideInInspector]
-        public int originalLayer;
+    [HideInInspector]
+    public int originalLayer;
 
-        [HideInInspector]
-        public Material[] originalMaterials;
+    [HideInInspector]
+    public Material[] originalMaterials;
 
-        private void Awake() {
-            Renderer = GetComponent<Renderer>();
-            this.enabled = false;
-        }
+    private void Awake() {
+        Renderer = GetComponent<Renderer>();
+        enabled = false;
+    }
 
 
-        private void OnEnable() {
-            IEnumerable<OutlineEffect> effects = Camera
-                                                .allCameras.AsEnumerable()
-                                                .Select(c => c.GetComponent<OutlineEffect>())
-                                                .Where(e => e != null);
+    private void OnEnable() {
+        IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
+                                                   .Select(c => c.GetComponent<OutlineEffect>())
+                                                   .Where(e => e != null);
 
-            foreach (OutlineEffect effect in effects) { effect.AddOutline(this); }
-        }
+        foreach (OutlineEffect effect in effects) { effect.AddOutline(this); }
+    }
 
-        private void OnDisable() {
-            IEnumerable<OutlineEffect> effects = Camera
-                                                .allCameras.AsEnumerable()
-                                                .Select(c => c.GetComponent<OutlineEffect>())
-                                                .Where(e => e != null);
+    private void OnDisable() {
+        IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
+                                                   .Select(c => c.GetComponent<OutlineEffect>())
+                                                   .Where(e => e != null);
 
-            foreach (OutlineEffect effect in effects) { effect.RemoveOutline(this); }
-        }
+        foreach (OutlineEffect effect in effects) { effect.RemoveOutline(this); }
     }
 }

@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-
-public abstract class TutorialState
+﻿public abstract class TutorialState
 {
     public string text;
     protected Tutorial tut;
 
     public TutorialState(Tutorial tutorial){
-        this.tut = tutorial;
+        tut = tutorial;
         BindAll();
     }
 

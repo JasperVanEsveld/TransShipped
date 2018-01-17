@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using cakeslice;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {

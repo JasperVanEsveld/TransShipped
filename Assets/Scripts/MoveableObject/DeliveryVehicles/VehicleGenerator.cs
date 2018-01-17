@@ -5,7 +5,7 @@ public class VehicleGenerator
 {
     private static Random rnd = new Random();
 
-    private int currentType = 0;
+    private int currentType;
 
     public DeliveryVehicle GenerateRandomVehicle()
     {

@@ -87,9 +87,8 @@ public class Road : Area
                 vehicle.request.Enqueue(origin);
             }
             return false;
-        } else if(vehicle == null){
-            return false;
         }
+
         reserved = vehicle.ReserveVehicle(origin);
         vehicle.request.Enqueue(origin);
         return reserved;

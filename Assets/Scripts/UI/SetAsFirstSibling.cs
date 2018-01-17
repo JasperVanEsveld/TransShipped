@@ -1,14 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SetAsFirstSibling : MonoBehaviour {
-
-
-
-
-    public void ChooseTab()
-    {
+    public void ChooseTab() {
         transform.SetAsLastSibling();
     }
 }
