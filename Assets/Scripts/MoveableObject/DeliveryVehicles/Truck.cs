@@ -7,7 +7,11 @@ public class Truck : DeliveryVehicle {
         MOPushDestination(truckSpawnPos);
     }
 
-    public override void OnSelected() {
+    private void Awake() {
+        if (!Game.trucks.Contains(this)) Game.trucks.Add(this);
+    }
+
+    public void OnSelected() {
         List<TruckArea> areas = Game.OnlyHighlight<TruckArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();

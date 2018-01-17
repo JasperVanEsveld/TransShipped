@@ -31,7 +31,9 @@ public class Game : MonoBehaviour
         }
     }
 
-    public List<DeliveryVehicle> vehicles = new List<DeliveryVehicle>();
+    public static List<Ship> ships { get; private set; }
+    public static List<Truck> trucks { get; private set; }
+    public static List<Train> trains { get; private set; }
     private readonly List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
@@ -56,6 +58,9 @@ public class Game : MonoBehaviour
             ChangeState(new LevelEndState());
 
         ChangeState(new UpgradeState());
+        ships = new List<Ship>();
+        trucks = new List<Truck>();
+        trains = new List<Train>();
     }
 
     public void Update()
@@ -81,12 +86,6 @@ public class Game : MonoBehaviour
             instance.optionalAreas.Remove(area);
     }
 
-    public void RegisterWaiting(DeliveryVehicle vehicle)
-    {
-        if (!vehicles.Contains(vehicle))
-            vehicles.Add(vehicle);
-    }
-
     public static List<T> GetAreasOfType<T>() where T : Area
     {
         return instance.areas.OfType<T>().Select(a => a).ToList();
@@ -94,13 +93,7 @@ public class Game : MonoBehaviour
 
     public static List<T> OnlyHighlight<T>() where T : Area
     {
-        foreach(Area currentArea in instance.areas){
-            if( currentArea is T) {
-                currentArea.Highlight(true);
-            } else if(!(currentArea is T)){
-                currentArea.Highlight(false);
-            }
-        }
+        foreach (Area currentArea in instance.areas) currentArea.Highlight(currentArea is T);
         return GetAreasOfType<T>();
     }
 
@@ -113,13 +106,13 @@ public class Game : MonoBehaviour
 
     public static VehicleGenerator GetGenerator()
     {
-        var state = instance.currentState as OperationState;
+        OperationState state = instance.currentState as OperationState;
         return state != null ? state.generator : null;
     }
 
     public static ContainerManager GetManager()
     {
-        var state = instance.currentState as OperationState;
+        OperationState state = instance.currentState as OperationState;
         return state != null ? state.manager : null;
     }
 

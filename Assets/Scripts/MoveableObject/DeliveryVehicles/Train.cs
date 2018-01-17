@@ -8,7 +8,11 @@ public class Train : DeliveryVehicle {
         MOPushDestination(trainSpawnPos);
     }
 
-    public override void OnSelected() {
+    private void Awake() {
+        if (!Game.trains.Contains(this)) Game.trains.Add(this);
+    }
+
+    public void OnSelected() {
         List<TrainArea> areas = Game.OnlyHighlight<TrainArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
