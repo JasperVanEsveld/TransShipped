@@ -83,6 +83,7 @@ public class OptionalArea : HighlightAble
 
     private void OnMouseDown()
     {
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if(MouseDownEvent != null){
             MouseDownEvent.Invoke(this);
         }
