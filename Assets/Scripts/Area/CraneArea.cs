@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using cakeslice;
 using UnityEngine;
 
-public class CraneArea : Area
-{
+public class CraneArea : Area {
     public delegate void CraneAreaListener(CraneArea source);
+
     public static event CraneAreaListener MouseDownEvent;
     public static event CraneAreaListener CraneBought;
     public static event CraneAreaListener NotEnough;
@@ -20,59 +21,53 @@ public class CraneArea : Area
     private BuildingPanel buildingPanel;
     public string areaName, attribute;
 
-    private new void Start()
-    {
+    private new void Start() {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         Game.RegisterArea(this);
+        GetComponent<Outline>().enabled = false;
     }
 
     private int i;
 
-    public bool NoMoreSpace()
-    {
+    public bool NoMoreSpace() {
         return cranes.Count >= maxCranes;
     }
 
-    public void BuyCrane()
-    {
+    public void BuyCrane() {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        if (cranes.Count < maxCranes && UpgradeState.Buy(priceForOneCrane))
-        {
+        if (cranes.Count < maxCranes && UpgradeState.Buy(priceForOneCrane)) {
             i = 0;
-            var crane = Instantiate(cranePrefab,
-                new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
-                transform.rotation).GetComponent<Crane>();
+            Crane crane = Instantiate(cranePrefab,
+                                      new Vector3(transform.position.x + cranes.Count * offSet,
+                                                  0,
+                                                  transform.position.z),
+                                      transform.rotation)
+               .GetComponent<Crane>();
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
-            if(CraneBought != null){
-                CraneBought.Invoke(this);
-            }
-        }
-        else if (i == 1)
+            if (CraneBought != null) { CraneBought.Invoke(this); }
+        } else if (i == 1)
             print("You don't have enough money!");
-            if(NotEnough != null){
-                NotEnough.Invoke(this);
-            }
+
+        if (NotEnough != null) { NotEnough.Invoke(this); }
+
         i++;
     }
 
-    private void OnMouseDown()
-    {
-        if(MouseDownEvent != null){
-            MouseDownEvent.Invoke(this);
-        }
+    private void OnMouseDown() {
+        if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
+
         buildingPanel.SelectCraneArea(this, areaName, attribute);
+        GetComponent<Outline>().enabled = true;
     }
 
-    private void OnMouseEnter()
-    {
+    private void OnMouseEnter() {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = selected;
     }
 
-    private void OnMouseExit()
-    {
+    private void OnMouseExit() {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = craneAreaColor;
     }
@@ -82,18 +77,15 @@ public class CraneArea : Area
     /// If found, return it, otherwise return null.
     /// </summary>
     /// <returns>Available crane found</returns>
-    private Crane FindAvailableCrane()
-    {
+    private Crane FindAvailableCrane() {
         foreach (var crane in cranes)
             if (!crane.reserved)
                 return crane;
         return null;
     }
 
-    private Crane CompleteReservation(Area reference)
-    {
-        foreach (Crane crane in cranes)
-        {
+    private Crane CompleteReservation(Area reference) {
+        foreach (Crane crane in cranes) {
             if (!crane.IsReservedBy(reference) || !crane.IsReady(reference)) continue;
             crane.reserved = false;
             return crane;
@@ -107,8 +99,7 @@ public class CraneArea : Area
     /// If found, return it, otherwise return null.
     /// </summary>
     /// <returns>Available crane found</returns>
-    private Crane FindReadyCrane(Area origin)
-    {
+    private Crane FindReadyCrane(Area origin) {
         foreach (Crane crane in cranes)
             if (crane.IsReady(origin))
                 return crane;
@@ -122,11 +113,9 @@ public class CraneArea : Area
     /// </summary>
     /// <param name="monoContainer">The container to be moved</param>
     /// <returns>Whether the operation is a success</returns>
-    public override bool AddContainer(MonoContainer monoContainer)
-    {
+    public override bool AddContainer(MonoContainer monoContainer) {
         Crane crane = CompleteReservation(monoContainer.movement.originArea);
-        if (crane != null)
-        {
+        if (crane != null) {
             containerCrane.Add(monoContainer, crane);
             return crane.AddContainer(monoContainer);
         }
@@ -140,14 +129,12 @@ public class CraneArea : Area
         return crane.AddContainer(monoContainer);
     }
 
-    protected override void RemoveContainer(MonoContainer monoContainer)
-    {
+    protected override void RemoveContainer(MonoContainer monoContainer) {
         containerCrane[monoContainer].container = null;
         containerCrane.Remove(monoContainer);
     }
 
-    public override bool ReserveArea(Area origin, Movement move)
-    {
+    public override bool ReserveArea(Area origin, Movement move) {
         Crane crane = FindAvailableCrane();
         if (crane == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
         bool reserved = crane.ReserveCrane(origin);

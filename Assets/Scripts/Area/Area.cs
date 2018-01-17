@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Area : MonoBehaviour
 {
-    public bool highlight = false;
+    public bool highlight;
     public Material defaultMat;
     public Material highlightMat;
     public List<Area> connected;
@@ -15,11 +15,11 @@ public abstract class Area : MonoBehaviour
     
     public void Start()
     {
-        if(this.GetComponent<Renderer>() != null){
+        if(GetComponent<Renderer>() != null){
             if(highlight){
-                this.GetComponent<Renderer>().material = highlightMat;
+                GetComponent<Renderer>().material = highlightMat;
             } else{
-                this.GetComponent<Renderer>().material = defaultMat;
+                GetComponent<Renderer>().material = defaultMat;
             }
         }
         Game.RegisterArea(this);
@@ -27,11 +27,11 @@ public abstract class Area : MonoBehaviour
 
     public void Highlight(bool highlight){
         this.highlight = highlight;
-        if(this.GetComponent<Renderer>() != null){
+        if(GetComponent<Renderer>() != null){
             if(highlight) {
-                this.GetComponent<Renderer>().material = highlightMat;
+                GetComponent<Renderer>().material = highlightMat;
             } else{
-                this.GetComponent<Renderer>().material = defaultMat;
+                GetComponent<Renderer>().material = defaultMat;
             }
         }
     }
