@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18154866, g: 0.22718975, b: 0.3074077, a: 1}
+  m_IndirectSpecularColor: {r: 0.18154822, g: 0.22718923, b: 0.30740666, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -143,6 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 2082192676}
   - {fileID: 1417522347}
@@ -319,6 +322,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &26769306
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 964
+  m_Height: 638
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &29976112
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +659,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &50755879 stripped
@@ -639,6 +679,71 @@ Transform:
   m_PrefabParentObject: {fileID: 4478905090271034, guid: f8342ccd01fb84a858810bff60613ed1,
     type: 2}
   m_PrefabInternal: {fileID: 50755878}
+--- !u!1 &99511705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 99511706}
+  - component: {fileID: 99511707}
+  m_Layer: 0
+  m_Name: Outline Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &99511706
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 99511705}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1074894488}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &99511707
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 99511705}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 1733294029}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &139033504
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,6 +1042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 848989308}
   - {fileID: 50755879}
@@ -1894,7 +2002,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &516087468 stripped
@@ -2411,7 +2525,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &600583187 stripped
@@ -2533,6 +2653,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 1337571518}
   - {fileID: 1163102616}
@@ -3174,7 +3297,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &811906758 stripped
@@ -3286,7 +3415,13 @@ Prefab:
       propertyPath: defaultMat
       value: 
       objectReference: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &848989308 stripped
@@ -3511,6 +3646,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 1956905627}
   - {fileID: 906716209}
@@ -3694,7 +3832,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &906716209 stripped
@@ -4022,7 +4166,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &967514577 stripped
@@ -4261,6 +4411,7 @@ GameObject:
   - component: {fileID: 1074894491}
   - component: {fileID: 1074894490}
   - component: {fileID: 1074894489}
+  - component: {fileID: 1074894494}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4277,7 +4428,8 @@ Transform:
   m_LocalRotation: {x: 0.18301274, y: -0.6830127, z: 0.18301274, w: 0.6830127}
   m_LocalPosition: {x: 50, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 99511706}
   m_Father: {fileID: 1236857525}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30, y: -90, z: 0}
@@ -4353,6 +4505,35 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1074894494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1074894487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineThickness: 3
+  lineIntensity: 1.51
+  fillAmount: 0.1
+  lineColor0: {r: 1, g: 0.5586207, b: 0, a: 1}
+  lineColor1: {r: 0, g: 1, b: 0, a: 1}
+  lineColor2: {r: 0, g: 0, b: 1, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 1
+  cornerOutlines: 1
+  addLinesBetweenColors: 1
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 1074894493}
+  outlineCamera: {fileID: 99511707}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 1733294029}
+  extraRenderTexture: {fileID: 26769306}
 --- !u!1 &1105073959
 GameObject:
   m_ObjectHideFlags: 0
@@ -4533,7 +4714,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1163102616 stripped
@@ -4891,6 +5078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 516087468}
   - {fileID: 811906758}
@@ -5158,7 +5348,13 @@ Prefab:
       propertyPath: defaultMat
       value: 
       objectReference: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1337571518 stripped
@@ -5545,7 +5741,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1417522347 stripped
@@ -5760,6 +5962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 1590476102}
   - {fileID: 600583187}
@@ -6075,7 +6280,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1590476102 stripped
@@ -6408,7 +6619,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1686164098 stripped
@@ -6417,6 +6634,37 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1686164097}
   m_Script: {fileID: 11500000, guid: d065fa723950b4045afa03b6a24de1ea, type: 3}
+--- !u!84 &1733294029
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 964
+  m_Height: 638
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1744950287
 GameObject:
   m_ObjectHideFlags: 0
@@ -7130,6 +7378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: 0
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected:
   - {fileID: 2135306555}
   - {fileID: 1686164098}
@@ -7297,7 +7548,13 @@ Prefab:
       propertyPath: highlightMat
       value: 
       objectReference: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1956905627 stripped
@@ -8017,7 +8274,13 @@ Prefab:
       propertyPath: defaultMat
       value: 
       objectReference: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &2082192676 stripped
@@ -8175,11 +8438,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd9b0b5dc64946958787157853ce9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStage: {fileID: 0}
   stagesList:
   - {fileID: 11400000, guid: 4255c453f68d6cd42b7a6ff7b61549f9, type: 2}
   - {fileID: 11400000, guid: e83551785d92ef5418c980ca429a9a2c, type: 2}
   - {fileID: 11400000, guid: 7c5b1171da182584594612f61b90a511, type: 2}
+  highlights: []
   movements: 0
+  startMoney: 0
   vehicles: []
 --- !u!4 &2093919696
 Transform:
@@ -8475,7 +8741,13 @@ Prefab:
       propertyPath: defaultMat
       value: 
       objectReference: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114647413494135982, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f8342ccd01fb84a858810bff60613ed1, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &2135306555 stripped

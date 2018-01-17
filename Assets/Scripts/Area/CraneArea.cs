@@ -24,6 +24,7 @@ public class CraneArea : Area
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         Game.RegisterArea(this);
+        InitHighlight();
     }
 
     private int i;
@@ -41,7 +42,7 @@ public class CraneArea : Area
             i = 0;
             var crane = Instantiate(cranePrefab,
                 new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
-                transform.rotation).GetComponent<Crane>();
+                transform.rotation).GetComponentInChildren<Crane>();
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
@@ -63,18 +64,22 @@ public class CraneArea : Area
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectCraneArea(this, areaName, attribute);
+        Game.ForceRemoveHighlights();
+        this.Highlight(true);
+        this.lastClicked = true;
     }
 
     private void OnMouseEnter()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        GetComponent<Renderer>().material.color = selected;
+        Game.RemoveHighlights();
+        this.Highlight(true);
     }
 
     private void OnMouseExit()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        GetComponent<Renderer>().material.color = craneAreaColor;
+        this.Highlight(false);
     }
 
     /// <summary>

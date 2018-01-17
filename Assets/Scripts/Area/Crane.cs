@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crane : MonoBehaviour
+public class Crane : HighlightAble
 {
+    public delegate void CraneListener(Crane source);
+
+    public static event CraneListener MouseDownEvent;
+    public static event CraneListener CraneBought;
+    public static event CraneListener NotEnough;
+
     private const double upbound = 10;
     public double speed { get; set; }
     private double baseTime;
@@ -59,6 +65,7 @@ public class Crane : MonoBehaviour
         speed = speedAtEachLevel[0];
         baseTime = upbound - speed;
         container = null;
+        InitHighlight();
     }
 
     /// <summary>
@@ -99,10 +106,24 @@ public class Crane : MonoBehaviour
         reservedBy.Enqueue(origin);
         return true;
     }
-
-    private void OnMouseDown()
-    {
+    
+    private void OnMouseDown() {
+        if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
         buildingPanel.SelectCrane(this);
+        Game.ForceRemoveHighlights();
+        this.Highlight(true);
+        lastClicked = true;
+    }
+
+    private void OnMouseEnter() {
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        Game.RemoveHighlights();
+        this.Highlight(true);
+    }
+
+    private void OnMouseExit() {
+        if (!(Game.instance.currentState is UpgradeState) || lastClicked) return;
+        this.Highlight(false);
     }
 
     public bool AddContainer(MonoContainer monoContainer)

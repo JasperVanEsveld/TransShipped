@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using cakeslice;
 
 public class DeliveryArea<T> : Area where T : DeliveryVehicle
 {
     public bool occupied;
     private DateTime start;
     private List<Container> remainingRequests;
-    private Queue<T> waiting = new Queue<T>();
+    private readonly Queue<T> waiting = new Queue<T>();
     private T current;
     private bool loading;
 
@@ -16,6 +17,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         if (!highlight || !(Game.instance.currentState is OperationState)) return;
         CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
         commandPanel.SetDeliveryArea(this);
+        GetComponent<Outline>().enabled = false;
     }
 
     public void OnVehicleEnter(T vehicle)
@@ -36,15 +38,15 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         start = DateTime.Now;
         loading = false;
         remainingRequests = new List<Container>(vehicle.outgoing);
-        foreach (var container in vehicle.carrying)
+        foreach (MonoContainer container in vehicle.carrying)
             ((OperationState) Game.instance.currentState).manager.Store(this, container, vehicle.targetStack);
 
-        for (var i = vehicle.carrying.Count - 1; i >= 0; i--)
+        for (int i = vehicle.carrying.Count - 1; i >= 0; i--)
             if (!MoveToNext(vehicle.carrying[i]))
                 AddToQueue(vehicle.carrying[i]);
     }
 
-    public void requestOutgoing()
+    private void requestOutgoing()
     {
         for (int i = remainingRequests.Count - 1; i >= 0; i--)
         {

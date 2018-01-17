@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class OptionalArea : MonoBehaviour
+public class OptionalArea : HighlightAble
 {
     public delegate void OpAreaListener(OptionalArea source);
     public static event OpAreaListener MouseDownEvent;
@@ -32,6 +32,7 @@ public class OptionalArea : MonoBehaviour
         GetComponent<Renderer>().material.color = price <= Game.money ? Color.green : Color.red;
         Game.RegisterArea(this);
         capacity = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
+        InitHighlight();
     }
 
     public void BuyStack()
@@ -40,6 +41,7 @@ public class OptionalArea : MonoBehaviour
         if (UpgradeState.Buy(price))
         {
             Game.DeregisterArea(this);
+            Game.DeregisterHighlight(this);
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.max = capacity;
             foreach (var connectArea in connected)
@@ -66,12 +68,15 @@ public class OptionalArea : MonoBehaviour
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
+        Game.RemoveHighlights();
+        this.Highlight(true);
     }
 
     private void OnMouseExit()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
+        this.Highlight(false);
     }
 
     private void OnMouseDown()
@@ -80,6 +85,9 @@ public class OptionalArea : MonoBehaviour
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectOptionalArea(this, areaName, attribute);
+        Game.ForceRemoveHighlights();
+        this.Highlight(true);
+        lastClicked = true;
     }
 
     private void Update()
