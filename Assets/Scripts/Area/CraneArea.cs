@@ -12,7 +12,7 @@ public class CraneArea : Area
     public List<Crane> cranes = new List<Crane>();
     public double priceForOneCrane = 10;
     public int maxCranes = 2;
-    public int offSet = 5;
+    public int offSet = 5/2;
 
     public GameObject cranePrefab;
     private readonly Color selected = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
