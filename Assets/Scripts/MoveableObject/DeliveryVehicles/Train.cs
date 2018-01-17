@@ -8,7 +8,11 @@ public class Train : DeliveryVehicle {
         MOPushDestination(trainSpawnPos);
     }
 
-    public override void OnSelected() {
+    private void Awake() {
+        if (!Game.trains.Contains(this)) Game.trains.Add(this);
+    }
+
+    public void OnSelected() {
         List<TrainArea> areas = Game.OnlyHighlight<TrainArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
@@ -32,8 +36,7 @@ public class Train : DeliveryVehicle {
     }
 
     protected override void DestroyIfDone() {
-        if (isAtDestination && MOIsAtTheThisPos(trainSpawnPos))
-            Destroy(gameObject);
+        if (isAtDestination && MOIsAtTheThisPos(trainSpawnPos)) Destroy(gameObject);
     }
 
     protected override void Enter() {
@@ -45,11 +48,9 @@ public class Train : DeliveryVehicle {
         if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
         for (int i = 0; i < carrying.Count; i++) {
-            carrying[i].transform.position = new Vector3(
-                transform.position.x - (carrying.Count - i) * 2,
-                transform.position.y + 1,
-                transform.position.z
-            );
+            carrying[i].transform.position = new Vector3(transform.position.x - (carrying.Count - i) * 2,
+                                                         transform.position.y + 1,
+                                                         transform.position.z);
         }
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

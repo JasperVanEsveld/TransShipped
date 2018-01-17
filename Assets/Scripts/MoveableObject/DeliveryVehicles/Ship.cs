@@ -8,7 +8,11 @@ public class Ship : DeliveryVehicle {
         MOShipLeaveTerminal();
     }
 
-    public override void OnSelected() {
+    private void Awake() {
+        if (!Game.ships.Contains(this)) Game.ships.Add(this);
+    }
+
+    public void OnSelected() {
         List<ShipArea> areas = Game.OnlyHighlight<ShipArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();

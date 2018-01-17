@@ -1,34 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Indic : MonoBehaviour {
-
     private double lastMoney = 0.0f;
 
-    public void ShowLatestChange(double i_amount)
-    {
-        if (i_amount > 0.0)
-        {
+    public void ShowLatestChange(double i_amount) {
+        if (i_amount > 0.0) {
             GetComponent<Text>().text = "+" + i_amount;
             GetComponent<Text>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
-        }
-        else
-        {
+        } else {
             GetComponent<Text>().text = "" + i_amount;
             GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         }
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        float speedOfDecay = 0.03f;
+    private void Update() {
+        float speedOfDecay = 0.01f;
         Color c = GetComponent<Text>().color;
         //Debug.Log(c.a);
         c.a = c.a - speedOfDecay;
