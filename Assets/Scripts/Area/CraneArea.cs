@@ -22,9 +22,8 @@ public class CraneArea : Area {
     public string areaName, attribute;
 
     private new void Start() {
+        base.Start();
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
-        Game.RegisterArea(this);
-        GetComponent<Outline>().enabled = false;
     }
 
     private int i;
@@ -42,7 +41,7 @@ public class CraneArea : Area {
                                                   0,
                                                   transform.position.z),
                                       transform.rotation)
-               .GetComponent<Crane>();
+               .GetComponentInChildren<Crane>();
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
@@ -57,19 +56,22 @@ public class CraneArea : Area {
 
     private void OnMouseDown() {
         if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
-
         buildingPanel.SelectCraneArea(this, areaName, attribute);
-        GetComponent<Outline>().enabled = true;
+        Game.ForceRemoveHighlights();
+        this.Highlight(true);
+        lastClicked = true;
     }
 
     private void OnMouseEnter() {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        GetComponent<Renderer>().material.color = selected;
+        Game.RemoveHighlights();
+        this.Highlight(true);
     }
 
     private void OnMouseExit() {
-        if (!(Game.instance.currentState is UpgradeState)) return;
-        GetComponent<Renderer>().material.color = craneAreaColor;
+        if (!(Game.instance.currentState is UpgradeState) || lastClicked) return;
+        Game.RemoveHighlights();
+        this.Highlight(false);
     }
 
     /// <summary>

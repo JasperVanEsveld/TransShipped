@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
     public GameState currentState { get; private set; }
     public Stage currentStage;
     public List<Stage> stagesList;
+    public List<HighlightAble> highlights = new List<HighlightAble>();
     public Queue<Stage> stages;
     public int movements;
     public double startMoney;
@@ -69,6 +70,18 @@ public class Game : MonoBehaviour
             instance.areas.Add(area);
     }
 
+    public static void RegisterHighlight(HighlightAble highlight)
+    {
+        if (!instance.highlights.Contains(highlight))
+            instance.highlights.Add(highlight);
+    }
+
+    public static void DeregisterHighlight(HighlightAble highlight)
+    {
+        if (instance.highlights.Contains(highlight))
+            instance.highlights.Remove(highlight);
+    }
+
     public static void RegisterArea(OptionalArea area)
     {
         if (!instance.optionalAreas.Contains(area))
@@ -94,7 +107,7 @@ public class Game : MonoBehaviour
 
     public static List<T> OnlyHighlight<T>() where T : Area
     {
-        foreach(Area currentArea in instance.areas){
+        foreach(HighlightAble currentArea in instance.highlights){
             if( currentArea is T) {
                 currentArea.Highlight(true);
             } else if(!(currentArea is T)){
@@ -104,9 +117,16 @@ public class Game : MonoBehaviour
         return GetAreasOfType<T>();
     }
 
+    public static void ForceRemoveHighlights()
+    {
+        foreach(HighlightAble currentArea in instance.highlights){
+            currentArea.ForceHighlight(false);
+        }
+    }
+
     public static void RemoveHighlights()
     {
-        foreach(Area currentArea in instance.areas){
+        foreach(HighlightAble currentArea in instance.highlights){
             currentArea.Highlight(false);
         }
     }

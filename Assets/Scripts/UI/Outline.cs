@@ -43,6 +43,7 @@ namespace cakeslice {
 
         private void Awake() {
             Renderer = GetComponent<Renderer>();
+            this.enabled = false;
         }
 
 

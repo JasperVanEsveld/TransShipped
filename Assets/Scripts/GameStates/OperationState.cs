@@ -14,6 +14,7 @@ public class OperationState : GameState
     {
         manager = new ContainerManager(Game.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();
+        Game.ForceRemoveHighlights();
     }
 
     public void OnMovementComplete()

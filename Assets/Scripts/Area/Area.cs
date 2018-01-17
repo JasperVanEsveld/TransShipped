@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
-public abstract class Area : MonoBehaviour
+public abstract class Area : HighlightAble
 {
-    public bool highlight;
-    public Material defaultMat;
-    public Material highlightMat;
     public List<Area> connected;
     public List<Area> listening = new List<Area>();
 
@@ -15,25 +13,8 @@ public abstract class Area : MonoBehaviour
     
     public void Start()
     {
-        if(GetComponent<Renderer>() != null){
-            if(highlight){
-                GetComponent<Renderer>().material = highlightMat;
-            } else{
-                GetComponent<Renderer>().material = defaultMat;
-            }
-        }
+        this.InitHighlight();
         Game.RegisterArea(this);
-    }
-
-    public void Highlight(bool highlight){
-        this.highlight = highlight;
-        if(GetComponent<Renderer>() != null){
-            if(highlight) {
-                GetComponent<Renderer>().material = highlightMat;
-            } else{
-                GetComponent<Renderer>().material = defaultMat;
-            }
-        }
     }
 
     public void Connect(Area connectArea)
@@ -88,6 +69,9 @@ public abstract class Area : MonoBehaviour
     {
         if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return false;
         var nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (nextArea == null) {
+            return false;
+        }
         Transform previousParent = monoCont.transform.parent;
         monoCont.transform.SetParent(nextArea.transform);
         Area previousOrigin = monoCont.movement.originArea;
@@ -107,6 +91,9 @@ public abstract class Area : MonoBehaviour
     {
         if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return;
         Area nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (nextArea == null){
+            return;
+        }
         if (!containerQueue.ContainsKey(nextArea))
             containerQueue.Add(nextArea, new Queue<MonoContainer>());
         if (!containerQueue[nextArea].Contains(monoCont))

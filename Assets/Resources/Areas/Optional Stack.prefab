@@ -9,47 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1292293641598194}
+  m_RootGameObject: {fileID: 1829340482434986}
   m_IsPrefabParent: 1
---- !u!1 &1292293641598194
+--- !u!1 &1829340482434986
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4478905090271034}
-  - component: {fileID: 33047334878826222}
-  - component: {fileID: 65181415677785960}
-  - component: {fileID: 23440773207952784}
-  - component: {fileID: 114781244478696350}
-  - component: {fileID: 114647413494135982}
+  - component: {fileID: 4209397728486876}
+  - component: {fileID: 33796156406608542}
+  - component: {fileID: 65977791120983444}
+  - component: {fileID: 23697537549936040}
+  - component: {fileID: 114044173487621580}
   m_Layer: 0
-  m_Name: CraneArea
+  m_Name: Optional Stack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4478905090271034
+--- !u!4 &4209397728486876
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
+  m_GameObject: {fileID: 1829340482434986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 0.1, z: 1}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23440773207952784
+--- !u!23 &23697537549936040
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
+  m_GameObject: {fileID: 1829340482434986}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
+  - {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,61 +77,41 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33047334878826222
+--- !u!33 &33796156406608542
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
+  m_GameObject: {fileID: 1829340482434986}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65181415677785960
+--- !u!65 &65977791120983444
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
+  m_GameObject: {fileID: 1829340482434986}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114647413494135982
+--- !u!114 &114044173487621580
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 0
-  eraseRenderer: 0
-  originalLayer: 0
-  originalMaterials: []
---- !u!114 &114781244478696350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
+  m_GameObject: {fileID: 1829340482434986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d065fa723950b4045afa03b6a24de1ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 751e9e72d2a7af44fb63319ef08c36bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: 0
-  defaultMat: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
-  highlightMat: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
+  defaultMat: {fileID: 2100000, guid: d12835a73a9a54e8fbf79ceec4670da5, type: 2}
+  highlightMat: {fileID: 2100000, guid: 5326f0b5b3aadfa40bf8564c97e1a441, type: 2}
   connected: []
-  listening: []
-  cranes: []
-  priceForOneCrane: 10
-  maxCranes: 2
-  offSet: 5
-  cranePrefab: {fileID: 1609709993846976, guid: 0d9a721d693024030810591576511803,
-    type: 2}
-  areaName: 
-  attribute: 
+  areaName: Stack
+  price: 10
+  buildingPanel: {fileID: 0}
+  attribute: Can store containers
