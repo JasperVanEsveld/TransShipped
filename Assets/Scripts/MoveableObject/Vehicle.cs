@@ -64,6 +64,7 @@ public class Vehicle : MoveableObject
     private void Awake()
     {
         countAGV++;
+        transform.position = new Vector3(Random.Range(-35.0f, -5.0f), transform.position.y, Random.Range(-10.0f, 10.0f));
         request = new Queue<Area>();
         MOInit(transform.position, speed, false);
     }

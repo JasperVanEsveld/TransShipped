@@ -40,7 +40,9 @@ public class OptionalArea : MonoBehaviour
         if (UpgradeState.Buy(price))
         {
             Game.DeregisterArea(this);
+            Vector3 sizeTemp = transform.localScale;
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
+            stack.transform.localScale = sizeTemp;
             stack.max = capacity;
             foreach (var connectArea in connected)
             {

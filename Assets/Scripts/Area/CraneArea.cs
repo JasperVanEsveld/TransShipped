@@ -42,6 +42,9 @@ public class CraneArea : Area
             var crane = Instantiate(cranePrefab,
                 new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
                 transform.rotation).GetComponent<Crane>();
+            Vector3 temp = crane.transform.localScale;
+            temp.x /= 2; temp.y /= 2; temp.z /= 2;
+            crane.transform.localScale = temp;
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);
