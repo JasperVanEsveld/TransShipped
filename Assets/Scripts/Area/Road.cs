@@ -32,10 +32,12 @@ public class Road : Area
 
     private Vehicle CompleteReservation(Area reference){
         foreach(Vehicle vehicle in vehicles){
-            if (!vehicle.IsReservedBy(reference) || !vehicle.IsAvailable(reference) ||
-                !vehicle.MOIsAtTheThisPos(reference.transform.position)) continue;
-            vehicle.reserved = false;
-            return vehicle;
+            if (vehicle.IsReservedBy(reference) && 
+                !vehicle.IsFull() && 
+                vehicle.MOIsAtTheThisPos(reference.transform.position)){
+                vehicle.reserved = false;
+                return vehicle;
+            }
         }
         return null;
     }
@@ -80,7 +82,7 @@ public class Road : Area
     public override bool ReserveArea(Area origin, Movement move) {
         Vehicle vehicle = FindAvailableVehicle(origin.transform.position);
         bool reserved;
-        if (!Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) {
+        if (vehicle == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) {
             if(vehicle != null && vehicle.request.Count == 0) {
                 vehicle.request.Enqueue(origin);
             }
@@ -88,7 +90,6 @@ public class Road : Area
         } else if(vehicle == null){
             return false;
         }
-        print("Reserve vehicle: " + vehicle);
         reserved = vehicle.ReserveVehicle(origin);
         vehicle.request.Enqueue(origin);
         return reserved;

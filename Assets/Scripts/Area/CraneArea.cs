@@ -82,10 +82,10 @@ public class CraneArea : Area
     /// If found, return it, otherwise return null.
     /// </summary>
     /// <returns>Available crane found</returns>
-    private Crane FindAvailableCrane()
+    private Crane FindAvailableCrane(Area origin)
     {
         foreach (var crane in cranes)
-            if (!crane.reserved)
+            if (!crane.reservedBy.Contains(origin))
                 return crane;
         return null;
     }
@@ -94,9 +94,10 @@ public class CraneArea : Area
     {
         foreach (Crane crane in cranes)
         {
-            if (!crane.IsReservedBy(reference) || !crane.IsReady(reference)) continue;
-            crane.reserved = false;
-            return crane;
+            if (crane.IsReservedBy(reference) && crane.IsReady(reference)) {
+                crane.reservedBy.Dequeue();
+                return crane;
+            }
         }
 
         return null;
@@ -148,9 +149,17 @@ public class CraneArea : Area
 
     public override bool ReserveArea(Area origin, Movement move)
     {
-        Crane crane = FindAvailableCrane();
+        Crane crane = FindAvailableCrane(origin);
+        if(crane != null && crane.reservedBy.Count >= 1){
+            print("Trying first servicing: " + crane.reservedBy.Peek());
+        } else if(crane == null){
+            print("Already servicing: " + origin);
+        } else{
+            print("Trying no one in queue");
+        }
         if (crane == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
         bool reserved = crane.ReserveCrane(origin);
+        print(crane.reservedBy.Count);
         return reserved;
     }
 }

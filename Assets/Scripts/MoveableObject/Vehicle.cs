@@ -45,12 +45,12 @@ public class Vehicle : MoveableObject
 
     public bool IsAvailable(Area origin)
     {
-        return IsAvailable() || !MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin);
+        return IsAvailable() || (reserved && reservedBy.Equals(origin));
     }
 
     public bool IsAvailable()
     {
-        return !MOIsObjectMoving() && !IsFull() && !reserved;
+        return !reserved;
     }
 
     public bool ReserveVehicle(Area origin)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Crane : MonoBehaviour
@@ -9,8 +10,7 @@ public class Crane : MonoBehaviour
     private DateTime startTime;
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
-    public bool reserved;
-    private Area reservedBy;
+    public Queue<Area> reservedBy = new Queue<Area>();
     public BuildingPanel buildingPanel;
 
     // Upgrade and stuff
@@ -69,7 +69,7 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     public bool IsReady(Area origin)
     {
-        return IsReady() || container == null && reserved && reservedBy.Equals(origin);
+        return IsReady() || container == null && (reservedBy.Count == 0 || reservedBy.Peek() == origin);
     }
 
     /// <summary>
@@ -80,12 +80,12 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     private bool IsReady()
     {
-        return container == null && !reserved;
+        return container == null && reservedBy.Count == 0;
     }
 
     public bool IsReservedBy(Area reference)
     {
-        return reserved && reservedBy.Equals(reference);
+        return reservedBy.Count != 0 && reservedBy.Peek() == reference;
     }
 
     /// <summary>
@@ -95,9 +95,8 @@ public class Crane : MonoBehaviour
     /// <returns></returns>
     public bool ReserveCrane(Area origin)
     {
-        if (reserved) return false;
-        reservedBy = origin;
-        reserved = true;
+        if (reservedBy.Contains(origin)) return false;
+        reservedBy.Enqueue(origin);
         return true;
     }
 
@@ -110,8 +109,6 @@ public class Crane : MonoBehaviour
     {
         if (!IsReady(monoContainer.movement.originArea))
             return false;
-
-        reserved = false;
         container = monoContainer;
         container.transform.SetParent(transform);
         container.transform.position = transform.position;
