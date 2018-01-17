@@ -6,7 +6,7 @@ public delegate void OnStateChanged(GameState newState);
 
 public delegate void OnStageChanged(Stage newStage);
 
-public delegate void OnMoneyChanged(double newValue);
+public delegate void OnMoneyChanged(double oldValue, double newValue);
 
 public class Game : MonoBehaviour
 {
@@ -19,16 +19,17 @@ public class Game : MonoBehaviour
     public int movements;
     public double startMoney;
 
-    private static double moneyValue = 300;
+    private static double moneyValue = 0;
 
     public static double money
     {
         get { return moneyValue; }
         set
         {
+            if (instance.moneyChangeEvent != null && moneyValue != value) {
+                instance.moneyChangeEvent(moneyValue, value);
+            }
             moneyValue = value;
-            if (instance.moneyChangeEvent != null)
-                instance.moneyChangeEvent(money);
         }
     }
 

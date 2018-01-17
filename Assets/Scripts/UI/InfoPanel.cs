@@ -26,9 +26,9 @@ public class InfoPanel : MonoBehaviour {
 	    timeRemainingText.text = "Time left :" + (int) (Game.instance.currentStage.duration - difference);
 	}
 
-    public void MoneyChanged(double newMoney) {
+    public void MoneyChanged(double oldMoney, double newMoney) {
         moneyText.text = "Money :" + newMoney;
-        indicatorText.GetComponent<Indic>().ShowLatestChange(-23);
+        indicatorText.GetComponent<Indic>().ShowLatestChange(newMoney - oldMoney);
     }
 
     public void StageChanged(Stage newStage) {

@@ -12,12 +12,12 @@ public class Indic : MonoBehaviour {
         if (i_amount > 0.0)
         {
             GetComponent<Text>().text = "+" + i_amount;
-            GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+            GetComponent<Text>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
         }
         else
         {
             GetComponent<Text>().text = "" + i_amount;
-            GetComponent<Text>().color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+            GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         }
     }
 
