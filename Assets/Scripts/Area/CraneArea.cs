@@ -12,7 +12,7 @@ public class CraneArea : Area
     public List<Crane> cranes = new List<Crane>();
     public double priceForOneCrane = 10;
     public int maxCranes = 2;
-    public int offSet = 5;
+    public int offSet = 5/2;
 
     public GameObject cranePrefab;
     private readonly Color selected = new Color32(0xC0, 0xC0, 0xC0, 0xFF);
@@ -43,6 +43,9 @@ public class CraneArea : Area
             var crane = Instantiate(cranePrefab,
                 new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
                 transform.rotation).GetComponentInChildren<Crane>();
+            Vector3 temp = crane.transform.localScale;
+            temp.x /= 2; temp.y /= 2; temp.z /= 2;
+            crane.transform.localScale = temp;
             cranes.Add(crane);
             crane.craneArea = this;
             crane.transform.SetParent(transform);

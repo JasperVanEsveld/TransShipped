@@ -42,7 +42,9 @@ public class OptionalArea : HighlightAble
         {
             Game.DeregisterArea(this);
             Game.DeregisterHighlight(this);
+            Vector3 sizeTemp = transform.localScale;
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
+            stack.transform.localScale = sizeTemp;
             stack.max = capacity;
             foreach (var connectArea in connected)
             {

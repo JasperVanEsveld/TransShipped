@@ -7,9 +7,10 @@ public class InfoPanel : MonoBehaviour {
     public Text targetText;
     public Text moneyText;
     public Text timeRemainingText;
+    public Text indicatorText;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Game.instance.moneyChangeEvent += MoneyChanged;
         Game.instance.stateChangeEvent += StateChanged;
         Game.instance.stageChangeEvent += StageChanged;
@@ -27,6 +28,7 @@ public class InfoPanel : MonoBehaviour {
 
     public void MoneyChanged(double newMoney) {
         moneyText.text = "Money :" + newMoney;
+        indicatorText.GetComponent<Indic>().ShowLatestChange(-23);
     }
 
     public void StageChanged(Stage newStage) {
