@@ -11,7 +11,7 @@ public class Crane : HighlightAble
     public static event CraneListener NotEnough;
 
     private const double upbound = 10;
-    public double speed { get; set; }
+    public double speed { get; private set; }
     private double baseTime;
     private DateTime startTime;
     public MonoContainer container { private get; set; }
@@ -108,22 +108,23 @@ public class Crane : HighlightAble
     }
     
     private void OnMouseDown() {
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
         buildingPanel.SelectCrane(this);
         Game.ForceRemoveHighlights();
-        this.Highlight(true);
+        Highlight(true);
         lastClicked = true;
     }
 
     private void OnMouseEnter() {
         if (!(Game.instance.currentState is UpgradeState)) return;
         Game.RemoveHighlights();
-        this.Highlight(true);
+        Highlight(true);
     }
 
     private void OnMouseExit() {
         if (!(Game.instance.currentState is UpgradeState) || lastClicked) return;
-        this.Highlight(false);
+        Highlight(false);
     }
 
     public bool AddContainer(MonoContainer monoContainer)

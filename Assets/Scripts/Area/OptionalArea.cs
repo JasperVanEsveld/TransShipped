@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class OptionalArea : HighlightAble
 {
     public delegate void OpAreaListener(OptionalArea source);
@@ -71,24 +70,25 @@ public class OptionalArea : HighlightAble
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
         Game.RemoveHighlights();
-        this.Highlight(true);
+        Highlight(true);
     }
 
     private void OnMouseExit()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
-        this.Highlight(false);
+        Highlight(false);
     }
 
     private void OnMouseDown()
     {
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if(MouseDownEvent != null){
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectOptionalArea(this, areaName, attribute);
         Game.ForceRemoveHighlights();
-        this.Highlight(true);
+        Highlight(true);
         lastClicked = true;
     }
 

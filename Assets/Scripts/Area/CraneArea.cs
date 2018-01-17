@@ -63,26 +63,27 @@ public class CraneArea : Area
 
     private void OnMouseDown()
     {
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if(MouseDownEvent != null){
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectCraneArea(this, areaName, attribute);
         Game.ForceRemoveHighlights();
-        this.Highlight(true);
-        this.lastClicked = true;
+        Highlight(true);
+        lastClicked = true;
     }
 
     private void OnMouseEnter()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
         Game.RemoveHighlights();
-        this.Highlight(true);
+        Highlight(true);
     }
 
     private void OnMouseExit()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        this.Highlight(false);
+        Highlight(false);
     }
 
     /// <summary>
@@ -102,10 +103,9 @@ public class CraneArea : Area
     {
         foreach (Crane crane in cranes)
         {
-            if (crane.IsReservedBy(reference) && crane.IsReady(reference)) {
-                crane.reservedBy.Dequeue();
-                return crane;
-            }
+            if (!crane.IsReservedBy(reference) || !crane.IsReady(reference)) continue;
+            crane.reservedBy.Dequeue();
+            return crane;
         }
 
         return null;
