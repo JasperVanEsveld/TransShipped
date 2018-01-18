@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: EmptyTruck
   m_EditorClassIdentifier: 
   type: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 4313081529219084, guid: 0c68e914a8906487b82de3ee5fed2319, type: 2}
   carryingTypes: 0200000000000000
   requestTypes: 01000000
   carryMin: 0
