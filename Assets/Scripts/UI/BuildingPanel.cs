@@ -11,7 +11,7 @@ public class BuildingPanel : MonoBehaviour
 
     public GameObject selected;
     private Text text5, text1, text2, text3, text4, buttonText;
-    Button buttonObject;
+    private Button buttonObject;
 
 
     private void Awake()

@@ -23,9 +23,18 @@ public class Vehicle : MoveableObject
         return level >= maxLevel;
     }
 
-    public static int price
+    public static int buyPrice
     {
         get { return costOfPurchase[level];}
+    }
+
+    public static int upgradePrice {
+        get {
+            if(!IsFullyUpgraded())
+            return costOfUpgrade[level] * countAGV;
+
+            return -1;
+        }
     }
 
     public static int Upgrade()
