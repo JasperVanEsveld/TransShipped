@@ -10,24 +10,24 @@ public class OperationState : GameState
     public VehicleGenerator generator;
     public DateTime startTime = DateTime.Now;
     private DateTime lastTime;
-
-    public OperationState() : base() {
+    public OperationState() {
         manager = new ContainerManager(Game.instance.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();
         Game.instance.ForceRemoveHighlights();
 
         foreach(Ship vehicle in Game.instance.ships){
-            GameObject.Destroy(vehicle.gameObject);
+            Object.Destroy(vehicle.gameObject);
         }
         Game.instance.ships.Clear();
         foreach(Train vehicle in Game.instance.trains){
-            GameObject.Destroy(vehicle.gameObject);
+            Object.Destroy(vehicle.gameObject);
         }
         Game.instance.trains.Clear();
         foreach(Truck vehicle in Game.instance.trucks){
-            GameObject.Destroy(vehicle.gameObject);
+            Object.Destroy(vehicle.gameObject);
         }
         Game.instance.trucks.Clear();
+        GameObject.Find("LightOrigin").transform.rotation = Quaternion.Euler(-70, 0, 0);
     }
 
     public void OnMovementComplete()

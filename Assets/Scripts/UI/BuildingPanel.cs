@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingPanel : MonoBehaviour
-{
+public class BuildingPanel : MonoBehaviour {
     public delegate void BuildingPanelListener();
-    public static event BuildingPanelListener GameStarted;
+
+    private int buttonCount = 0;
+    private Button buttonObject;
+    private List<Transform> buttons = new List<Transform>();
 
     public Transform prefab;
 
     public GameObject selected;
-    private Text text5, text1, text2, text3, text4, buttonText;
-    private Button buttonObject;
+    private Text text5, text2, text3, text4, buttonText;
 
+    public static event BuildingPanelListener GameStarted;
 
-    private void Awake()
-    {
-        text1 = transform.Find("Text1").gameObject.GetComponent<Text>();
+    private void Awake() {
         text2 = transform.Find("Text2").gameObject.GetComponent<Text>();
         text3 = transform.Find("Text3").gameObject.GetComponent<Text>();
         text4 = transform.Find("Text4").gameObject.GetComponent<Text>();
@@ -25,7 +26,7 @@ public class BuildingPanel : MonoBehaviour
         buttonText = buttonObject.GetComponentInChildren<Text>();
     }
 
-    private void OnEnable(){
+    private void OnEnable() {
         buttonText.text = "";
         text2.text = "";
         text3.text = "";
@@ -34,28 +35,28 @@ public class BuildingPanel : MonoBehaviour
         buttonObject.gameObject.SetActive(false);
     }
 
-    public void SelectOptionalArea(OptionalArea optionalArea, string objectname, string attribute)
-    {
+    public void SelectOptionalArea(OptionalArea optionalArea, string objectname, string attribute) {
         buttonObject.onClick.RemoveAllListeners();
         buttonText.text = "Purchase";
         text2.text = "Price for this area: " + optionalArea.price;
         text3.text = "Capacity for this area: " + optionalArea.capacity;
         text4.text = attribute;
         text5.text = objectname;
-        buttonObject.gameObject.SetActive(true);
-        buttonObject.onClick.AddListener(optionalArea.BuyStack);
-        buttonObject.onClick.AddListener(StackBought);
+        if (Game.instance.money >= optionalArea.price) {
+            buttonObject.gameObject.SetActive(true);
+            buttonObject.onClick.AddListener(optionalArea.BuyStack);
+            buttonObject.onClick.AddListener(StackBought);
+        }
+        else buttonObject.gameObject.SetActive(false);
     }
-    
-    private void StackBought()
-    {
+
+    private void StackBought() {
         buttonObject.onClick.RemoveAllListeners();
         text2.text = "";
         buttonObject.gameObject.SetActive(false);
     }
 
-    public void SelectCraneArea(CraneArea craneArea, string objectname, string attribute)
-    {
+    public void SelectCraneArea(CraneArea craneArea, string objectname, string attribute) {
         buttonObject.onClick.RemoveAllListeners();
         buttonText.text = "Buy a new Crane";
         text2.text = "Price for one crane: " + craneArea.priceForOneCrane;
@@ -65,47 +66,37 @@ public class BuildingPanel : MonoBehaviour
         }
         text4.text = attribute;
         text5.text = objectname;
-        if (!craneArea.NoMoreSpace())
-        {
+        if (!craneArea.NoMoreSpace() && Game.instance.money >= craneArea.priceForOneCrane) {
             buttonObject.gameObject.SetActive(true);
             buttonObject.onClick.AddListener(craneArea.BuyCrane);
             buttonObject.onClick.AddListener(() => SelectCraneArea(craneArea, objectname, attribute));
         }
-        else
-        {
+        else {
             buttonObject.gameObject.SetActive(false);
             text3.text = "There is " + craneArea.cranes.Count + " cranes and no more could be bought";
         }
     }
 
-    int buttonCount = 0;
-    List<Transform> buttons = new List<Transform>();
+    public void beginGame() {
+        if (GameStarted != null) GameStarted.Invoke();
 
-    public void beginGame()
-    {
-        if(GameStarted != null){
-            GameStarted.Invoke();
-        }
         selected = null;
         Game.instance.ChangeState(new OperationState());
     }
 
-    public void SelectCrane(Crane crane)
-    {
+    public void SelectCrane(Crane crane) {
         buttonObject.onClick.RemoveAllListeners();
         buttonText.text = "Upgrade";
         text2.text = "Current Level: " + crane.Level;
         text4.text = "Current Efficiency: " + crane.speed;
         text5.text = crane.GetType().ToString();
-        if (!crane.IsFullyUpgraded())
-        {
+        if (!crane.IsFullyUpgraded() && Game.instance.money >= crane.CostOfUpgrade) {
             text3.text = "Price for Upgrading: " + crane.CostOfUpgrade;
             buttonObject.gameObject.SetActive(true);
             buttonObject.onClick.AddListener(crane.Upgrade);
             buttonObject.onClick.AddListener(() => SelectCrane(crane));
         }
-        else
-        {
+        else {
             buttonObject.gameObject.SetActive(false);
             text3.text = "This crane has already been fully upgraded";
         }

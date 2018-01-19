@@ -1,20 +1,12 @@
 ﻿using UnityEngine;
 
-public class SunRotation : MonoBehaviour
-{
-    public float rotationSpeed;
-    public float xAngle;
-    public float yAngle;
-    public float zAngle;
-
-    private void Start()
-    {
-        transform.rotation = Quaternion.Euler(xAngle, yAngle, zAngle);
+public class SunRotation : MonoBehaviour {
+    private void Start() {
+        transform.rotation = Quaternion.Euler(-70, 0, 0);
     }
 
-    private void Update()
-    {
+    private void Update() {
         if (Game.instance.currentState is OperationState)
-            transform.Rotate(Vector3.right * Time.deltaTime * rotationSpeed);
+            transform.Rotate(Vector3.right * Time.deltaTime);
     }
 }
