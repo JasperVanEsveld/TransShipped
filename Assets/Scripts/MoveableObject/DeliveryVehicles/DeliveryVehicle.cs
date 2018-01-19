@@ -9,7 +9,7 @@ public abstract class DeliveryVehicle : MoveableObject {
     public List<Container> outgoing = new List<Container>();
     protected bool isAtDestination { get; set; }
     public Vector3 areaPos;
-    protected static readonly Vector3 truckSpawnPos = new Vector3(-50, 0, 42);
+    protected static readonly Vector3 truckSpawnPos = new Vector3(-60, 0, 42);
     protected static readonly Vector3 trainSpawnPos = new Vector3(-60, 0, -40);
     protected static readonly Vector3 shipSpawnPos = new Vector3(65, 0, 35);
 
