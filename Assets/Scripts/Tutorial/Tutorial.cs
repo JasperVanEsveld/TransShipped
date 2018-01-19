@@ -15,7 +15,10 @@ public abstract class Tutorial : MonoBehaviour
             }
             state = value;
             textBox.text = state.text;
-            print(currentState.text);
         } 
+    }
+
+    void OnDestroy(){
+        state.UnBindAll();
     }
 }

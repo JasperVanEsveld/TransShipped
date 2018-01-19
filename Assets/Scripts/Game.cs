@@ -9,7 +9,19 @@ public delegate void OnStageChanged(Stage newStage);
 public delegate void OnMoneyChanged(double oldValue, double newValue);
 
 public class Game : MonoBehaviour {
-    public static Game instance;
+    static Game _instance;// only one Go can exist
+	public static Game instance
+	{
+		get
+		{
+			if( !_instance)
+			{
+				_instance = FindObjectOfType<Game>();
+			}
+
+			return _instance;
+		}
+	}
     public GameState currentState { get; private set; }
     public Stage currentStage;
     public List<Stage> stagesList;
@@ -39,11 +51,11 @@ public class Game : MonoBehaviour {
     public event OnMoneyChanged moneyChangeEvent;
 
     public void Awake() {
-        if (instance == null)
-            instance = this;
+        if (_instance == null)
+            _instance = this;
         else if (instance != this)
-            Destroy(gameObject);
-            
+            _instance = this;
+        
     }
 
     public void Start() {
