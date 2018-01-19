@@ -1,8 +1,11 @@
 public class ShipSelectState : TutorialState {
     public ShipSelectState(Tutorial tutorial) : base(tutorial) {
         text =
-            "There is a ship waiting let it in by first clicking the button then the prefered berth.\n"
-          + "After that press the stack to store the containers in that area. ";
+            "There is a ship waiting let it in by clicking the button.";
+    }
+
+    private void StageComplete(){
+        tut.currentState = new TutorialCompleteState(tut);
     }
 
     private void VehicleSelected() {
@@ -11,9 +14,11 @@ public class ShipSelectState : TutorialState {
 
     public override void BindAll() {
         CommandPanel.VehicleSelected += VehicleSelected;
+        StageEndState.StageComplete += StageComplete;
     }
 
     public override void UnBindAll() {
         CommandPanel.VehicleSelected -= VehicleSelected;
+        StageEndState.StageComplete -= StageComplete;
     }
 }

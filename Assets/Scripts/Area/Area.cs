@@ -13,7 +13,7 @@ public abstract class Area : HighlightAble
     public void Start()
     {
         InitHighlight();
-        Game.RegisterArea(this);
+        Game.instance.RegisterArea(this);
     }
 
     public void Connect(Area connectArea)

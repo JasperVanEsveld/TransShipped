@@ -66,7 +66,7 @@ public class Road : Area
         }
         vehicle = FindAvailableReadyVehicle(monoContainer.movement.originArea);
         if (vehicle == null) return false;
-        Area next = Game.GetManager().GetNextArea(this,monoContainer.movement);
+        Area next = Game.instance.GetManager().GetNextArea(this,monoContainer.movement);
         if (!next.ReserveArea(this, monoContainer.movement)) return false;
         vehicle.GoTo(monoContainer.movement.originArea);
         containerVehicle.Add(monoContainer, vehicle);
@@ -82,7 +82,7 @@ public class Road : Area
     public override bool ReserveArea(Area origin, Movement move) {
         Vehicle vehicle = FindAvailableVehicle(origin.transform.position);
         bool reserved;
-        if (vehicle == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) {
+        if (vehicle == null || !Game.instance.GetManager().GetNextArea(this, move).ReserveArea(this, move)) {
             if(vehicle != null && vehicle.request.Count == 0) {
                 vehicle.request.Enqueue(origin);
             }

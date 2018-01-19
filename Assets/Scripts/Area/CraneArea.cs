@@ -24,7 +24,7 @@ public class CraneArea : Area
     private new void Start()
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
-        Game.RegisterArea(this);
+        Game.instance.RegisterArea(this);
         InitHighlight();
     }
 
@@ -69,7 +69,7 @@ public class CraneArea : Area
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectCraneArea(this, areaName, attribute);
-        Game.ForceRemoveHighlights();
+        Game.instance.ForceRemoveHighlights();
         Highlight(true);
         lastClicked = true;
     }
@@ -77,7 +77,7 @@ public class CraneArea : Area
     private void OnMouseEnter()
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        Game.RemoveHighlights();
+        Game.instance.RemoveHighlights();
         Highlight(true);
     }
 
@@ -147,7 +147,7 @@ public class CraneArea : Area
         crane = FindReadyCrane(monoContainer.movement.originArea);
 
         if (crane == null) return false;
-        Area next = Game.GetManager().GetNextArea(this, monoContainer.movement);
+        Area next = Game.instance.GetManager().GetNextArea(this, monoContainer.movement);
         if (!next.ReserveArea(this, monoContainer.movement)) return false;
         containerCrane.Add(monoContainer, crane);
         return crane.AddContainer(monoContainer);
@@ -169,7 +169,7 @@ public class CraneArea : Area
         } else{
             print("Trying no one in queue");
         }
-        if (crane == null || !Game.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
+        if (crane == null || !Game.instance.GetManager().GetNextArea(this, move).ReserveArea(this, move)) return false;
         bool reserved = crane.ReserveCrane(origin);
         print(crane.reservedBy.Count);
         return reserved;

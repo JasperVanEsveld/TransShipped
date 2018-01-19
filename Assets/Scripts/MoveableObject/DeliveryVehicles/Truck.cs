@@ -8,11 +8,11 @@ public class Truck : DeliveryVehicle {
     }
 
     private void Awake() {
-        if (!Game.trucks.Contains(this)) Game.trucks.Add(this);
+        if (!Game.instance.trucks.Contains(this)) Game.instance.trucks.Add(this);
     }
 
     public void OnSelected() {
-        List<TruckArea> areas = Game.OnlyHighlight<TruckArea>();
+        List<TruckArea> areas = Game.instance.OnlyHighlight<TruckArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             if (!areas[0].occupied) {

@@ -111,14 +111,14 @@ public class Crane : HighlightAble
         if (!(Game.instance.currentState is UpgradeState)) return;
         if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
         buildingPanel.SelectCrane(this);
-        Game.ForceRemoveHighlights();
+        Game.instance.ForceRemoveHighlights();
         Highlight(true);
         lastClicked = true;
     }
 
     private void OnMouseEnter() {
         if (!(Game.instance.currentState is UpgradeState)) return;
-        Game.RemoveHighlights();
+        Game.instance.RemoveHighlights();
         Highlight(true);
     }
 

@@ -9,11 +9,11 @@ public class Ship : DeliveryVehicle {
     }
 
     private void Awake() {
-        if (!Game.ships.Contains(this)) Game.ships.Add(this);
+        if (!Game.instance.ships.Contains(this)) Game.instance.ships.Add(this);
     }
 
     public void OnSelected() {
-        List<ShipArea> areas = Game.OnlyHighlight<ShipArea>();
+        List<ShipArea> areas = Game.instance.OnlyHighlight<ShipArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             if (!areas[0].occupied) {

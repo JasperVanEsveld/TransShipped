@@ -2,8 +2,8 @@ public class UpgradeState : GameState
 {
     public static bool Buy(double price)
     {
-        if (Game.money < price) return false;
-        Game.money -= price;
+        if (Game.instance.money < price) return false;
+        Game.instance.money -= price;
         return true;
     }
 

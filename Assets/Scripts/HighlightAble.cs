@@ -17,7 +17,7 @@ public abstract class HighlightAble : MonoBehaviour {
                 GetComponent<Renderer>().material = defaultMat;
             }
         }
-        Game.RegisterHighlight(this);
+        Game.instance.RegisterHighlight(this);
     }
 
     public void Highlight(bool highlight){
