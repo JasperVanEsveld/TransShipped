@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   prefab: {fileID: 4227835453075452, guid: c9077471a67683849992de0dac7642f3, type: 2}
-  carryingTypes: 0100000002000000
+  carryingTypes: 0100000000000000
   requestTypes: 
   carryMin: 5
   carryMax: 12

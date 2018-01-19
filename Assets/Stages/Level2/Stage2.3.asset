@@ -11,14 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f7f9494dde9542800b0e3e45f581b, type: 3}
   m_Name: Stage2.3
   m_EditorClassIdentifier: 
-  duration: 90
-  moneyRequired: 1000
+  duration: 120
+  moneyRequired: 850
   movementsRequired: 0
   reward: 0
-  penalty: -250
+  penalty: -150
   vehicleTemplates:
   - {fileID: 11400000, guid: 38ff07844339a6a49ac1375bbfb6df3e, type: 2}
-  - {fileID: 11400000, guid: 7530d718aacb7b549a9132f272385b55, type: 2}
   - {fileID: 11400000, guid: 7530d718aacb7b549a9132f272385b55, type: 2}
   - {fileID: 11400000, guid: 7530d718aacb7b549a9132f272385b55, type: 2}
   - {fileID: 11400000, guid: 7530d718aacb7b549a9132f272385b55, type: 2}
