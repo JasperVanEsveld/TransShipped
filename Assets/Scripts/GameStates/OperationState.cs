@@ -1,5 +1,6 @@
 using System;
 using Object = UnityEngine.Object;
+using UnityEngine;
 
 public class OperationState : GameState
 {
@@ -10,11 +11,23 @@ public class OperationState : GameState
     public DateTime startTime = DateTime.Now;
     private DateTime lastTime;
 
-    public OperationState()
-    {
+    public OperationState() : base() {
         manager = new ContainerManager(Game.instance.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();
         Game.instance.ForceRemoveHighlights();
+
+        foreach(Ship vehicle in Game.instance.ships){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.ships.Clear();
+        foreach(Train vehicle in Game.instance.trains){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.trains.Clear();
+        foreach(Truck vehicle in Game.instance.trucks){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.trucks.Clear();
     }
 
     public void OnMovementComplete()

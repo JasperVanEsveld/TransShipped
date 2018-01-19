@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bd947abe5f96444a811479ef41d1ca0, type: 3}
-  m_Name: SimpleOffloadShip
+  m_Name: BlueOffloadShip
   m_EditorClassIdentifier: 
   type: 0
   prefab: {fileID: 4227835453075452, guid: c9077471a67683849992de0dac7642f3, type: 2}
-  carryingTypes: 0100000002000000
+  carryingTypes: 00000000
   requestTypes: 
-  carryMin: 12
-  carryMax: 12
+  carryMin: 10
+  carryMax: 14
   requestMin: 0
   requestMax: 0
   spawnPosition: {x: 0, y: 0, z: 0}

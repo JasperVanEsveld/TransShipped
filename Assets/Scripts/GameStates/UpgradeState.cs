@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class UpgradeState : GameState
 {
     public static bool Buy(double price)
