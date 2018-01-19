@@ -16,7 +16,7 @@ public class AGVButtons : MonoBehaviour {
     private void Update() {
         if (buyPrice != Vehicle.buyPrice) {
             buyPrice = Vehicle.buyPrice;
-            BuyAGVButton.GetComponentInChildren<Text>().text = "Buy AGV\n$" + buyPrice + " Each";
+            BuyAGVButton.GetComponentInChildren<Text>().text = "Buy AGV\nPrice: " + buyPrice;
         }
 
         if (Game.instance.money < buyPrice)
@@ -29,7 +29,7 @@ public class AGVButtons : MonoBehaviour {
                 return;
             }
 
-            UpgradeAGVButton.GetComponentInChildren<Text>().text = "Upgrade AGV\n$" + upgradePrice;
+            UpgradeAGVButton.GetComponentInChildren<Text>().text = "Upgrade AGV\nCost: " + upgradePrice;
         }
 
         if (Game.instance.money < upgradePrice)
