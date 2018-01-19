@@ -41,9 +41,8 @@ public class CraneArea : Area
         if (cranes.Count < maxCranes && UpgradeState.Buy(priceForOneCrane))
         {
             i = 0;
-            var crane = Instantiate(cranePrefab,
-                new Vector3(transform.position.x + cranes.Count * offSet, 0, transform.position.z),
-                transform.rotation).GetComponentInChildren<Crane>();
+            Vector3 cranePos = cranes.Count * offSet * this.transform.right + this.transform.position;
+            var crane = Instantiate(cranePrefab,cranePos,transform.rotation).GetComponentInChildren<Crane>();
             Vector3 temp = crane.transform.localScale;
             temp.x /= 2; temp.y /= 2; temp.z /= 2;
             crane.transform.localScale = temp;

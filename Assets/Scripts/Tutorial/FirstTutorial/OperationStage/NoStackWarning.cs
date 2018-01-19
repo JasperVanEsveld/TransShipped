@@ -5,7 +5,7 @@ public class NoStackWarning : TutorialState {
     }
 
     private void StageComplete(){
-        tut.currentState = new TutorialCompleteState(tut);
+        tut.currentState = new TutorialFailed(tut);
     }
 
     public override void BindAll() {

@@ -6,7 +6,7 @@ public class NoPathState : TutorialState {
     }
 
     private void StageComplete(){
-        tut.currentState = new TutorialCompleteState(tut);
+        tut.currentState = new TutorialFailed(tut);
     }
 
     public override void BindAll() {
