@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DeliveryVehicle : MoveableObject
-{
+public abstract class DeliveryVehicle : MoveableObject {
     public Stack targetStack;
     public double reward;
     public double timeOutTime;
@@ -14,32 +13,28 @@ public abstract class DeliveryVehicle : MoveableObject
     protected static readonly Vector3 trainSpawnPos = new Vector3(-50, 0, -42);
     protected static readonly Vector3 shipSpawnPos = new Vector3(65, 0, 35);
 
-    public void Awake()
-    {
-        Game.instance.RegisterWaiting(this);
-    }
-
-    public abstract void OnSelected();
-
-    public void EnterTerminal()
-    {
-        Game.instance.vehicles.Remove(this);
-        if (GetType() == typeof(Ship))
+    public void EnterTerminal() {
+        if (GetType() == typeof(Ship)) {
+            Game.instance.ships.Remove(this as Ship);
             MOShipEnterTerminal(areaPos);
-        else
+        } else if (GetType() == typeof(Truck)) {
+            Game.instance.trucks.Remove(this as Truck);
             MOPushDestination(areaPos);
+        } else {
+            Game.instance.trains.Remove(this as Train);
+            MOPushDestination(areaPos);
+        }
     }
 
     public abstract void LeaveTerminal();
 
     protected abstract void DestroyIfDone();
-    
+
     protected abstract void Enter();
 
-    private void Update()
-    {
+    private void Update() {
         DestroyIfDone();
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
 
         if (isAtDestination || !MOIsAtTheThisPos(areaPos)) return;

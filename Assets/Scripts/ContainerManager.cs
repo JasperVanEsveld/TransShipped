@@ -3,6 +3,9 @@ using System.Linq;
 
 public class ContainerManager
 {
+    public delegate void ContainerManagerListener();
+    public static event ContainerManagerListener NoPathFound;
+
     private OperationState origin;
     private List<Stack> stacks;
 
@@ -56,9 +59,9 @@ public class ContainerManager
         Pair<Area, int> next = FirstArea(movement.TargetArea, area, visited);
         if(next != null){
             return next.First;
-        } else{
-            return null;
         }
+
+        return null;
     }
 
     private static Pair<Area, int> FirstArea(Area current, Area target, List<Area> visited)

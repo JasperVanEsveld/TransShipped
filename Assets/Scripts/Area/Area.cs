@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Area : MonoBehaviour
+public abstract class Area : HighlightAble
 {
-    public bool highlight = false;
-    public Material defaultMat;
-    public Material highlightMat;
     public List<Area> connected;
     public List<Area> listening = new List<Area>();
 
@@ -15,25 +12,8 @@ public abstract class Area : MonoBehaviour
     
     public void Start()
     {
-        if(this.GetComponent<Renderer>() != null){
-            if(highlight){
-                this.GetComponent<Renderer>().material = highlightMat;
-            } else{
-                this.GetComponent<Renderer>().material = defaultMat;
-            }
-        }
-        Game.RegisterArea(this);
-    }
-
-    public void Highlight(bool highlight){
-        this.highlight = highlight;
-        if(this.GetComponent<Renderer>() != null){
-            if(highlight) {
-                this.GetComponent<Renderer>().material = highlightMat;
-            } else{
-                this.GetComponent<Renderer>().material = defaultMat;
-            }
-        }
+        InitHighlight();
+        Game.instance.RegisterArea(this);
     }
 
     public void Connect(Area connectArea)
@@ -86,8 +66,11 @@ public abstract class Area : MonoBehaviour
 
     public bool MoveToNext(MonoContainer monoCont)
     {
-        if (monoCont.movement == null || !(Game.currentState is OperationState)) return false;
-        var nextArea = ((OperationState) Game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return false;
+        var nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (nextArea == null) {
+            return false;
+        }
         Transform previousParent = monoCont.transform.parent;
         monoCont.transform.SetParent(nextArea.transform);
         Area previousOrigin = monoCont.movement.originArea;
@@ -105,8 +88,11 @@ public abstract class Area : MonoBehaviour
 
     protected void AddToQueue(MonoContainer monoCont)
     {
-        if (monoCont.movement == null || !(Game.currentState is OperationState)) return;
-        Area nextArea = ((OperationState) Game.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (monoCont.movement == null || !(Game.instance.currentState is OperationState)) return;
+        Area nextArea = ((OperationState) Game.instance.currentState).manager.GetNextArea(this, monoCont.movement);
+        if (nextArea == null){
+            return;
+        }
         if (!containerQueue.ContainsKey(nextArea))
             containerQueue.Add(nextArea, new Queue<MonoContainer>());
         if (!containerQueue[nextArea].Contains(monoCont))

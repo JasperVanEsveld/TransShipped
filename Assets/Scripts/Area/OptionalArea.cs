@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionalArea : MonoBehaviour
+public class OptionalArea : HighlightAble
 {
+    public delegate void OpAreaListener(OptionalArea source);
+    public static event OpAreaListener MouseDownEvent;
+    public static event OpAreaListener AreaBought;
+    public static event OpAreaListener NotEnough;
+
     public List<Area> connected;
 
     public string areaName;
@@ -23,18 +28,22 @@ public class OptionalArea : MonoBehaviour
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         stackPrefab = Resources.Load("Areas/Stack") as GameObject;
-        GetComponent<Renderer>().material.color = price <= Game.money ? Color.green : Color.red;
-        Game.RegisterArea(this);
+        GetComponent<Renderer>().material.color = price <= Game.instance.money ? Color.green : Color.red;
+        Game.instance.RegisterArea(this);
         capacity = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
+        InitHighlight();
     }
 
     public void BuyStack()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (UpgradeState.Buy(price))
         {
-            Game.DeregisterArea(this);
+            Game.instance.DeregisterArea(this);
+            Game.instance.DeregisterHighlight(this);
+            Vector3 sizeTemp = transform.localScale;
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
+            stack.transform.localScale = sizeTemp;
             stack.max = capacity;
             foreach (var connectArea in connected)
             {
@@ -42,10 +51,15 @@ public class OptionalArea : MonoBehaviour
             }
 
             Destroy(gameObject);
+            if(AreaBought != null){
+                AreaBought.Invoke(this);
+            }
         }
         else if (i == 0)
         {
-            print("You don't have enough money!");
+            if(NotEnough != null){
+                NotEnough.Invoke(this);
+            }
         }
 
         i++;
@@ -53,31 +67,41 @@ public class OptionalArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
+        Game.instance.RemoveHighlights();
+        Highlight(true);
     }
 
     private void OnMouseExit()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = originColor;
+        Highlight(false);
     }
 
     private void OnMouseDown()
     {
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        if(MouseDownEvent != null){
+            MouseDownEvent.Invoke(this);
+        }
         buildingPanel.SelectOptionalArea(this, areaName, attribute);
+        Game.instance.ForceRemoveHighlights();
+        Highlight(true);
+        lastClicked = true;
     }
 
     private void Update()
     {
-        if (!(Game.currentState is UpgradeState))
+        if (!(Game.instance.currentState is UpgradeState))
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
         else
         {
             GetComponent<MeshRenderer>().enabled = true;
-            originColor = price <= Game.money ? Color.green : Color.red;
+            originColor = price <= Game.instance.money ? Color.green : Color.red;
         }
     }
 }

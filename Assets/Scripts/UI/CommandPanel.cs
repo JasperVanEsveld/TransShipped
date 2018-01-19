@@ -1,104 +1,192 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommandPanel : MonoBehaviour
-{
-    public Transform prefab;
-    int buttonCount;
-    readonly List<Transform> buttons = new List<Transform>();
-    Transform ShipTab;
-    Transform TruckTab;
-    Transform TrainTab;
+public class CommandPanel : MonoBehaviour {
+    public delegate void CommandPanelListener();
+    public static event CommandPanelListener VehicleSelected;
+    public static event CommandPanelListener DeliveryAreaSelected;
+    public static event CommandPanelListener StackSelected;
+    private Transform buttonPrefab;
+    private int shipCount, truckCount, trainCount;
+    private GameObject ShipTab;
+    private GameObject TruckTab;
+    private GameObject TrainTab;
+    private GameObject shipIcon;
+    private GameObject truckIcon;
+    private GameObject trainIcon;
+    private Text shipText;
+    private Text truckText;
+    private Text trainText;
     private Area selectedArea;
     private Stack selectedStack;
     private DeliveryVehicle currentVehicle;
+    private readonly List<Transform> shipButtons = new List<Transform>();
+    private readonly List<Transform> truckButtons = new List<Transform>();
+    private readonly List<Transform> trainButtons = new List<Transform>();
 
-    public void SetVehicle(DeliveryVehicle vehicle){
+    private void SetVehicle(DeliveryVehicle vehicle) {
+        if(VehicleSelected != null){
+            VehicleSelected.Invoke();
+        }
         currentVehicle = vehicle;
     }
 
-    public void SetDeliveryArea(Area area){
+    public void SetDeliveryArea(Area area) {
+        if(DeliveryAreaSelected != null){
+            DeliveryAreaSelected.Invoke();
+        }
         selectedArea = area;
-        Game.OnlyHighlight<Stack>();
+        Game.instance.OnlyHighlight<Stack>();
+
     }
 
-    public void SetStackArea(Stack area){
+    public void SetStackArea(Stack area) {
+        if(StackSelected != null){
+            StackSelected.Invoke();
+        }
         selectedStack = area;
-        Game.RemoveHighlights();
+        Game.instance.RemoveHighlights();
         SendVehicleIn();
     }
 
     private void SendVehicleIn() {
         currentVehicle.targetStack = selectedStack;
-        if(currentVehicle is Ship && selectedArea is ShipArea){
-            (currentVehicle as Ship).area = selectedArea as ShipArea;
-        } else if(currentVehicle is Truck && selectedArea is TruckArea){
-            (currentVehicle as Truck).area = selectedArea as TruckArea;
-        } else if(currentVehicle is Train && selectedArea is TrainArea){
-            (currentVehicle as Train).area = selectedArea as TrainArea;
+        if (currentVehicle is Ship && selectedArea is ShipArea) {
+            ((Ship) currentVehicle).area = (ShipArea) selectedArea;
+            ((Ship) currentVehicle).areaPos = selectedArea.transform.position;
+            ((ShipArea) selectedArea).occupied = true;
+        } else if (currentVehicle is Truck && selectedArea is TruckArea) {
+            ((Truck) currentVehicle).area = (TruckArea) selectedArea;
+            ((Truck) currentVehicle).areaPos = selectedArea.transform.position;
+            ((TruckArea) selectedArea).occupied = true;
+        } else if (currentVehicle is Train && selectedArea is TrainArea) {
+            ((Train) currentVehicle).area = (TrainArea) selectedArea;
+            ((Train) currentVehicle).areaPos = selectedArea.transform.position;
+            ((TrainArea) selectedArea).occupied = true;
         }
+
         currentVehicle.EnterTerminal();
     }
 
-    void Awake()
-    {
-        CreateButtons();
-        ShipTab = transform.GetChild(5);
-        TruckTab = transform.GetChild(4);
-        TrainTab = transform.GetChild(3);
+    private void Awake() {
+        buttonPrefab = ((GameObject) Resources.Load("UI/button")).transform;
+        ShipTab = GameObject.Find("ShipCommand");
+        TruckTab = GameObject.Find("TruckCommand");
+        TrainTab = GameObject.Find("TrainCommand");
+        shipIcon = GameObject.Find("ShipCount");
+        if (shipIcon != null) shipIcon.SetActive(false);
+
+        truckIcon = GameObject.Find("TruckCount");
+        if (truckIcon != null) truckIcon.SetActive(false);
+
+        trainIcon = GameObject.Find("TrainCount");
+        if (trainIcon != null) trainIcon.SetActive(false);
+
+        shipCount = 0;
+        trainCount = 0;
+        truckCount = 0;
     }
 
-    void Update()
-    {
-        if (buttonCount != Game.instance.vehicles.Count)
-            CreateButtons();
+    private void Update() {
+        if (shipCount != Game.instance.ships.Count)
+            CreateShipButtons();
+        else if (trainCount != Game.instance.trains.Count)
+            CreateTrainButtons();
+        else if (truckCount != Game.instance.trucks.Count)
+            CreateTruckButtons();
     }
 
-    private void CreateButtons()
-    {
-        foreach (Transform button in buttons)
-            Destroy(button.gameObject);
+    private void CreateShipButtons() {
+        foreach (Transform button in shipButtons) Destroy(button.gameObject);
 
-        buttons.Clear();
-        float x1 = 85;
-        float x2 = 85;
-        float x3 = 85;
-        buttonCount = Game.instance.vehicles.Count;
-
-
-        foreach (DeliveryVehicle vehicle in Game.instance.vehicles)
-        {
-            Transform obj = Instantiate(prefab);
-
-            if (vehicle.GetType() == typeof(Ship))
-            {
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Ship>>()[0].transform.position;
-                obj.SetParent(ShipTab, false);
-                buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x1, 0);
-                x1 += 170;
-            }
-            else if (vehicle.GetType() == typeof(Train))
-            {
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Train>>()[0].transform.position;
-                obj.SetParent(TrainTab, false);
-                buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x2, 0);
-                x2 += 170;
-            }
-            else
-            {
-                obj.SetParent(TruckTab, false);
-                buttons.Add(obj);
-                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(x3, 0);
-                x3 += 170;
-                vehicle.areaPos = Game.GetAreasOfType<DeliveryArea<Truck>>()[0].transform.position;
-            }
-            obj.GetComponent<Button>().onClick.AddListener(vehicle.OnSelected);
-            obj.GetComponent<Button>().onClick.AddListener(() => SetVehicle(vehicle));
-            obj.GetChild(0).GetComponent<Text>().text = vehicle.GetType() + "\n Containers: " + vehicle.carrying.Count;
+        shipButtons.Clear();
+        float xMax = 0;
+        shipCount = Game.instance.ships.Count;
+        if (shipCount == 0) {
+            shipIcon.SetActive(false);
+            return;
         }
+
+        foreach (Ship ship in Game.instance.ships) {
+            Transform button = Instantiate(buttonPrefab);
+
+            button.SetParent(ShipTab.transform, false);
+            shipButtons.Add(button);
+            RectTransform rectTransform = button.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(xMax + 0.01f, 0.1f);
+            xMax += 0.2f;
+            rectTransform.anchorMax = new Vector2(xMax - 0.01f, 0.9f);
+
+            button.GetComponent<Button>().onClick.AddListener(ship.OnSelected);
+            Ship ship1 = ship;
+            button.GetComponent<Button>().onClick.AddListener(() => SetVehicle(ship1));
+            button.GetChild(0).GetComponent<Text>().text = ship.GetType() + "\n Containers: " + ship.carrying.Count;
+        }
+
+        shipIcon.SetActive(true);
+        shipIcon.GetComponentInChildren<Text>().text = "" + shipCount;
+    }
+
+    private void CreateTruckButtons() {
+        foreach (Transform button in truckButtons) { Destroy(button.gameObject); }
+
+        truckButtons.Clear();
+        float xMax = 0;
+        truckCount = Game.instance.trucks.Count;
+        if (truckCount == 0) {
+            truckIcon.SetActive(false);
+            return;
+        }
+
+        foreach (Truck truck in Game.instance.trucks) {
+            Transform button = Instantiate(buttonPrefab);
+
+            button.SetParent(TruckTab.transform, false);
+            truckButtons.Add(button);
+            RectTransform rectTransform = button.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(xMax + 0.01f, 0.1f);
+            xMax += 0.2f;
+            rectTransform.anchorMax = new Vector2(xMax - 0.01f, 0.9f);
+
+            button.GetComponent<Button>().onClick.AddListener(truck.OnSelected);
+            Truck truck1 = truck;
+            button.GetComponent<Button>().onClick.AddListener(() => SetVehicle(truck1));
+            button.GetChild(0).GetComponent<Text>().text = truck.GetType() + "\n Containers: " + truck.carrying.Count;
+        }
+
+        truckIcon.SetActive(true);
+        truckIcon.GetComponentInChildren<Text>().text = "" + truckCount;
+    }
+
+    private void CreateTrainButtons() {
+        foreach (Transform button in trainButtons) { Destroy(button.gameObject); }
+
+        trainButtons.Clear();
+        float xMax = 0;
+        trainCount = Game.instance.trains.Count;
+        if (trainCount == 0) {
+            trainIcon.SetActive(false);
+            return;
+        }
+
+        foreach (Train train in Game.instance.trains) {
+            Transform button = Instantiate(buttonPrefab);
+
+            button.SetParent(TrainTab.transform, false);
+            trainButtons.Add(button);
+            RectTransform rectTransform = button.GetComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(xMax + 0.01f, 0.1f);
+            xMax += 0.2f;
+            rectTransform.anchorMax = new Vector2(xMax - 0.01f, 0.9f);
+
+            button.GetComponent<Button>().onClick.AddListener(train.OnSelected);
+            Train train1 = train;
+            button.GetComponent<Button>().onClick.AddListener(() => SetVehicle(train1));
+            button.GetChild(0).GetComponent<Text>().text = train.GetType() + "\n Containers: " + train.carrying.Count;
+        }
+
+        trainIcon.SetActive(true);
+        trainIcon.GetComponentInChildren<Text>().text = "" + trainCount;
     }
 }

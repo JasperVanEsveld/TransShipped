@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Stack : Area
-{
+public class Stack : Area {
     public List<MonoContainer> containers = new List<MonoContainer>();
 
     private CapacitySlider script;
@@ -11,62 +10,58 @@ public class Stack : Area
 
     public GameObject slider;
     GameObject sliderclone;
-    public int Contains(Container container)
-    {
-        for (var i = 0; i < containers.Count; i++)
-        {
-            if (containers[i].container.Equals(container))
-            {
+
+    public int Contains(Container container) {
+        for (var i = 0; i < containers.Count; i++) {
+            if (containers[i].container.Equals(container)) {
                 return i;
             }
         }
+
         return -1;
     }
 
-    public void Update()
-    {
-        for (var i = containers.Count - 1; i >= 0; i--)
-        {
+    public void Update() {
+        for (var i = containers.Count - 1; i >= 0; i--) {
             if (MoveToNext(containers[i])) {
                 break;
             }
+
             var n = i % (max / 5);
             containers[i].transform.position = new Vector3(
                 transform.position.x - transform.lossyScale.x / 2 + 2 + 2 * (int) (n / (transform.lossyScale.z - 2)),
-                i * 5 / max,
+                0.5f + i * 5 / max,
                 transform.position.z - transform.lossyScale.z / 2 + 1.5f + n % (transform.lossyScale.z - 2));
         }
     }
 
-    public override bool AddContainer(MonoContainer monoContainer)
-    {
+    public override bool AddContainer(MonoContainer monoContainer) {
         if (containers.Count >= max) return false;
         containers.Add(monoContainer);
-        if (monoContainer.movement.TargetArea == this)
-        {
+        if (monoContainer.movement.TargetArea == this) {
             monoContainer.movement = null;
         }
-        if(script != null){
-            script.ChangeSliderValue((float)containers.Count / max); 
+
+        if (script != null) {
+            script.ChangeSliderValue((float) containers.Count / max);
         }
+
         return true;
     }
 
-    protected override void RemoveContainer(MonoContainer monoContainer)
-    {
+    protected override void RemoveContainer(MonoContainer monoContainer) {
         containers.Remove(monoContainer);
     }
 
-    private void OnMouseDown(){
-        if(highlight && Game.currentState is OperationState){
+    private void OnMouseDown() {
+        if (highlight && Game.instance.currentState is OperationState) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             commandPanel.SetStackArea(this);
         }
     }
 
-    private void OnMouseEnter()
-    {
-        if (!(Game.currentState is OperationState)) return;
+    private void OnMouseEnter() {
+        if (!(Game.instance.currentState is OperationState)) return;
         sliderclone = Instantiate(slider, transform.position, Quaternion.identity);
 
         sliderclone.transform.SetParent(GameObject.Find("Canvas").transform, false);
@@ -74,17 +69,17 @@ public class Stack : Area
         //sliderclone.transform.parent = GameObject.Find("Canvas").transform;
         script = sliderclone.GetComponent<CapacitySlider>();
         script.target = transform;
-        script.ChangeSliderValue((float)containers.Count / max); 
+        script.ChangeSliderValue((float) containers.Count / max);
         GetComponent<Renderer>().material.color = Color.cyan;
     }
 
-    private void OnMouseExit()
-    {
-        if (!(Game.currentState is OperationState)) return;
+    private void OnMouseExit() {
+        if (!(Game.instance.currentState is OperationState)) return;
         Destroy(sliderclone);
-        if(highlight) {
+        if (highlight) {
             GetComponent<Renderer>().material = highlightMat;
-        } else{
+        }
+        else {
             GetComponent<Renderer>().material = defaultMat;
         }
     }

@@ -1,16 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Crane : MonoBehaviour
+public class Crane : HighlightAble
 {
+    public delegate void CraneListener(Crane source);
+
+    public static event CraneListener MouseDownEvent;
+    public static event CraneListener CraneBought;
+    public static event CraneListener NotEnough;
+
     private const double upbound = 10;
-    public double speed { get; set; }
+    public double speed { get; private set; }
     private double baseTime;
     private DateTime startTime;
     public MonoContainer container { private get; set; }
     public CraneArea craneArea;
-    public bool reserved;
-    private Area reservedBy;
+    public Queue<Area> reservedBy = new Queue<Area>();
     public BuildingPanel buildingPanel;
 
     // Upgrade and stuff
@@ -23,8 +29,8 @@ public class Crane : MonoBehaviour
         get { return level + 1; }
     }
 
-    private static readonly int[] costOfUpgrade = {5, 10, 20};
-    private static readonly double[] speedAtEachLevel = {5, 10, 20, 40};
+    private static readonly int[] costOfUpgrade = {10, 20, 30};
+    private static readonly double[] speedAtEachLevel = {7, 8, 9, 10};
 
     public bool IsFullyUpgraded()
     {
@@ -40,7 +46,7 @@ public class Crane : MonoBehaviour
 
     public void Upgrade()
     {
-        if (!(Game.currentState is UpgradeState)) return;
+        if (!(Game.instance.currentState is UpgradeState)) return;
         if (UpgradeState.Buy(costOfUpgrade[level]))
         {
             i = 0;
@@ -59,6 +65,7 @@ public class Crane : MonoBehaviour
         speed = speedAtEachLevel[0];
         baseTime = upbound - speed;
         container = null;
+        InitHighlight();
     }
 
     /// <summary>
@@ -69,7 +76,7 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     public bool IsReady(Area origin)
     {
-        return IsReady() || container == null && reserved && reservedBy.Equals(origin);
+        return IsReady() || container == null && (reservedBy.Count == 0 || reservedBy.Peek() == origin);
     }
 
     /// <summary>
@@ -80,12 +87,12 @@ public class Crane : MonoBehaviour
     /// <returns>Available or not</returns>
     private bool IsReady()
     {
-        return container == null && !reserved;
+        return container == null && reservedBy.Count == 0;
     }
 
     public bool IsReservedBy(Area reference)
     {
-        return reserved && reservedBy.Equals(reference);
+        return reservedBy.Count != 0 && reservedBy.Peek() == reference;
     }
 
     /// <summary>
@@ -95,23 +102,35 @@ public class Crane : MonoBehaviour
     /// <returns></returns>
     public bool ReserveCrane(Area origin)
     {
-        if (reserved) return false;
-        reservedBy = origin;
-        reserved = true;
+        if (reservedBy.Contains(origin)) return false;
+        reservedBy.Enqueue(origin);
         return true;
     }
-
-    private void OnMouseDown()
-    {
+    
+    private void OnMouseDown() {
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        if (MouseDownEvent != null) { MouseDownEvent.Invoke(this); }
         buildingPanel.SelectCrane(this);
+        Game.instance.ForceRemoveHighlights();
+        Highlight(true);
+        lastClicked = true;
+    }
+
+    private void OnMouseEnter() {
+        if (!(Game.instance.currentState is UpgradeState)) return;
+        Game.instance.RemoveHighlights();
+        Highlight(true);
+    }
+
+    private void OnMouseExit() {
+        if (!(Game.instance.currentState is UpgradeState) || lastClicked) return;
+        Highlight(false);
     }
 
     public bool AddContainer(MonoContainer monoContainer)
     {
         if (!IsReady(monoContainer.movement.originArea))
             return false;
-
-        reserved = false;
         container = monoContainer;
         container.transform.SetParent(transform);
         container.transform.position = transform.position;
@@ -122,7 +141,7 @@ public class Crane : MonoBehaviour
     private void Update()
     {
         baseTime = upbound - speed;
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (container != null && DateTime.Now.Subtract(startTime).TotalSeconds >= baseTime)
             craneArea.MoveToNext(container);
         else if (IsReady())

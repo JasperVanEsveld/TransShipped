@@ -6,27 +6,26 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
     public bool occupied;
     private DateTime start;
     private List<Container> remainingRequests;
-    private Queue<T> waiting = new Queue<T>();
+    private readonly Queue<T> waiting = new Queue<T>();
     private T current;
     private bool loading;
 
     
     private void OnMouseDown()
     {
-        if(highlight && Game.currentState is OperationState){
-            CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
-            commandPanel.SetDeliveryArea(this);
-        }
+        if (!highlight || !(Game.instance.currentState is OperationState)) return;
+        CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
+        commandPanel.SetDeliveryArea(this);
+        GetComponent<Outline>().enabled = false;
     }
 
     public void OnVehicleEnter(T vehicle)
     {
         if (vehicle == current || waiting.Contains(vehicle)) return;
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         if (current == null)
         {
             current = vehicle;
-            occupied = true;
             Service(current);
         }
         else
@@ -38,20 +37,20 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         start = DateTime.Now;
         loading = false;
         remainingRequests = new List<Container>(vehicle.outgoing);
-        foreach (var container in vehicle.carrying)
-            ((OperationState) Game.currentState).manager.Store(this, container, vehicle.targetStack);
+        foreach (MonoContainer container in vehicle.carrying)
+            ((OperationState) Game.instance.currentState).manager.Store(this, container, vehicle.targetStack);
 
-        for (var i = vehicle.carrying.Count - 1; i >= 0; i--)
+        for (int i = vehicle.carrying.Count - 1; i >= 0; i--)
             if (!MoveToNext(vehicle.carrying[i]))
                 AddToQueue(vehicle.carrying[i]);
     }
 
-    public void requestOutgoing()
+    private void requestOutgoing()
     {
         for (int i = remainingRequests.Count - 1; i >= 0; i--)
         {
             Container c = remainingRequests[i];
-            ContainerManager manager = Game.GetManager();
+            ContainerManager manager = Game.instance.GetManager();
             if (manager == null) continue;
             if (manager.Request(this, c))
                 remainingRequests.RemoveAt(i);
@@ -79,7 +78,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
             requestOutgoing();
         else if (loading && current.outgoing.Count == current.carrying.Count)
         {
-            Game.money += current.reward;
+            Game.instance.money += current.reward;
             OnVehicleLeaves();
         }
     }

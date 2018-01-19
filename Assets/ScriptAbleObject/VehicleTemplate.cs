@@ -8,7 +8,8 @@ public class VehicleTemplate : ScriptableObject
 {
     public VehicleType type;
     public Transform prefab;
-    public List<containerType> containerTypes;
+    public List<containerType> carryingTypes;
+    public List<containerType> requestTypes;
     public int carryMin;
     public int carryMax;
     public int requestMin;

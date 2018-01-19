@@ -1,17 +1,33 @@
 using System;
 using Object = UnityEngine.Object;
+using UnityEngine;
 
 public class OperationState : GameState
 {
+    public delegate void OperationStateListener();
+    public static event OperationStateListener vehicleGeneratedEvent;
     public ContainerManager manager;
     public VehicleGenerator generator;
     public DateTime startTime = DateTime.Now;
     private DateTime lastTime;
 
-    public OperationState()
-    {
-        manager = new ContainerManager(Game.GetAreasOfType<Stack>(), this);
+    public OperationState() : base() {
+        manager = new ContainerManager(Game.instance.GetAreasOfType<Stack>(), this);
         generator = new VehicleGenerator();
+        Game.instance.ForceRemoveHighlights();
+
+        foreach(Ship vehicle in Game.instance.ships){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.ships.Clear();
+        foreach(Train vehicle in Game.instance.trains){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.trains.Clear();
+        foreach(Truck vehicle in Game.instance.trucks){
+            GameObject.Destroy(vehicle.gameObject);
+        }
+        Game.instance.trucks.Clear();
     }
 
     public void OnMovementComplete()
@@ -21,13 +37,16 @@ public class OperationState : GameState
 
     public override void Update()
     {
-        if (Game.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
+        if (Game.instance.currentStage.duration < (DateTime.Now - startTime).TotalSeconds)
             Game.instance.ChangeState(new StageEndState());
 
         int vehicles = Object.FindObjectsOfType<DeliveryVehicle>().Length;
-        if (!((DateTime.Now - lastTime).TotalSeconds >= Game.currentStage.spawnInterval) ||
-            !(vehicles < Game.currentStage.maxVehicles)) return;
+        if (!((DateTime.Now - lastTime).TotalSeconds >= Game.instance.currentStage.spawnInterval) ||
+            !(vehicles < Game.instance.currentStage.maxVehicles)) return;
         generator.GenerateRandomVehicle();
+        if(vehicleGeneratedEvent != null){
+            vehicleGeneratedEvent.Invoke();
+        }
         lastTime = DateTime.Now;
     }
 }

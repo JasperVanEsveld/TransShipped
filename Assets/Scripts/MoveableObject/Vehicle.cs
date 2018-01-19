@@ -45,12 +45,12 @@ public class Vehicle : MoveableObject
 
     public bool IsAvailable(Area origin)
     {
-        return IsAvailable() || !MOIsObjectMoving() && !IsFull() && reserved && reservedBy.Equals(origin);
+        return IsAvailable() || reserved && reservedBy.Equals(origin);
     }
 
     public bool IsAvailable()
     {
-        return !MOIsObjectMoving() && !IsFull() && !reserved;
+        return !reserved;
     }
 
     public bool ReserveVehicle(Area origin)
@@ -64,6 +64,7 @@ public class Vehicle : MoveableObject
     private void Awake()
     {
         countAGV++;
+        transform.position = new Vector3(Random.Range(-35.0f, -5.0f), transform.position.y, Random.Range(-10.0f, 10.0f));
         request = new Queue<Area>();
         MOInit(transform.position, speed, false);
     }
@@ -76,7 +77,7 @@ public class Vehicle : MoveableObject
         return true;
     }
 
-    private bool IsFull()
+    public bool IsFull()
     {
         return containers.Count >= capacity;
     }
@@ -91,7 +92,7 @@ public class Vehicle : MoveableObject
     private void Update()
     {
         UpdateSpeed(speed);
-        if (!(Game.currentState is OperationState)) return;
+        if (!(Game.instance.currentState is OperationState)) return;
         UpdateSpeed(speed);
         for (var i = 0; i < containers.Count; i++)
             containers[i].transform.position = new Vector3(transform.position.x,
@@ -100,7 +101,7 @@ public class Vehicle : MoveableObject
         {
             if (containers.Count != 0)
             {
-                targetArea = Game.GetManager().GetNextArea(road, containers[0].movement);
+                targetArea = Game.instance.GetManager().GetNextArea(road, containers[0].movement);
                 GoTo(targetArea);
                 if (MOIsAtTheThisPos(targetArea.transform.position))
                     road.MoveToNext(containers[0]);

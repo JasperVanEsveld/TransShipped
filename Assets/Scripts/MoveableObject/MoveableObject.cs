@@ -111,16 +111,16 @@ public abstract class MoveableObject : MonoBehaviour
         int desRegion = GetRegion_(dest);
         if (desRegion == 5)
         {
-            Vector3 intPoint2 = new Vector3(dest.x, height_, 36.0f);
-            Vector3 intPoint1 = new Vector3(80.0f, height_, 36.0f);
+            Vector3 intPoint2 = new Vector3(dest.x, height_, 36);
+            Vector3 intPoint1 = new Vector3(65, height_, 36);
             movementQueue.Enqueue(intPoint1);
             movementQueue.Enqueue(intPoint2);
             movementQueue.Enqueue(dest);
         }
         else if (desRegion == 3)
         {
-            Vector3 intPoint2 = new Vector3(dest.x, height_, -36.0f);
-            Vector3 intPoint1 = new Vector3(80.0f, height_, -36.0f);
+            Vector3 intPoint2 = new Vector3(dest.x, height_, -36);
+            Vector3 intPoint1 = new Vector3(65, height_, -36);
             movementQueue.Enqueue(intPoint1);
             movementQueue.Enqueue(intPoint2);
             movementQueue.Enqueue(dest);
@@ -145,8 +145,6 @@ public abstract class MoveableObject : MonoBehaviour
             movementQueue.Enqueue(intPoint1);
             movementQueue.Enqueue(intPoint2);
         }
-
-        // TODO: Delete the parent GameObject
     }
 
     protected void UpdateSpeed(float newSpeed)
