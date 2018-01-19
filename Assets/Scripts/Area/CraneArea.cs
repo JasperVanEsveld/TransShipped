@@ -7,6 +7,7 @@ public class CraneArea : Area
     public static event CraneAreaListener MouseDownEvent;
     public static event CraneAreaListener CraneBought;
     public static event CraneAreaListener NotEnough;
+    public static event CraneAreaListener NoCraneWarning;
 
     private readonly Dictionary<MonoContainer, Crane> containerCrane = new Dictionary<MonoContainer, Crane>();
     public List<Crane> cranes = new List<Crane>();
@@ -133,6 +134,9 @@ public class CraneArea : Area
     /// <returns>Whether the operation is a success</returns>
     public override bool AddContainer(MonoContainer monoContainer)
     {
+        if(NoCraneWarning != null && cranes.Count == 0) {
+            NoCraneWarning.Invoke(this);
+        }
         Crane crane = CompleteReservation(monoContainer.movement.originArea);
         if (crane != null)
         {

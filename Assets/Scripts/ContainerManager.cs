@@ -3,6 +3,9 @@ using System.Linq;
 
 public class ContainerManager
 {
+    public delegate void ContainerManagerListener();
+    public static event ContainerManagerListener NoPathFound;
+
     private OperationState origin;
     private List<Stack> stacks;
 

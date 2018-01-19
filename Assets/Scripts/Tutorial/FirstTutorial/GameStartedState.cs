@@ -5,7 +5,7 @@ public class GameStartedState : TutorialState {
     }
 
     private void OnVehcicleGen() {
-        tut.currentState = new WaitingState(tut);
+        tut.currentState = new ShipSelectState(tut);
     }
 
     public override void BindAll() {

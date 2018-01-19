@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CommandPanel : MonoBehaviour {
+    public delegate void CommandPanelListener();
+    public static event CommandPanelListener VehicleSelected;
+    public static event CommandPanelListener DeliveryAreaSelected;
+    public static event CommandPanelListener StackSelected;
     private Transform buttonPrefab;
     private int shipCount, truckCount, trainCount;
     private GameObject ShipTab;
@@ -22,15 +26,25 @@ public class CommandPanel : MonoBehaviour {
     private readonly List<Transform> trainButtons = new List<Transform>();
 
     private void SetVehicle(DeliveryVehicle vehicle) {
+        if(VehicleSelected != null){
+            VehicleSelected.Invoke();
+        }
         currentVehicle = vehicle;
     }
 
     public void SetDeliveryArea(Area area) {
+        if(DeliveryAreaSelected != null){
+            DeliveryAreaSelected.Invoke();
+        }
         selectedArea = area;
         Game.OnlyHighlight<Stack>();
+
     }
 
     public void SetStackArea(Stack area) {
+        if(StackSelected != null){
+            StackSelected.Invoke();
+        }
         selectedStack = area;
         Game.RemoveHighlights();
         SendVehicleIn();

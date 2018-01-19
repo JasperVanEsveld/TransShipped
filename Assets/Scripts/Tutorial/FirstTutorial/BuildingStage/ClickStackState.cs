@@ -5,15 +5,21 @@ public class ClickStackState : TutorialState {
              + "You can buy a new stacking area by selecting one of the green areas.";
     }
 
+    private void GameStarted(){
+        tut.currentState = new NoStackWarning(tut);
+    }
+
     private void OptionalAreaClicked(OptionalArea area) {
         tut.currentState = new BuyStackState(tut);
     }
 
     public override void BindAll() {
         OptionalArea.MouseDownEvent += OptionalAreaClicked;
+        BuildingPanel.GameStarted += GameStarted;
     }
 
     public override void UnBindAll() {
         OptionalArea.MouseDownEvent -= OptionalAreaClicked;
+        BuildingPanel.GameStarted -= GameStarted;
     }
 }

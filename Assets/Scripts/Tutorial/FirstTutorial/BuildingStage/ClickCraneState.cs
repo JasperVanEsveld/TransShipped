@@ -5,15 +5,21 @@ public class ClickCraneState : TutorialState {
              + "Click on the strip between the berth and the stack";
     }
 
+    private void GameStarted(){
+        tut.currentState = new NoCraneWarning(tut);
+    }
+
     private void CraneAreaClicked(CraneArea area) {
         tut.currentState = new BuyCraneState(tut);
     }
 
     public override void BindAll() {
         CraneArea.MouseDownEvent += CraneAreaClicked;
+        BuildingPanel.GameStarted += GameStarted;
     }
 
     public override void UnBindAll() {
         CraneArea.MouseDownEvent -= CraneAreaClicked;
+        BuildingPanel.GameStarted -= GameStarted;
     }
 }
