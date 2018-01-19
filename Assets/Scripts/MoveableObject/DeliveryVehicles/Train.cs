@@ -48,8 +48,9 @@ public class Train : DeliveryVehicle {
         if (!(Game.instance.currentState is OperationState)) return;
         MOMovementUpdate();
         for (int i = 0; i < carrying.Count; i++) {
-            carrying[i].transform.position = new Vector3(transform.position.x - (carrying.Count - i) * 2,
-                                                         transform.position.y + 1,
+            int j = i/2;
+            carrying[i].transform.position = new Vector3(transform.position.x -  i * 2 - j / 4f +0.11f,
+                                                         transform.position.y + 0.8f,
                                                          transform.position.z);
         }
 
