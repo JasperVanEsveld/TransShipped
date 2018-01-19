@@ -30,7 +30,7 @@ public class Crane : HighlightAble
     }
 
     private static readonly int[] costOfUpgrade = {10, 20, 30};
-    private static readonly double[] speedAtEachLevel = {7, 8, 9, 10};
+    private static readonly double[] speedAtEachLevel = {7, 7.8, 8.6, 9.4};
 
     public bool IsFullyUpgraded()
     {
