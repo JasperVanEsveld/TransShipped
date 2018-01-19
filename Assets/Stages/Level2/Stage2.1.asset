@@ -17,7 +17,7 @@ MonoBehaviour:
   reward: 100
   penalty: -100
   vehicleTemplates:
-  - {fileID: 11400000, guid: 32be5870d374c9b4f9f577659078c3fa, type: 2}
   - {fileID: 11400000, guid: 2a64f8f48f136c34faceabcd5f003f9c, type: 2}
-  spawnInterval: 10
+  - {fileID: 11400000, guid: 32be5870d374c9b4f9f577659078c3fa, type: 2}
+  spawnInterval: 5
   maxVehicles: 8
