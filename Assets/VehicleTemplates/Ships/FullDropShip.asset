@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bd947abe5f96444a811479ef41d1ca0, type: 3}
-  m_Name: DefaultTrain
+  m_Name: FullDropShip
   m_EditorClassIdentifier: 
-  type: 2
-  prefab: {fileID: 4641671783158534, guid: 7ad1769f09faa4c2ab1adb5b81ab7ce4, type: 2}
-  carryingTypes: 0100000000000000
-  requestTypes: 02000000
-  carryMin: 4
-  carryMax: 6
-  requestMin: 2
-  requestMax: 3
+  type: 0
+  prefab: {fileID: 4227835453075452, guid: c9077471a67683849992de0dac7642f3, type: 2}
+  carryingTypes: 00000000010000000200000002000000
+  requestTypes: 
+  carryMin: 5
+  carryMax: 5
+  requestMin: 0
+  requestMax: 0
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0, w: 0}
-  reward: 25
+  reward: 20
   timeOutTime: 30
