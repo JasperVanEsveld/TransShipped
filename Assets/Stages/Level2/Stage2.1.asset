@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Stage2.1
   m_EditorClassIdentifier: 
   duration: 90
-  moneyRequired: 250
+  moneyRequired: 200
   movementsRequired: 0
   reward: 100
   penalty: -100
