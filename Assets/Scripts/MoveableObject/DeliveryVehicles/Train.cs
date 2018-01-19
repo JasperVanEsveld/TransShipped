@@ -9,11 +9,11 @@ public class Train : DeliveryVehicle {
     }
 
     private void Awake() {
-        if (!Game.trains.Contains(this)) Game.trains.Add(this);
+        if (!Game.instance.trains.Contains(this)) Game.instance.trains.Add(this);
     }
 
     public void OnSelected() {
-        List<TrainArea> areas = Game.OnlyHighlight<TrainArea>();
+        List<TrainArea> areas = Game.instance.OnlyHighlight<TrainArea>();
         if (areas.Count == 1) {
             CommandPanel commandPanel = FindObjectOfType<CommandPanel>();
             if (!areas[0].occupied) {

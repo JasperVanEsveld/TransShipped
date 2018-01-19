@@ -37,7 +37,7 @@ public class CommandPanel : MonoBehaviour {
             DeliveryAreaSelected.Invoke();
         }
         selectedArea = area;
-        Game.OnlyHighlight<Stack>();
+        Game.instance.OnlyHighlight<Stack>();
 
     }
 
@@ -46,7 +46,7 @@ public class CommandPanel : MonoBehaviour {
             StackSelected.Invoke();
         }
         selectedStack = area;
-        Game.RemoveHighlights();
+        Game.instance.RemoveHighlights();
         SendVehicleIn();
     }
 
@@ -89,11 +89,11 @@ public class CommandPanel : MonoBehaviour {
     }
 
     private void Update() {
-        if (shipCount != Game.ships.Count)
+        if (shipCount != Game.instance.ships.Count)
             CreateShipButtons();
-        else if (trainCount != Game.trains.Count)
+        else if (trainCount != Game.instance.trains.Count)
             CreateTrainButtons();
-        else if (truckCount != Game.trucks.Count)
+        else if (truckCount != Game.instance.trucks.Count)
             CreateTruckButtons();
     }
 
@@ -102,13 +102,13 @@ public class CommandPanel : MonoBehaviour {
 
         shipButtons.Clear();
         float xMax = 0;
-        shipCount = Game.ships.Count;
+        shipCount = Game.instance.ships.Count;
         if (shipCount == 0) {
             shipIcon.SetActive(false);
             return;
         }
 
-        foreach (Ship ship in Game.ships) {
+        foreach (Ship ship in Game.instance.ships) {
             Transform button = Instantiate(buttonPrefab);
 
             button.SetParent(ShipTab.transform, false);
@@ -133,13 +133,13 @@ public class CommandPanel : MonoBehaviour {
 
         truckButtons.Clear();
         float xMax = 0;
-        truckCount = Game.trucks.Count;
+        truckCount = Game.instance.trucks.Count;
         if (truckCount == 0) {
             truckIcon.SetActive(false);
             return;
         }
 
-        foreach (Truck truck in Game.trucks) {
+        foreach (Truck truck in Game.instance.trucks) {
             Transform button = Instantiate(buttonPrefab);
 
             button.SetParent(TruckTab.transform, false);
@@ -164,13 +164,13 @@ public class CommandPanel : MonoBehaviour {
 
         trainButtons.Clear();
         float xMax = 0;
-        trainCount = Game.trains.Count;
+        trainCount = Game.instance.trains.Count;
         if (trainCount == 0) {
             trainIcon.SetActive(false);
             return;
         }
 
-        foreach (Train train in Game.trains) {
+        foreach (Train train in Game.instance.trains) {
             Transform button = Instantiate(buttonPrefab);
 
             button.SetParent(TrainTab.transform, false);

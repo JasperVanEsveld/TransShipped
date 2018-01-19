@@ -14,7 +14,7 @@ public class InfoPanel : MonoBehaviour {
         Game.instance.moneyChangeEvent += MoneyChanged;
         Game.instance.stateChangeEvent += StateChanged;
         Game.instance.stageChangeEvent += StageChanged;
-        moneyText.text = "Money :" + Game.money;
+        moneyText.text = "Money :" + Game.instance.money;
 
     }
 	

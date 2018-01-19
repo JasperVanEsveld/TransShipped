@@ -15,13 +15,13 @@ public abstract class DeliveryVehicle : MoveableObject {
 
     public void EnterTerminal() {
         if (GetType() == typeof(Ship)) {
-            Game.ships.Remove(this as Ship);
+            Game.instance.ships.Remove(this as Ship);
             MOShipEnterTerminal(areaPos);
         } else if (GetType() == typeof(Truck)) {
-            Game.trucks.Remove(this as Truck);
+            Game.instance.trucks.Remove(this as Truck);
             MOPushDestination(areaPos);
         } else {
-            Game.trains.Remove(this as Train);
+            Game.instance.trains.Remove(this as Train);
             MOPushDestination(areaPos);
         }
     }

@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65181415677785960}
   - component: {fileID: 23440773207952784}
   - component: {fileID: 114781244478696350}
-  - component: {fileID: 114647413494135982}
   m_Layer: 0
   m_Name: CraneArea
   m_TagString: Untagged
@@ -38,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292293641598194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 24}
   m_LocalScale: {x: 10, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,21 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114647413494135982
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292293641598194}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 0
-  eraseRenderer: 0
-  originalLayer: 0
-  originalMaterials: []
 --- !u!114 &114781244478696350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,7 +110,8 @@ MonoBehaviour:
   highlight: 0
   defaultMat: {fileID: 2100000, guid: 89b3f56d4d4614496a57d51cb59db232, type: 2}
   highlightMat: {fileID: 2100000, guid: c7cbeec1fcf8a48458bb2080452bc8fb, type: 2}
-  connected: []
+  connected:
+  - {fileID: 0}
   listening: []
   cranes: []
   priceForOneCrane: 10
@@ -134,5 +119,5 @@ MonoBehaviour:
   offSet: 5
   cranePrefab: {fileID: 1609709993846976, guid: 0d9a721d693024030810591576511803,
     type: 2}
-  areaName: 
-  attribute: 
+  areaName: Stack to Road
+  attribute: Connecting the right stack and the road

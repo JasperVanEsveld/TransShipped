@@ -12,8 +12,8 @@ public class StageEndState : GameState
         }
         MonoBehaviour.print(Game.instance.currentStage.IsSuccess(this) ? "Stage passed" : "Stage failed");
         if (Game.instance.currentStage.IsSuccess(this))
-            Game.money += Game.instance.currentStage.reward;
+            Game.instance.money += Game.instance.currentStage.reward;
         else
-            Game.money += Game.instance.currentStage.penalty;
+            Game.instance.money += Game.instance.currentStage.penalty;
     }
 }

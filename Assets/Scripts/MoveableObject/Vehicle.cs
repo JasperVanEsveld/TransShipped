@@ -101,7 +101,7 @@ public class Vehicle : MoveableObject
         {
             if (containers.Count != 0)
             {
-                targetArea = Game.GetManager().GetNextArea(road, containers[0].movement);
+                targetArea = Game.instance.GetManager().GetNextArea(road, containers[0].movement);
                 GoTo(targetArea);
                 if (MOIsAtTheThisPos(targetArea.transform.position))
                     road.MoveToNext(containers[0]);

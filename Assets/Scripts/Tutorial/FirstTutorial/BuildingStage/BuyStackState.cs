@@ -17,7 +17,7 @@ public class BuyStackState : TutorialState {
     }
 
     public override void UnBindAll(){
-        OptionalArea.MouseDownEvent -= AreaBought;
+        OptionalArea.AreaBought -= AreaBought;
         BuildingPanel.GameStarted -= GameStarted;
     }
 }

@@ -9,7 +9,19 @@ public delegate void OnStageChanged(Stage newStage);
 public delegate void OnMoneyChanged(double oldValue, double newValue);
 
 public class Game : MonoBehaviour {
-    public static Game instance;
+    static Game _instance;// only one Go can exist
+	public static Game instance
+	{
+		get
+		{
+			if( !_instance)
+			{
+				_instance = FindObjectOfType<Game>();
+			}
+
+			return _instance;
+		}
+	}
     public GameState currentState { get; private set; }
     public Stage currentStage;
     public List<Stage> stagesList;
@@ -18,9 +30,9 @@ public class Game : MonoBehaviour {
     public int movements;
     public double startMoney;
 
-    private static double moneyValue;
+    private double moneyValue;
 
-    public static double money {
+    public double money {
         get { return moneyValue; }
         set {
             if (instance.moneyChangeEvent != null && moneyValue != value) instance.moneyChangeEvent(moneyValue, value);
@@ -29,9 +41,9 @@ public class Game : MonoBehaviour {
         }
     }
 
-    public static List<Ship> ships { get; private set; }
-    public static List<Truck> trucks { get; private set; }
-    public static List<Train> trains { get; private set; }
+    public List<Ship> ships { get; private set; }
+    public List<Truck> trucks { get; private set; }
+    public List<Train> trains { get; private set; }
     private readonly List<OptionalArea> optionalAreas = new List<OptionalArea>();
     private readonly List<Area> areas = new List<Area>();
     public event OnStateChanged stateChangeEvent;
@@ -39,10 +51,11 @@ public class Game : MonoBehaviour {
     public event OnMoneyChanged moneyChangeEvent;
 
     public void Awake() {
-        if (instance == null)
-            instance = this;
+        if (_instance == null)
+            _instance = this;
         else if (instance != this)
-            Destroy(gameObject);
+            _instance = this;
+        
     }
 
     public void Start() {
@@ -63,50 +76,50 @@ public class Game : MonoBehaviour {
         currentState.Update();
     }
 
-    public static void RegisterArea(Area area) {
+    public void RegisterArea(Area area) {
         if (!instance.areas.Contains(area)) instance.areas.Add(area);
     }
 
-    public static void RegisterHighlight(HighlightAble highlight) {
+    public void RegisterHighlight(HighlightAble highlight) {
         if (!instance.highlights.Contains(highlight)) instance.highlights.Add(highlight);
     }
 
-    public static void DeregisterHighlight(HighlightAble highlight) {
+    public void DeregisterHighlight(HighlightAble highlight) {
         if (instance.highlights.Contains(highlight)) instance.highlights.Remove(highlight);
     }
 
-    public static void RegisterArea(OptionalArea area) {
+    public void RegisterArea(OptionalArea area) {
         if (!instance.optionalAreas.Contains(area)) instance.optionalAreas.Add(area);
     }
 
-    public static void DeregisterArea(OptionalArea area) {
+    public void DeregisterArea(OptionalArea area) {
         if (instance.optionalAreas.Contains(area)) instance.optionalAreas.Remove(area);
     }
 
-    public static List<T> GetAreasOfType<T>() where T : Area {
+    public List<T> GetAreasOfType<T>() where T : Area {
         return instance.areas.OfType<T>().Select(a => a).ToList();
     }
 
-    public static List<T> OnlyHighlight<T>() where T : Area {
+    public List<T> OnlyHighlight<T>() where T : Area {
         foreach (HighlightAble currentArea in instance.highlights) currentArea.Highlight(currentArea is T);
 
         return GetAreasOfType<T>();
     }
 
-    public static void ForceRemoveHighlights() {
+    public void ForceRemoveHighlights() {
         foreach (HighlightAble currentArea in instance.highlights) currentArea.ForceHighlight(false);
     }
 
-    public static void RemoveHighlights() {
+    public void RemoveHighlights() {
         foreach (HighlightAble currentArea in instance.highlights) currentArea.Highlight(false);
     }
 
-    public static VehicleGenerator GetGenerator() {
+    public VehicleGenerator GetGenerator() {
         OperationState state = instance.currentState as OperationState;
         return state != null ? state.generator : null;
     }
 
-    public static ContainerManager GetManager() {
+    public ContainerManager GetManager() {
         OperationState state = instance.currentState as OperationState;
         return state != null ? state.manager : null;
     }

@@ -28,8 +28,8 @@ public class OptionalArea : HighlightAble
     {
         buildingPanel = GameObject.Find("BuildingPanel").GetComponent<BuildingPanel>();
         stackPrefab = Resources.Load("Areas/Stack") as GameObject;
-        GetComponent<Renderer>().material.color = price <= Game.money ? Color.green : Color.red;
-        Game.RegisterArea(this);
+        GetComponent<Renderer>().material.color = price <= Game.instance.money ? Color.green : Color.red;
+        Game.instance.RegisterArea(this);
         capacity = 5 * (int) ((transform.lossyScale.x - 2) / 2) * (int) (transform.lossyScale.z - 2);
         InitHighlight();
     }
@@ -39,8 +39,8 @@ public class OptionalArea : HighlightAble
         if (!(Game.instance.currentState is UpgradeState)) return;
         if (UpgradeState.Buy(price))
         {
-            Game.DeregisterArea(this);
-            Game.DeregisterHighlight(this);
+            Game.instance.DeregisterArea(this);
+            Game.instance.DeregisterHighlight(this);
             Vector3 sizeTemp = transform.localScale;
             var stack = Instantiate(stackPrefab, transform.position, transform.rotation).GetComponent<Stack>();
             stack.transform.localScale = sizeTemp;
@@ -69,7 +69,7 @@ public class OptionalArea : HighlightAble
     {
         if (!(Game.instance.currentState is UpgradeState)) return;
         GetComponent<Renderer>().material.color = stackColor;
-        Game.RemoveHighlights();
+        Game.instance.RemoveHighlights();
         Highlight(true);
     }
 
@@ -87,7 +87,7 @@ public class OptionalArea : HighlightAble
             MouseDownEvent.Invoke(this);
         }
         buildingPanel.SelectOptionalArea(this, areaName, attribute);
-        Game.ForceRemoveHighlights();
+        Game.instance.ForceRemoveHighlights();
         Highlight(true);
         lastClicked = true;
     }
@@ -101,7 +101,7 @@ public class OptionalArea : HighlightAble
         else
         {
             GetComponent<MeshRenderer>().enabled = true;
-            originColor = price <= Game.money ? Color.green : Color.red;
+            originColor = price <= Game.instance.money ? Color.green : Color.red;
         }
     }
 }

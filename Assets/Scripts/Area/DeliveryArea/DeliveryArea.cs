@@ -50,7 +50,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
         for (int i = remainingRequests.Count - 1; i >= 0; i--)
         {
             Container c = remainingRequests[i];
-            ContainerManager manager = Game.GetManager();
+            ContainerManager manager = Game.instance.GetManager();
             if (manager == null) continue;
             if (manager.Request(this, c))
                 remainingRequests.RemoveAt(i);
@@ -78,7 +78,7 @@ public class DeliveryArea<T> : Area where T : DeliveryVehicle
             requestOutgoing();
         else if (loading && current.outgoing.Count == current.carrying.Count)
         {
-            Game.money += current.reward;
+            Game.instance.money += current.reward;
             OnVehicleLeaves();
         }
     }

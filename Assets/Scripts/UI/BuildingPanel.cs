@@ -14,7 +14,7 @@ public class BuildingPanel : MonoBehaviour
     Button buttonObject;
 
 
-    private void Start()
+    private void Awake()
     {
         text1 = transform.Find("Text1").gameObject.GetComponent<Text>();
         text2 = transform.Find("Text2").gameObject.GetComponent<Text>();
@@ -23,6 +23,15 @@ public class BuildingPanel : MonoBehaviour
         text5 = GameObject.Find("Text5").gameObject.GetComponent<Text>();
         buttonObject = transform.Find("PurchaseButton").GetComponent<Button>();
         buttonText = buttonObject.GetComponentInChildren<Text>();
+    }
+
+    private void OnEnable(){
+        buttonText.text = "";
+        text2.text = "";
+        text3.text = "";
+        text4.text = "";
+        text5.text = "";
+        buttonObject.gameObject.SetActive(false);
     }
 
     public void SelectOptionalArea(OptionalArea optionalArea, string objectname, string attribute)
@@ -77,6 +86,7 @@ public class BuildingPanel : MonoBehaviour
         if(GameStarted != null){
             GameStarted.Invoke();
         }
+        selected = null;
         Game.instance.ChangeState(new OperationState());
     }
 
