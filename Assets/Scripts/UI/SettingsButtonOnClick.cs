@@ -1,40 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SettingsButtonOnClick : MonoBehaviour
-{
+public class SettingsButtonOnClick : MonoBehaviour {
     private Game game;
 
-    public void Start(){
+    public void Start() {
         game = FindObjectOfType<Game>();
     }
 
-    public void ContinueSuccess()
-    {   if (game.stages.Count == 0)
-        {
+    public void ContinueSuccess() {
+        if (game.stages.Count == 0)
             if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-            {
                 game.ChangeState(new LevelEndState());
-            }
-            else
-            {
+            else {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 game.ChangeState(new UpgradeState());
             }
-        }
-        else
-        {
+        else {
             game.SetStage(game.stages.Dequeue());
             game.ChangeState(new UpgradeState());
         }
     }
-    public void ContinueFail()
-    {
+
+    public void ContinueFail() {
         game.ChangeState(new UpgradeState());
     }
 
-    public void Restart(int sceneIndex)
-    {
+    public void Restart(int sceneIndex) {
         SceneManager.LoadScene(sceneIndex);
     }
 }
